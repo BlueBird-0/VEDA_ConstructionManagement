@@ -8,6 +8,7 @@ CONFIG += c++17 cmdline
 
 SOURCES += \
         main.cpp \
+        manager.cpp \
         object.cpp
 
 # Default rules for deployment.
@@ -16,4 +17,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    manager.h \
     object.h
