@@ -1,5 +1,11 @@
 #ifndef MANAGER_H
 #define MANAGER_H
+
+#ifdef __APPLE__
+#define cleanCMD()    system("clear")
+#else
+#define cleanCMD()    system("cls")
+#endif
 #include <iostream>
 
 using namespace std;
