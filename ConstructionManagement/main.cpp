@@ -1,14 +1,42 @@
 #include <iostream>
 #include "materialmanager.h"
-#include "material.h"
 #include "expensemanager.h"
+#include "employeemanager.h"
 #include <vector>
 
 using namespace std;
 
 int main()
 {
-    ExpenseManager manager;
+    Manager* manager;
+    ExpenseManager* expenseManager = new ExpenseManager();
+    EmployeeManager* employeeManager = new EmployeeManager();
+    MaterialManager* materialManager = new MaterialManager();
+
+    int input;
+    while(true){
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "       Project Management Program            " << endl;
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "  1. Project Manage                          " << endl;
+        cout << "  2. Client Manage                           " << endl;
+        cout << "  3. Material Manage                         " << endl;
+        cout << "  4. EmployeeManage                          " << endl;
+        cout << "  5. Expense Manage\                         " << endl;
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "Enter your choice: ";
+
+        cin >> input;
+        if( input == 4 ){
+            manager = employeeManager;
+            manager->run();
+        }else if( input == 5){
+            // 프로그램 메뉴 실행
+            expenseManager->displayMenu();
+        }
+
+    }
+
     //MaterialManager manager;  // MaterialManager 객체 생성
     /*int projectID, materialID;
 
@@ -42,8 +70,6 @@ int main()
         cout << "No projects found for Material ID " << materialID << endl;
     }*/
 
-    // 프로그램 메뉴 실행
-    manager.displayMenu();
 
     return 0;
 }
