@@ -1,0 +1,41 @@
+#ifndef __MATERIAL_H__
+#define __MATERIAL_H__
+
+#include <iostream>
+using namespace std;
+
+class Material {
+public:
+    Material(int id = 0, string name = "", string supplier = "", double unitPrice = 0.0, int stock = 0, int orderQuantity = 0);
+
+    // Getter and Setter functions
+    string getName() const;
+    void setName(const string& name);
+
+    string getSupplier() const;
+    void setSupplier(const string& supplier);
+
+    double getUnitPrice() const;
+    void setUnitPrice(double unitPrice);
+
+    int getStock() const;
+    void setStock(int stock);
+
+    int getOrderQuantity() const;
+    void setOrderQuantity(int orderQuantity);
+
+    int getId() const;
+
+    // Overloaded equality operator
+    bool operator==(const Material& other) const;
+
+private:
+    int m_id;
+    string m_name;
+    string m_supplier;
+    double m_unitPrice;
+    int m_stock;
+    int m_orderQuantity;
+};
+
+#endif // __MATERIAL_H__
