@@ -5,8 +5,9 @@ class Object
 {
     int m_id;
 public:
-    Object();
-    Object(int id);
+	Object() : Object(-1) {}
+	Object(int id) : m_id(id) {}
+	int getId() { return m_id; }
     virtual void showInfo() = 0;
 };
 
