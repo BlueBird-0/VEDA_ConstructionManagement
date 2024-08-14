@@ -68,11 +68,11 @@ void ProjectManager::modify(int id)
 {
     Project* p = search(id);
     cout << "  ID  |     Name     | Location | Start Date | End Date | Budget " << endl;
-    cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
-    cout << setw(12) << setfill(' ') << c->getProjectName() << " | ";
-    cout << setw(12) << c->getLocation() << " | ";
-    cout << setw(12) << c->getStartDate() << " | ";
-    cout << setw(12) << c->getEndDate() << " | ";
+    cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
+    cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
+    cout << setw(12) << p->getLocation() << " | ";
+    cout << setw(12) << p->getStartDate() << " | ";
+    cout << setw(12) << p->getEndDate() << " | ";
     cout << p->getBudget() << endl;
 
     string name, location, startDate, endDate;
@@ -97,11 +97,11 @@ void ProjectManager::displayInfo()
     cout << endl << "  ID  |     Name     | Location | Start Date | End Date | Budget " << endl;
     for (const auto& v : projectList) {
         Project* p = search(id);
-        cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
-        cout << setw(12) << setfill(' ') << c->getProjectName() << " | ";
-        cout << setw(12) << c->getLocation() << " | ";
-        cout << setw(12) << c->getStartDate() << " | ";
-        cout << setw(12) << c->getEndDate() << " | ";
+        cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
+        cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
+        cout << setw(12) << p->getLocation() << " | ";
+        cout << setw(12) << p->getStartDate() << " | ";
+        cout << setw(12) << p->getEndDate() << " | ";
         cout << p->getBudget() << endl;
     }
 }
