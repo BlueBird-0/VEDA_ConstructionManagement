@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Project::Project(int m_projectId = 0, string m_projectName = "", string m_startDate = "", string m_endDate = "", int m_projectBudget = 0)
+Project::Project(int projectId = 0, string projectName = "", string startDate = "", string endDate = "", int projectBudget = 0)
     : m_projectName(projectName), m_startDate(startDate), m_endDate(endDate), m_projectBudget(projectBudget)
 {
 }
