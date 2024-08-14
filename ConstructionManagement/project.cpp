@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Project::Project(int projectId = 0, string projectName = "", string startDate = "", string endDate = "", int projectBudget = 0)
-    : m_projectName(projectName), m_startDate(startDate), m_endDate(endDate), m_projectBudget(projectBudget)
+Project::Project(int projectId, string projectName, string location, string startDate, string endDate, int projectBudget)
+    : m_projectId(projectId), m_projectName(projectName), m_location(location), m_startDate(startDate), m_endDate(endDate), m_projectBudget(projectBudget)
 {
 }
 
@@ -17,6 +17,16 @@ string Project::getProjectName() const
 void Project::setProjectName(string& projectName)
 {
     m_projectName = projectName;
+}
+
+string Project::getLocation() const
+{
+    return m_location;
+}
+
+void Project::setLocation(string& location)
+{
+    m_location = location;
 }
 
 string Project::getStartDate() const
@@ -36,7 +46,7 @@ string Project::getEndDate() const
 
 void Project::setBudget(int projectBudget)
 {
-    m_endDate = endDate;
+    m_projectBudget = projectBudget;
 }
 
 int Project::getBudget() const

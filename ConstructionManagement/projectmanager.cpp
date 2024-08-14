@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <string>
 
 #include "project.h"
 #include "projectmanager.h"
@@ -16,7 +17,7 @@ ProjectManager::ProjectManager()
             vector<string> row = parseCSV(file, ',');
             if (row.size()) {
                 int id = atoi(row[0].c_str());
-                Project* p = new Project(id, row[1], row[2], row[3], row[4], row[5]);
+                Project* p = new Project(id, row[1], row[2], row[3], row[4], stoi(row[5]));
                 projectList.insert({ id, p });
             }
         }
@@ -42,12 +43,13 @@ ProjectManager::~ProjectManager()
 void ProjectManager::create()
 {
     string name, location, startDate, endDate;
-    int budget=0;
+    string budgetStr;
     cout << "name : "; cin >> name;
     cout << "location : "; cin >> location;
     cout << "startDate : "; cin >> startDate;
     cout << "endDate : "; cin >> endDate;
-    cout << "budget : "; cin.ignore(); getline(cin, budget, '\n'); //cin >> address;
+    cout << "budget : "; cin.ignore(); std::getline(cin, budgetStr, '\n'); //cin >> address;
+    int budget = stoi(budgetStr);
 
     int id = makeId();
     Project* p = new Project(id, name, location, startDate, endDate, budget);
@@ -61,7 +63,7 @@ Project* ProjectManager::search(int id)
 
 void ProjectManager::remove(int id)
 {
-    ProjectList.erase(id);
+    projectList.erase(id);
 }
 
 void ProjectManager::modify(int id)
@@ -76,13 +78,15 @@ void ProjectManager::modify(int id)
     cout << p->getBudget() << endl;
 
     string name, location, startDate, endDate;
-    int budget = 0;
+    string budgetStr;
+
 
     cout << "name : "; cin >> name;
     cout << "location : "; cin >> location;
     cout << "startDate : "; cin >> startDate;
     cout << "endDate : "; cin >> endDate;
-    cout << "budget : "; cin.ignore(); getline(cin, budget, '\n'); //cin >> address;
+    cout << "budget : "; cin.ignore(); getline(cin, budgetStr, '\n'); //cin >> address;
+    int budget = stoi(budgetStr);
 
     p->setProjectName(name);
     p->setLocation(location);
@@ -96,6 +100,7 @@ void ProjectManager::displayInfo()
 {
     cout << endl << "  ID  |     Name     | Location | Start Date | End Date | Budget " << endl;
     for (const auto& v : projectList) {
+        int id = v.first;
         Project* p = search(id);
         cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
         cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";

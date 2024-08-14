@@ -7,7 +7,7 @@ using namespace std;
 
 class Project {
 public:
-    Project(int projectId = 0, string projectName = "", string startDate = "", string endDate = "", int projectBudget = 0);
+    Project(int projectId = 0, string projectName = "", string location = "", string startDate = "", string endDate = "", int projectBudget = 0);
 
     string getProjectName() const;
     void setProjectName(string&);
@@ -25,7 +25,7 @@ public:
 
 
 private:
-    int m_ProjectId;
+    int m_projectId;
 
     string m_projectName;
     string m_location;
