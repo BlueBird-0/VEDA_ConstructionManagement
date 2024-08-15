@@ -5,6 +5,7 @@
 #include "manager.h"
 #include "employeemanager.h"
 #include "projectmanager.h"
+#include "clientmanager.h"
 #include <vector>
 
 using namespace std;
@@ -12,6 +13,7 @@ using namespace std;
 int main()
 {
     Manager* manager;
+    ClientManager* clientManager = new ClientManager();
     ExpenseManager* expenseManager = new ExpenseManager();
     EmployeeManager* employeeManager = new EmployeeManager();
     MaterialManager* materialManager = new MaterialManager();
@@ -34,9 +36,15 @@ int main()
         if (input == "1") {
             projectManagerr->displayMenu();
         }
+        else if (input == "2") {
+            clientManager->displayMenu();
+        }
+        else if (input == "3") {
+            materialManager->displayMenu();
+        }
         else if (input == "4") {
             manager = employeeManager;
-            manager->run();
+            manager->displayMenu();
         }
         else if (input == "5") {
             expenseManager->displayMenu();

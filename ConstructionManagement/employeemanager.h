@@ -15,7 +15,7 @@ private:
 public:
     EmployeeManager();
     virtual void showAllDatas();
-    virtual void run();
+    virtual void displayMenu();
     //vector<Employee> search(string currentProject)    //Todo : 구현 예정
     vector<string> parseCSV(istream&, char);
     void saveCSV();

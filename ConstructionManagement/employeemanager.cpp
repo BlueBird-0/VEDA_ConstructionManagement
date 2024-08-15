@@ -95,7 +95,7 @@ void EmployeeManager::showAllDatas()
     cin >> temp;
 }
 
-void EmployeeManager::run(){
+void EmployeeManager::displayMenu(){
     while(true)
     {
         cleanCMD();
