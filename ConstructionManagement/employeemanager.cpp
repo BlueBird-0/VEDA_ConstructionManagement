@@ -7,6 +7,7 @@
 void EmployeeManager::create()
 {
     string name, jobTitle, phoneNum;
+    vector<int> projectIdList;
 
     cleanCMD();
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
@@ -16,9 +17,19 @@ void EmployeeManager::create()
     cin >> jobTitle;
     cout << "연락처: ";
     cin >> phoneNum;
+	cout << "프로젝트 ID: (-1 입력시 종료) ";
+    int input;
+    while (true)
+    {
+        cin >> input;
+        if (input == -1)
+            break;
+        else
+            projectIdList.push_back(input);
+    }
 
     int newId = m_employeeList.size();
-    Employee* material = new Employee(newId, name, jobTitle, phoneNum);
+    Employee* material = new Employee(newId, name, jobTitle, phoneNum, projectIdList);
     m_employeeList[newId] = material;
 
     cout << "직원 생성 성공!" << endl;
@@ -37,8 +48,21 @@ EmployeeManager::EmployeeManager()
                 string name = row[1];
                 string jobTitle = row[2];
                 string phoneNum = row[3];
+                string projectIdStr = row[4];
+                vector<int> projectIdList;
+                while(true)
+                {
+                    int i = projectIdStr.find('&');
+                    if (i == -1) {
+                        break;
+                    }
+                    else {
+						projectIdList.push_back(stoi(projectIdStr.substr(0, i)));
+                        projectIdStr.erase(0, i+1);
+                    }
+                }
 
-                Employee* employee = new Employee(id, name, jobTitle, phoneNum);
+                Employee* employee = new Employee(id, name, jobTitle, phoneNum, projectIdList);
                 m_employeeList[id] = employee;
             }
         }
@@ -70,7 +94,11 @@ void EmployeeManager::saveCSV()
             file << employee->getId() << ",";
             file << employee->getName() << ",";
             file << employee->getJobTitle() << ",";
-            file << employee->getPhoneNum() << endl;
+            file << employee->getPhoneNum() << ",";
+            for (auto id : employee->getProjectIdList()) {
+                file << id << "&";
+            }
+            file << endl;
         }
     }
     file.close();
@@ -80,15 +108,12 @@ void EmployeeManager::saveCSV()
 void EmployeeManager::showAllDatas()
 {
     cleanCMD();
+
+    cout << "총 인원 [" << m_employeeList.size() << "]" << endl;
 	for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
     {
         Employee* employee = it->second;
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "ID: " << employee->getId() << endl;
-        cout << "이름: " << employee->getName() << endl;
-        cout << "직책: " << employee->getJobTitle() << endl;
-        cout << "연락처: " << employee->getPhoneNum() << endl;
-        cout << endl << endl;
+        employee->showInfo();
     }
     cout << "아무키나 입력하세요.";
     string temp;
@@ -133,4 +158,19 @@ void EmployeeManager::displayMenu(){
         }
 
     }
+}
+
+vector<Employee> EmployeeManager::search(int projectId)
+{
+    vector<Employee> returnEmployeeList;
+    for (pair<int, Employee*> pair : m_employeeList) {
+        Employee* employee = pair.second;
+        vector<int> projectIdList = employee->getProjectIdList();
+
+        //employee에게 projectId가 있다면, 리스트에 추가
+        if (find(projectIdList.begin(), projectIdList.end(), projectId) != projectIdList.end()) {
+            returnEmployeeList.push_back(*employee);
+        }
+    }
+    return returnEmployeeList;
 }

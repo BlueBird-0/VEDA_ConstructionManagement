@@ -16,7 +16,7 @@ public:
     EmployeeManager();
     virtual void showAllDatas();
     virtual void displayMenu();
-    //vector<Employee> search(string currentProject)    //Todo : 구현 예정
+    vector<Employee> search(int projectId);  //특정 projectId로 연관된 employee들을 반환합니다.
     vector<string> parseCSV(istream&, char);
     void saveCSV();
 };
