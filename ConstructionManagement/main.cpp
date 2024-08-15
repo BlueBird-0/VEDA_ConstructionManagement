@@ -22,15 +22,16 @@ int main()
     string  input;
     while(true){
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "       Project Management Program            " << endl;
+        cout << "            건축 관리 프로그램               " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "  1. Project Manage                          " << endl;
-        cout << "  2. Client Manage                           " << endl;
-        cout << "  3. Material Manage                         " << endl;
-        cout << "  4. EmployeeManage                          " << endl;
-        cout << "  5. Expense Manage\                         " << endl;
+        cout << "  1. 프로젝트 관리                           " << endl;
+        cout << "  2. 고객 관리                               " << endl;
+        cout << "  3. 자재 관리                               " << endl;
+        cout << "  4. 인력 관리                               " << endl;
+        cout << "  5. 비용 관리                               " << endl;
+        cout << "  exit. 프로그램 종료                        " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "Enter your choice: ";
+        cout << "어떤 항목을 선택하시겠습니까? ";
 
 		cin >> input;
         if (input == "1") {
@@ -54,43 +55,11 @@ int main()
 
     }
 
+    delete clientManager;
     delete expenseManager;
     delete employeeManager;
     delete materialManager;
     delete projectManagerr;
-
-    //MaterialManager manager;  // MaterialManager 객체 생성
-    /*int projectID, materialID;
-
-    cout << "Enter Project ID to search: ";
-    cin >> projectID;
-
-    cout << "Enter Material ID to search: ";
-    cin >> materialID;
-
-    // 프로젝트 ID로 검색
-    vector<int> materialIDs = manager.searchByProjectID(projectID);
-    if (!materialIDs.empty()) {
-        cout << "Materials used in Project " << projectID << ": ";
-        for (int id : materialIDs) {
-            cout << id << " ";
-        }
-        cout << endl;
-    } else {
-        cout << "No materials found for Project ID " << projectID << endl;
-    }
-
-    // 자재 ID로 검색
-    vector<int> projectIDs = manager.searchByMaterialID(materialID);
-    if (!projectIDs.empty()) {
-        cout << "Projects using Material " << materialID << ": ";
-        for (int id : projectIDs) {
-            cout << id << " ";
-        }
-        cout << endl;
-    } else {
-        cout << "No projects found for Material ID " << materialID << endl;
-    }*/
     return 0;
 
 }
