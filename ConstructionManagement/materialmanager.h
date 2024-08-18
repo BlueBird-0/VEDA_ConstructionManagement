@@ -4,10 +4,12 @@
 #include <map>
 #include <vector>
 #include "material.h"
+#include "manager.h"
 
 using namespace std;
 
-class MaterialManager {
+class MaterialManager : public Manager
+{
 public:
     MaterialManager();
     ~MaterialManager();

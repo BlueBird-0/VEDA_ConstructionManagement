@@ -4,10 +4,13 @@
 #include <vector>
 #include <string>
 #include "expense.h"
+#include "manager.h"
+#include <map>
 
 using namespace std;
 
-class ExpenseManager {
+class ExpenseManager : public Manager
+{
 private:
     vector<Expense> m_expenses;
 

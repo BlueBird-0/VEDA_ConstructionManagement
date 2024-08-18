@@ -1,10 +1,16 @@
 #ifndef EXPENSE_H
 #define EXPENSE_H
 
+#pragma once
 #include <iostream>
+#include <vector>
+#include <ctime>
+#include "object.h"
+
 using namespace std;
 
-class Expense {
+class Expense: public Object 
+{
 public:
     Expense(int projectID = 0, int materialID = 0, int materialCosts = 0, int laborCosts = 0, int otherCosts = 0);
 

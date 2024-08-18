@@ -1,10 +1,16 @@
 #ifndef __MATERIAL_H__
 #define __MATERIAL_H__
 
+#pragma once
 #include <iostream>
+#include <vector>
+#include <ctime>
+#include "object.h"
+
 using namespace std;
 
-class Material {
+class Material : public Object 
+{
 public:
     Material(int id = 0, string name = "", string supplier = "", double unitPrice = 0.0, int stock = 0, int orderQuantity = 0);
 
