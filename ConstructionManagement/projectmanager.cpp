@@ -29,8 +29,10 @@ ProjectManager::~ProjectManager()
 {
     ofstream file;
     file.open("projectlist.txt");
-    if (!file.fail()) {
-        for (const auto& v : projectList) {
+    if (!file.fail()) 
+    {
+        for (const auto& v : projectList) 
+        {
             Project* p = v.second;
             file << p->id() << ", " << p->getProjectName() << ", ";
             file << p->getLocation() << ", " << p->getStartDate() << ", ";;
@@ -39,43 +41,44 @@ ProjectManager::~ProjectManager()
     }
     file.close();
 
-    for (auto& pair : projectList) {
-        delete pair.second;  // µ¿ÀûÀ¸·Î ÇÒ´çµÈ ÇÁ·ÎÁ§Æ® °´Ã¼ »èÁ¦
+    for (auto& pair : projectList) 
+    {
+        delete pair.second;  // ë™ì ìœ¼ë¡œ í• ë‹¹ëœ í”„ë¡œì íŠ¸ ê°ì²´ ì‚­ì œ
+    }
 }
 
 void ProjectManager::create()
 {
-    string name, location, startDate, endDate;
-    int budget=0;
+    string name, location, startDate, endDate, budget;
 
-    cout << "ÇÁ·ÎÁ§Æ®¸í: "; 
+    cout << "í”„ë¡œì íŠ¸ëª…: "; 
     cin >> name;
-    cout << "À§Ä¡: "; 
+    cout << "ìœ„ì¹˜: "; 
     cin >> location;
-    cout << "½ÃÀÛÀÏ: "; 
+    cout << "ì‹œì‘ì¼: "; 
     cin >> startDate;
-    cout << "Á¾·áÀÏ: "; 
+    cout << "ì¢…ë£Œì¼: "; 
     cin >> endDate;
-    cout << "¿¹»ê: "; 
-    cin.ignore(); getline(cin, budget, '\n'); //cin >> address;
+    cout << "ì˜ˆì‚°: "; 
+    cin >> budget; //cin.ignore(); getline(cin, budget, '\n'); //cin >> address;
 
     int id = makeId();
-    Project* p = new Project(id, name, location, startDate, endDate, budget);
+    Project* p = new Project(id, name, location, startDate, endDate, stoi(budget));
     projectList[id] = p;
 
-    cout << "ÇÁ·ÎÁ§Æ®°¡ ¼º°øÀûÀ¸·Î Ãß°¡µÇ¾ú½À´Ï´Ù!" << endl;
+    cout << "í”„ë¡œì íŠ¸ê°€ ì„±ê³µì ìœ¼ë¡œ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
 }
 
 void ProjectManager::remove(int id)
 {
     auto it = projectList.find(id);
     if (it != projectList.end()) {
-        delete it->second;  // µ¿ÀûÀ¸·Î ÇÒ´çµÈ ÇÁ·ÎÁ§Æ® °´Ã¼ »èÁ¦
-        projectList.erase(it);  // ÇÁ·ÎÁ§Æ® ¸®½ºÆ®¿¡¼­ »èÁ¦
-        cout << "ÇÁ·ÎÁ§Æ®°¡ ¼º°øÀûÀ¸·Î »èÁ¦µÇ¾ú½À´Ï´Ù!" << endl;
+        delete it->second;  // ë™ì ìœ¼ë¡œ í• ë‹¹ëœ í”„ë¡œì íŠ¸ ê°ì²´ ì‚­ì œ
+        projectList.erase(it);  // í”„ë¡œì íŠ¸ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚­ì œ
+        cout << "í”„ë¡œì íŠ¸ê°€ ì„±ê³µì ìœ¼ë¡œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
     }
     else {
-        cout << "ÇÁ·ÎÁ§Æ®ID " << id << "À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù..." << endl;
+        cout << "í”„ë¡œì íŠ¸ID " << id << "ì„(ë¥¼) ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤..." << endl;
     }
 }
 
@@ -83,11 +86,11 @@ Project* ProjectManager::search(int id)
 {
     auto it = projectList.find(id);
     if (it != projectList.end()) {
-        return it->second;  // ÇÁ·ÎÁ§Æ® Ã£±â ¼º°ø
+        return it->second;  // í”„ë¡œì íŠ¸ ì°¾ê¸° ì„±ê³µ
     }
     else {
-        cout << "ÇÁ·ÎÁ§Æ®ID " << id << "À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù..." << endl;
-        return nullptr;  // ÇÁ·ÎÁ§Æ® Ã£±â ½ÇÆĞ
+        cout << "í”„ë¡œì íŠ¸ID " << id << "ì„(ë¥¼) ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤..." << endl;
+        return nullptr;  // í”„ë¡œì íŠ¸ ì°¾ê¸° ì‹¤íŒ¨
     }
 }
 
@@ -100,65 +103,65 @@ void ProjectManager::modify(int id)
         string name, location, startDate, endDate;
         int budget = 0;
 
-        cout << "ÇöÀç ÇÁ·ÎÁ§Æ®¸í: " << project->getName() << endl;
-        cout << "ÇöÀç À§Ä¡: " << project->getLocation() << endl;
-        cout << "ÇöÀç ½ÃÀÛÀÏ: " << project->getStartDate() << endl;
-        cout << "ÇöÀç Á¾·áÀÏ: " << project->getEndDate() << endl;
-        cout << "ÇöÀç ¿¹»ê: " << project->getBudget() << endl;
+        cout << "í˜„ì¬ í”„ë¡œì íŠ¸ëª…: " << project->getProjectName() << endl;
+        cout << "í˜„ì¬ ìœ„ì¹˜: " << project->getLocation() << endl;
+        cout << "í˜„ì¬ ì‹œì‘ì¼: " << project->getStartDate() << endl;
+        cout << "í˜„ì¬ ì¢…ë£Œì¼: " << project->getEndDate() << endl;
+        cout << "í˜„ì¬ ì˜ˆì‚°: " << project->getBudget() << endl;
 
-        cout << "»õ·Î¿î ÇÁ·ÎÁ§Æ®¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
+        cout << "ìƒˆë¡œìš´ í”„ë¡œì íŠ¸ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
         cin.ignore();
         getline(cin, name);
-        if (!name.empty()) project->setName(name);
+        if (!name.empty()) project->setProjectName(name);
 
-        cout << "»õ·Î¿î À§Ä¡¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
-        getline(cin, Location);
+        cout << "ìƒˆë¡œìš´ ìœ„ì¹˜ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        getline(cin, location);
         if (!location.empty()) project->setLocation(location);
 
-        cout << "»õ·Î¿î ½ÃÀÛÀÏ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
+        cout << "ìƒˆë¡œìš´ ì‹œì‘ì¼ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
         getline(cin, startDate);
         if (!startDate.empty()) project->setStartDate(startDate);
 
-        cout << "»õ·Î¿î Á¾·áÀÏ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
+        cout << "ìƒˆë¡œìš´ ì¢…ë£Œì¼ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
         getline(cin, endDate);
         if (!endDate.empty()) project->setEndDate(endDate);
 
-        cout << "»õ·Î¿î ¿¹»êÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é -1¸¦ ÀÔ·ÂÇÏ¿© ÇöÀç »óÅÂ À¯Áö): ";
+        cout << "ìƒˆë¡œìš´ ì˜ˆì‚°ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ -1ë¥¼ ì…ë ¥í•˜ì—¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
         cin >> budget;
         if (budget >= 0) project->setBudget(budget);
 
-        cout << "¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù!" << endl;
+        cout << "ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+    }
 }
 
-
+void ProjectManager::displayInfo()
+{
+    cout << endl << "  í”„ë¡œì íŠ¸ID  |     í”„ë¡œì íŠ¸ëª…     | ìœ„ì¹˜ | ì‹œì‘ì¼ | ì¢…ë£Œì¼ | ì˜ˆì‚° " << endl;
+    for (const auto& v : projectList)
+    {
+        int key = v.first;
+        showInfo(key);
+    }
+}
 
 void ProjectManager::displayInfo(int key)
 {
-    cout << endl << "  ÇÁ·ÎÁ§Æ®ID  |     ÇÁ·ÎÁ§Æ®¸í     | À§Ä¡ | ½ÃÀÛÀÏ | Á¾·áÀÏ | ¿¹»ê " << endl;
-    if (!key)
-    {
-        for (const auto& v : projectList) 
-        {
-            Project* p = v.second;
-            cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
-            cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
-            cout << setw(12) << p->getLocation() << " | ";
-            cout << setw(12) << p->getStartDate() << " | ";
-            cout << setw(12) << p->getEndDate() << " | ";
-            cout << p->getBudget() << endl;
-        }
-    }
-    else
-    {
-        Project* p = projectList[key];
-        cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
-        cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
-        cout << setw(12) << p->getLocation() << " | ";
-        cout << setw(12) << p->getStartDate() << " | ";
-        cout << setw(12) << p->getEndDate() << " | ";
-        cout << p->getBudget() << endl;
-    }
+    cout << endl << "  í”„ë¡œì íŠ¸ID  |     í”„ë¡œì íŠ¸ëª…     | ìœ„ì¹˜ | ì‹œì‘ì¼ | ì¢…ë£Œì¼ | ì˜ˆì‚° " << endl;
+    showInfo(key);
+
 }
+
+void ProjectManager::showInfo(int key)
+{
+    Project* p = projectList[key];
+    cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
+    cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
+    cout << setw(12) << p->getLocation() << " | ";
+    cout << setw(12) << p->getStartDate() << " | ";
+    cout << setw(12) << p->getEndDate() << " | ";
+    cout << p->getBudget() << endl;
+}
+
 
 int ProjectManager::makeId()
 {
@@ -202,16 +205,16 @@ bool ProjectManager::displayMenu()
     int ch, key;
     cout << "\033[2J\033[1;1H";
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "              ÇÁ·ÎÁ§Æ®°ü¸®                 " << endl;
+    cout << "              í”„ë¡œì íŠ¸ê´€ë¦¬                 " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. ÇÁ·ÎÁ§Æ® ÀüÃ¼Á¶È¸                    " << endl;
-    cout << "  2. ÇÁ·ÎÁ§Æ® IDÁ¶È¸                    " << endl;
-    cout << "  3. ÇÁ·ÎÁ§Æ® µî·Ï                            " << endl;
-    cout << "  4. ÇÁ·ÎÁ§Æ® »èÁ¦                           " << endl;
-    cout << "  5. ÇÁ·ÎÁ§Æ® ¼öÁ¤                           " << endl;
-    cout << "  6. ÇÁ·ÎÁ§Æ®°ü¸® ³ª°¡±â                       " << endl;
+    cout << "  1. í”„ë¡œì íŠ¸ ì „ì²´ì¡°íšŒ                    " << endl;
+    cout << "  2. í”„ë¡œì íŠ¸ IDì¡°íšŒ                    " << endl;
+    cout << "  3. í”„ë¡œì íŠ¸ ë“±ë¡                            " << endl;
+    cout << "  4. í”„ë¡œì íŠ¸ ì‚­ì œ                           " << endl;
+    cout << "  5. í”„ë¡œì íŠ¸ ìˆ˜ì •                           " << endl;
+    cout << "  6. í”„ë¡œì íŠ¸ê´€ë¦¬ ë‚˜ê°€ê¸°                       " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << " ¾î¶² Ç×¸ñÀ» ¼±ÅÃÇÏ½Ã°Ú½À´Ï±î? ";
+    cout << " ì–´ë–¤ í•­ëª©ì„ ì„ íƒí•˜ì‹œê² ìŠµë‹ˆê¹Œ? ";
     cin >> ch;
     switch (ch) {
     case 1:
@@ -220,7 +223,7 @@ bool ProjectManager::displayMenu()
         getchar();
         break;
     case 2:
-        cout << "   Á¶È¸ÇÒ ÇÁ·ÎÁ§Æ®ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
+        cout << "   ì¡°íšŒí•  í”„ë¡œì íŠ¸IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
         cin >> key;
         displayInfo(key);
         break;
@@ -229,13 +232,13 @@ bool ProjectManager::displayMenu()
         break;
     case 4:
         //displayInfo();
-        cout << "   »èÁ¦ÇÒ ÇÁ·ÎÁ§Æ®ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
+        cout << "   ì‚­ì œí•  í”„ë¡œì íŠ¸IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
         cin >> key;
         remove(key);
         break;
     case 5:
         //displayInfo();
-        cout << "   ¼öÁ¤ÇÒ ÇÁ·ÎÁ§Æ®ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
+        cout << "   ìˆ˜ì •í•  í”„ë¡œì íŠ¸IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
         cin >> key;
         modify(key);
         break;
@@ -243,7 +246,7 @@ bool ProjectManager::displayMenu()
         return false;
         break;
     default:
-        cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä." << endl;
+        cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”." << endl;
         break;
 
     }

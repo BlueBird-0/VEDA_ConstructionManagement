@@ -56,7 +56,7 @@ int Project::getBudget() const
 
 void Project::setBudget(int projectBudget)
 {
-    m_endDate = endDate;
+    m_projectBudget = projectBudget;
 }
 
 

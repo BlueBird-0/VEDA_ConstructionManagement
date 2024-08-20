@@ -28,7 +28,7 @@ public:
 
 
 private:
-    int m_ProjectId;
+    int m_projectId;
 
     string m_projectName;
     string m_location;

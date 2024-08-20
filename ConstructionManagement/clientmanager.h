@@ -17,7 +17,9 @@ public:
     void modify(int);
     Client* search(int);
     int makeId();
-    void displayInfo(int key = 0);
+    void displayInfo();
+    void displayInfo(int);
+    void showInfo(int);
     vector<string> parseCSV(istream&, char);
 
     bool displayMenu();
