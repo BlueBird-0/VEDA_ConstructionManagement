@@ -4,8 +4,8 @@
 
 using namespace std;
 
-Client::Client(int m_clientId, string clientName, string phoneNum, string address)
-    : m_clientName(clientName), m_phoneNum(phoneNum), m_address(address)
+Client::Client(int clientId, string clientName, string phoneNum, string address)
+    : m_clientId(clientId), m_clientName(clientName), m_phoneNum(phoneNum), m_address(address)
 {
 }
 

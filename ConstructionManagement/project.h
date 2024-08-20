@@ -11,10 +11,13 @@ public:
 
     string getProjectName() const;
     void setProjectName(string&);
+
     string getLocation() const;
     void setLocation(string&);
+
     string getStartDate() const;
     void setStartDate(string&);
+
     string getEndDate() const;
     void setEndDate(string&);
 
@@ -25,7 +28,7 @@ public:
 
 
 private:
-    int m_projectId;
+    int m_ProjectId;
 
     string m_projectName;
     string m_location;

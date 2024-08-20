@@ -17,7 +17,7 @@ ClientManager::ClientManager()
             if (row.size()) {
                 int id = atoi(row[0].c_str());
                 Client* c = new Client(id, row[1], row[2], row[3]);
-                clientList.insert({ id, c });
+                clientList[id] = c;
             }
         }
     }
@@ -37,55 +37,100 @@ ClientManager::~ClientManager()
         }
     }
     file.close();
+
+    for (auto& pair : clientList) {
+        delete pair.second;  // 동적으로 할당된 고객 객체 삭제
 }
 
 void ClientManager::create()
 {
     string name, number, address;
-    cout << "name : "; cin >> name;
-    cout << "number : "; cin >> number;
-    cout << "address : "; cin.ignore(); getline(cin, address, '\n'); //cin >> address;
 
-    int id = makeId();
-    Client* c = new Client(id, name, number, address);
-    clientList.insert({ id, c });
+    cout << "고객명: ";
+    cin >> name;
+    cout << "전화번호: ";
+    cin >> phoneNum;
+    cout << "주소: ";
+    cin >> address;
+
+
+    int id = makeId();  // 새로운 고객 ID 생성
+    Client* client = new Client(id, name, phoneNum, address);
+    clientList[id] = client;  // 고객 리스트에 추가
+
+    cout << "고객이 성공적으로 추가되었습니다!" << endl;
 }
 
 Client* ClientManager::search(int id)
 {
-    return clientList[id];
+    auto it = clientList.find(id);
+    if (it != clientList.end()) {
+        return it->second;  // 고객 찾기 성공
+    }
+    else {
+        cout << "고객ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+        return nullptr;  // 고객 찾기 실패
+    }
 }
 
 void ClientManager::remove(int id)
 {
-    clientList.erase(id);
+    auto it = clientList.find(id);
+    if (it != clientList.end()) {
+        delete it->second;  // 동적으로 할당된 고객 객체 삭제
+        clientList.erase(it);  // 고객 리스트에서 삭제
+        cout << "고객 정보가 성공적으로 삭제되었습니다!" << endl;
+    }
+    else {
+        cout << "고객ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+    }
 }
 
 void ClientManager::modify(int id)
 {
-    Client* c = search(id);
-    cout << "  ID  |     Name     | Phone Number |       Address" << endl;
-    cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
-    cout << setw(12) << setfill(' ') << c->getClientName() << " | ";
-    cout << setw(12) << c->getPhoneNum() << " | ";
-    cout << c->getAddress() << endl;
+    Client* client = search(id);
+    if (client) {
+        string name, phoneNum, address;
 
-    string name, number, address;
-    cout << "name : "; cin >> name;
-    cout << "number : "; cin >> number;
-    cout << "address : "; cin.ignore(); getline(cin, address, '\n'); //cin >> address;
+        cout << "현재 고객명: " << client->getName() << endl;
+        cout << "현재 전화번호: " << client->getSupplier() << endl;
+        cout << "현재 주소: " << client->getUnitPrice() << endl;
 
-    c->setClientName(name);
-    c->setPhoneNum(number);
-    c->setAddress(address);
-    clientList[id] = c;
+        cout << "새로운 고객명을 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        cin.ignore();
+        getline(cin, name);
+        if (!name.empty()) client->setName(name);
+
+        cout << "새로운 전화번호를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        getline(cin, phoneNum);
+        if (!phoneNum.empty()) client->setPhoneNum(phoneNum);
+
+        cout << "새로운 주소를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        getline(cin, address);
+        if (!address.empty()) client->setAddress(address);
+
+        cout << "성공적으로 수정되었습니다!" << endl;
+    }
 }
 
-void ClientManager::displayInfo()
+void ClientManager::displayInfo(int key)
 {
-    cout << endl << "  ID  |     Name     | Phone Number |       Address" << endl;
-    for (const auto& v : clientList) {
-        Client* c = v.second;
+    cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
+ 
+    if (!key)
+    {
+        for (const auto& v : clientList)
+        {
+            Client* c = v.second;
+            cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
+            cout << setw(12) << setfill(' ') << c->getClientName() << " | ";
+            cout << setw(12) << c->getPhoneNum() << " | ";
+            cout << c->getAddress() << endl;
+        }
+    }
+    else
+    {
+        Client* c = client[key];
         cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
         cout << setw(12) << setfill(' ') << c->getClientName() << " | ";
         cout << setw(12) << c->getPhoneNum() << " | ";
@@ -135,39 +180,52 @@ bool ClientManager::displayMenu()
     int ch, key;
     cout << "\033[2J\033[1;1H";
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "              Client Manager                 " << endl;
+    cout << "              고객관리                 " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. Display Client List                     " << endl;
-    cout << "  2. Create Client                            " << endl;
-    cout << "  3. Remove Client                           " << endl;
-    cout << "  4. Modify Client                           " << endl;
-    cout << "  5. Quit this Program                       " << endl;
+    cout << "  1. 전체 고객 조회                     " << endl;
+    cout << "  2. 고객 ID 조회                     " << endl;
+    cout << "  3. 고객 등록                            " << endl;
+    cout << "  4. 고객 정보 삭제                           " << endl;
+    cout << "  5. 고객 정보 수정                          " << endl;
+    cout << "  6. 고객관리 나가기                       " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << " What do you wanna do? ";
+    cout << " 어떤 항목을 선택하시겠습니까? ";
     cin >> ch;
     switch (ch) {
-    case 1: default:
+    case 1:
         displayInfo();
         cin.ignore();
         getchar();
         break;
+
     case 2:
-        create();
-        break;
-    case 3:
-        displayInfo();
-        cout << "   Choose Key : ";
+        cout << "   조회할 고객ID를 입력해주세요: ";
         cin >> key;
-        remove(key);
+        displayInfo(key);
+        break;
+
+    case 3:
+        create();
         break;
     case 4:
         displayInfo();
-        cout << "   Choose Key : ";
+        cout << "삭제할 고객ID를 입력해주세요: ";
+        cin >> key;
+        remove(key);
+        break;
+    case 5:
+        displayInfo();
+        cout << "수정할 고객ID를 입력해주세요: ";
         cin >> key;
         modify(key);
         break;
-    case 5:
+    case 6:
         return false;
+        break;
+    default:
+        cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+        break;
+
     }
     return true;
 }

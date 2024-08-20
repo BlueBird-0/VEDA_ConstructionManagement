@@ -18,7 +18,7 @@ ProjectManager::ProjectManager()
             if (row.size()) {
                 int id = atoi(row[0].c_str());
                 Project* p = new Project(id, row[1], row[2], row[3], row[4], stoi(row[5]));
-                projectList.insert({ id, p });
+                projectList[id] = p;
             }
         }
     }
@@ -38,70 +38,119 @@ ProjectManager::~ProjectManager()
         }
     }
     file.close();
+
+    for (auto& pair : projectList) {
+        delete pair.second;  // 동적으로 할당된 프로젝트 객체 삭제
 }
 
 void ProjectManager::create()
 {
     string name, location, startDate, endDate;
-    string budgetStr;
-    cout << "name : "; cin >> name;
-    cout << "location : "; cin >> location;
-    cout << "startDate : "; cin >> startDate;
-    cout << "endDate : "; cin >> endDate;
-    cout << "budget : "; cin.ignore(); std::getline(cin, budgetStr, '\n'); //cin >> address;
-    int budget = stoi(budgetStr);
+    int budget=0;
+
+    cout << "프로젝트명: "; 
+    cin >> name;
+    cout << "위치: "; 
+    cin >> location;
+    cout << "시작일: "; 
+    cin >> startDate;
+    cout << "종료일: "; 
+    cin >> endDate;
+    cout << "예산: "; 
+    cin.ignore(); getline(cin, budget, '\n'); //cin >> address;
 
     int id = makeId();
     Project* p = new Project(id, name, location, startDate, endDate, budget);
-    projectList.insert({ id, p });
-}
+    projectList[id] = p;
 
-Project* ProjectManager::search(int id)
-{
-    return projectList[id];
+    cout << "프로젝트가 성공적으로 추가되었습니다!" << endl;
 }
 
 void ProjectManager::remove(int id)
 {
-    projectList.erase(id);
+    auto it = projectList.find(id);
+    if (it != projectList.end()) {
+        delete it->second;  // 동적으로 할당된 프로젝트 객체 삭제
+        projectList.erase(it);  // 프로젝트 리스트에서 삭제
+        cout << "프로젝트가 성공적으로 삭제되었습니다!" << endl;
+    }
+    else {
+        cout << "프로젝트ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+    }
 }
+
+Project* ProjectManager::search(int id)
+{
+    auto it = projectList.find(id);
+    if (it != projectList.end()) {
+        return it->second;  // 프로젝트 찾기 성공
+    }
+    else {
+        cout << "프로젝트ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+        return nullptr;  // 프로젝트 찾기 실패
+    }
+}
+
+
 
 void ProjectManager::modify(int id)
 {
-    Project* p = search(id);
-    cout << "  ID  |     Name     | Location | Start Date | End Date | Budget " << endl;
-    cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
-    cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
-    cout << setw(12) << p->getLocation() << " | ";
-    cout << setw(12) << p->getStartDate() << " | ";
-    cout << setw(12) << p->getEndDate() << " | ";
-    cout << p->getBudget() << endl;
+    Project* project = projectList[id];
+    if (project) {
+        string name, location, startDate, endDate;
+        int budget = 0;
 
-    string name, location, startDate, endDate;
-    string budgetStr;
+        cout << "현재 프로젝트명: " << project->getName() << endl;
+        cout << "현재 위치: " << project->getLocation() << endl;
+        cout << "현재 시작일: " << project->getStartDate() << endl;
+        cout << "현재 종료일: " << project->getEndDate() << endl;
+        cout << "현재 예산: " << project->getBudget() << endl;
 
+        cout << "새로운 프로젝트명을 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        cin.ignore();
+        getline(cin, name);
+        if (!name.empty()) project->setName(name);
 
-    cout << "name : "; cin >> name;
-    cout << "location : "; cin >> location;
-    cout << "startDate : "; cin >> startDate;
-    cout << "endDate : "; cin >> endDate;
-    cout << "budget : "; cin.ignore(); getline(cin, budgetStr, '\n'); //cin >> address;
-    int budget = stoi(budgetStr);
+        cout << "새로운 위치를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        getline(cin, Location);
+        if (!location.empty()) project->setLocation(location);
 
-    p->setProjectName(name);
-    p->setLocation(location);
-    p->setStartDate(startDate);
-    p->setEndDate(endDate);
-    p->setBudget(budget);
-    projectList[id] = p;
+        cout << "새로운 시작일를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        getline(cin, startDate);
+        if (!startDate.empty()) project->setStartDate(startDate);
+
+        cout << "새로운 종료일를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+        getline(cin, endDate);
+        if (!endDate.empty()) project->setEndDate(endDate);
+
+        cout << "새로운 예산을 입력해주세요. (아니면 -1를 입력하여 현재 상태 유지): ";
+        cin >> budget;
+        if (budget >= 0) project->setBudget(budget);
+
+        cout << "성공적으로 수정되었습니다!" << endl;
 }
 
-void ProjectManager::displayInfo()
+
+
+void ProjectManager::displayInfo(int key)
 {
-    cout << endl << "  ID  |     Name     | Location | Start Date | End Date | Budget " << endl;
-    for (const auto& v : projectList) {
-        int id = v.first;
-        Project* p = search(id);
+    cout << endl << "  프로젝트ID  |     프로젝트명     | 위치 | 시작일 | 종료일 | 예산 " << endl;
+    if (!key)
+    {
+        for (const auto& v : projectList) 
+        {
+            Project* p = v.second;
+            cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
+            cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
+            cout << setw(12) << p->getLocation() << " | ";
+            cout << setw(12) << p->getStartDate() << " | ";
+            cout << setw(12) << p->getEndDate() << " | ";
+            cout << p->getBudget() << endl;
+        }
+    }
+    else
+    {
+        Project* p = projectList[key];
         cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
         cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
         cout << setw(12) << p->getLocation() << " | ";
@@ -153,39 +202,50 @@ bool ProjectManager::displayMenu()
     int ch, key;
     cout << "\033[2J\033[1;1H";
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "              Project Manager                 " << endl;
+    cout << "              프로젝트관리                 " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. Display Project List                     " << endl;
-    cout << "  2. Create Project                            " << endl;
-    cout << "  3. Remove Project                           " << endl;
-    cout << "  4. Modify Project                           " << endl;
-    cout << "  5. Quit this Program                       " << endl;
+    cout << "  1. 프로젝트 전체조회                    " << endl;
+    cout << "  2. 프로젝트 ID조회                    " << endl;
+    cout << "  3. 프로젝트 등록                            " << endl;
+    cout << "  4. 프로젝트 삭제                           " << endl;
+    cout << "  5. 프로젝트 수정                           " << endl;
+    cout << "  6. 프로젝트관리 나가기                       " << endl;
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << " What do you wanna do? ";
+    cout << " 어떤 항목을 선택하시겠습니까? ";
     cin >> ch;
     switch (ch) {
-    case 1: default:
+    case 1:
         displayInfo();
         cin.ignore();
         getchar();
         break;
     case 2:
-        create();
+        cout << "   조회할 프로젝트ID를 입력해주세요: ";
+        cin >> key;
+        displayInfo(key);
         break;
     case 3:
-        displayInfo();
-        cout << "   Choose Key : ";
+        create();
+        break;
+    case 4:
+        //displayInfo();
+        cout << "   삭제할 프로젝트ID를 입력해주세요: ";
         cin >> key;
         remove(key);
         break;
-    case 4:
-        displayInfo();
-        cout << "   Choose Key : ";
+    case 5:
+        //displayInfo();
+        cout << "   수정할 프로젝트ID를 입력해주세요: ";
         cin >> key;
         modify(key);
         break;
-    case 5:
+    case 6:
         return false;
+        break;
+    default:
+        cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+        break;
+
     }
     return true;
 }

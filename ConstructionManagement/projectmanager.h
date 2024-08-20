@@ -17,7 +17,7 @@ public:
     void modify(int);
     Project* search(int);
     int makeId();
-    void displayInfo();
+    void displayInfo(int key = 0);
     vector<string> parseCSV(istream&, char);
 
     bool displayMenu();

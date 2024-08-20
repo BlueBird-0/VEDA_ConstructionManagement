@@ -44,9 +44,9 @@ string Project::getEndDate() const
     return m_endDate;
 }
 
-void Project::setBudget(int projectBudget)
+void Project::setEndDate(string& endDate)
 {
-    m_projectBudget = projectBudget;
+    m_endDate = endDate;
 }
 
 int Project::getBudget() const
@@ -54,7 +54,7 @@ int Project::getBudget() const
     return m_projectBudget;
 }
 
-void Project::setEndDate(string& endDate)
+void Project::setBudget(int projectBudget)
 {
     m_endDate = endDate;
 }
