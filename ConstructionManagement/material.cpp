@@ -50,3 +50,7 @@ int Material::getId() const {
 bool Material::operator==(const Material& other) const {
     return (this->m_name == other.m_name);
 }
+
+void Material::showInfo(){
+
+}

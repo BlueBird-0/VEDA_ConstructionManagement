@@ -43,3 +43,7 @@ int Expense::getOtherCosts() const {
 void Expense::setOtherCosts(int otherCosts) {
     m_otherCosts = otherCosts;
 }
+
+void Expense::showInfo(){
+
+}

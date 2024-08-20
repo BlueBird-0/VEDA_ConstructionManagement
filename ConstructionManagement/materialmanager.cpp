@@ -203,3 +203,8 @@ vector<string> MaterialManager::parseCSV(istream& str, char delimiter) {
     }
     return result;  // CSV 파싱 결과 반환
 }
+
+void MaterialManager::showAllDatas(){
+
+}
+
