@@ -4,10 +4,12 @@
 #include <map>
 #include <vector>
 #include "project.h"
+#include "manager.h"
 
 using namespace std;
 
-class ProjectManager {
+class ProjectManager : public Manager
+{
 public:
     ProjectManager();
     ~ProjectManager();
@@ -19,10 +21,13 @@ public:
     int makeId();
     void displayInfo();
     void displayInfo(int);
-    void showInfo(int);
+
     vector<string> parseCSV(istream&, char);
 
-    bool displayMenu();
+    virtual void displayMenu();
+    //bool displayMenu();
+
+    virtual void showAllDatas();
 
 private:
     map<int, Project*> projectList;

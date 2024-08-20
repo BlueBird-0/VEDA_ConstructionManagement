@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-#include <iomanip>
+
 #include <string>
 
 #include "project.h"
@@ -140,18 +140,20 @@ void ProjectManager::displayInfo()
     for (const auto& v : projectList)
     {
         int key = v.first;
-        showInfo(key);
+        Project* p = projectList[key];
+        p->showInfo();
     }
 }
 
 void ProjectManager::displayInfo(int key)
 {
     cout << endl << "  프로젝트ID  |     프로젝트명     | 위치 | 시작일 | 종료일 | 예산 " << endl;
-    showInfo(key);
+    Project* p = projectList[key];
+    p->showInfo();
 
 }
 
-void ProjectManager::showInfo(int key)
+/*void ProjectManager::showInfo(int key)
 {
     Project* p = projectList[key];
     cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
@@ -160,7 +162,7 @@ void ProjectManager::showInfo(int key)
     cout << setw(12) << p->getStartDate() << " | ";
     cout << setw(12) << p->getEndDate() << " | ";
     cout << p->getBudget() << endl;
-}
+}*/
 
 
 int ProjectManager::makeId()
@@ -200,7 +202,7 @@ vector<string> ProjectManager::parseCSV(istream& file, char delimiter)
 }
 
 
-bool ProjectManager::displayMenu()
+void ProjectManager::displayMenu()
 {
     int ch, key;
     cout << "\033[2J\033[1;1H";
@@ -251,12 +253,16 @@ bool ProjectManager::displayMenu()
         getchar();
         break;
     case 6:
-        return false;
         break;
     default:
         cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
         break;
 
     }
-    return true;
+
 }
+
+void ProjectManager::showAllDatas() {
+    displayInfo();
+}
+

@@ -1,6 +1,7 @@
 #include "project.h"
 
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -65,3 +66,12 @@ int Project::id() const
     return m_projectId;
 }
 
+void Project::showInfo()
+{
+    cout << setw(5) << setfill('0') << right << id() << " | " << left;
+    cout << setw(12) << setfill(' ') << getProjectName() << " | ";
+    cout << setw(12) << getLocation() << " | ";
+    cout << setw(12) << getStartDate() << " | ";
+    cout << setw(12) << getEndDate() << " | ";
+    cout << getBudget() << endl;
+}

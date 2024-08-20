@@ -4,10 +4,13 @@
 #include <map>
 #include <vector>
 #include "client.h"
+#include "manager.h"
+#include "projectmanager.h"
 
 using namespace std;
 
-class ClientManager {
+class ClientManager : public Manager
+{
 public:
     ClientManager();
     ~ClientManager();
@@ -19,10 +22,13 @@ public:
     int makeId();
     void displayInfo();
     void displayInfo(int);
-    void showInfo(int);
+    
     vector<string> parseCSV(istream&, char);
 
-    bool displayMenu();
+    virtual void displayMenu();
+    //bool displayMenu();
+
+    virtual void showAllDatas();
 
 private:
     map<int, Client*> clientList;

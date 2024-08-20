@@ -2,10 +2,12 @@
 #define __CLIENT_H__
 
 #include <iostream>
+#include "object.h"
 
 using namespace std;
 
-class Client {
+class Client : public Object
+{
 public:
     Client(int m_clientId = 0, string m_clientName = "", string m_phoneNum = "", string m_address = "");
 
@@ -17,6 +19,8 @@ public:
     void setAddress(string&);
  
     int id() const;
+
+    virtual void showInfo();
 
 
 private:

@@ -123,24 +123,26 @@ void ClientManager::displayInfo()
     for (auto it = clientList.begin(); it != clientList.end(); it++)
     {
         int key = it->first;
-        showInfo(key);
+        Client* c = clientList[key];
+        c->showInfo();
     }
 }
 void ClientManager::displayInfo(int key)
 {
     cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
- 
-    showInfo(key);
+
+    Client* c = clientList[key];
+    c->showInfo();
 }
 
-void ClientManager::showInfo(int key)
-{
-    Client* c = clientList[key];
-    cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
-    cout << setw(12) << setfill(' ') << c->getClientName() << " | ";
-    cout << setw(12) << c->getPhoneNum() << " | ";
-    cout << c->getAddress() << endl;
-}
+//void ClientManager::showInfo(int key)
+//{
+//    Client* c = clientList[key];
+//    cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
+//    cout << setw(12) << setfill(' ') << c->getClientName() << " | ";
+//    cout << setw(12) << c->getPhoneNum() << " | ";
+//    cout << c->getAddress() << endl;
+//}
 
 int ClientManager::makeId()
 {
@@ -179,7 +181,7 @@ vector<string> ClientManager::parseCSV(istream& file, char delimiter)
 }
 
 
-bool ClientManager::displayMenu()
+void ClientManager::displayMenu()
 {
     int ch, key;
     cout << "\033[2J\033[1;1H";
@@ -228,12 +230,14 @@ bool ClientManager::displayMenu()
         modify(key);
         break;
     case 6:
-        return false;
         break;
     default:
         cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
         break;
-
     }
-    return true;
+}
+
+void ClientManager::showAllDatas() 
+{
+    displayInfo();
 }

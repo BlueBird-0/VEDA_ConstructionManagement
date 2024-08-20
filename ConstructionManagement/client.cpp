@@ -1,6 +1,7 @@
 #include "client.h"
 
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -45,3 +46,9 @@ int Client::id() const
     return m_clientId;
 }
 
+void Client::showInfo() {
+    cout << setw(5) << setfill('0') << right << id() << " | " << left;
+    cout << setw(12) << setfill(' ') << getClientName() << " | ";
+    cout << setw(12) << getPhoneNum() << " | ";
+    cout << getAddress() << endl;
+}

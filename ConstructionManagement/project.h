@@ -2,10 +2,12 @@
 #define __PROJECT_H__
 
 #include <iostream>
+#include "object.h"
 
 using namespace std;
 
-class Project {
+class Project : public Object
+{
 public:
     Project(int projectId = 0, string projectName = "", string location = "", string startDate = "", string endDate = "", int projectBudget = 0);
 
@@ -26,6 +28,7 @@ public:
 
     int id() const;
 
+    void showInfo();
 
 private:
     int m_projectId;
