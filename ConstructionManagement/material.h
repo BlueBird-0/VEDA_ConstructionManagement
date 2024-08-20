@@ -5,11 +5,11 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
-#include "object.h"
+#include "Object.h"
 
 using namespace std;
 
-class Material : public Object 
+class Material : public Object
 {
 public:
     Material(int id = 0, string name = "", string supplier = "", double unitPrice = 0.0, int stock = 0, int orderQuantity = 0);
@@ -34,6 +34,7 @@ public:
 
     // Overloaded equality operator
     bool operator==(const Material& other) const;
+    virtual void showInfo();
 
 private:
     int m_id;

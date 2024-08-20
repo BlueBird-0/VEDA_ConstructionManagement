@@ -24,6 +24,7 @@ public:
 
 private:
     map<int, Material*> materialList;  // 자재 목록을 저장하는 맵
+    virtual void showAllDatas();//인학님 한테 여쭤보기
 
     int makeId();                    // 새로운 고유 ID 생성
     vector<string> parseCSV(istream&, char);

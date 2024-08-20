@@ -132,7 +132,7 @@ void ExpenseManager::displayMenu() {
     while (running) {
         cout << "\033[2J\033[1;1H";  // Clear screen
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "              바용관리                " << endl;
+        cout << "                    비용관리                   " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
         cout << "  1. 비용 조회                    " << endl;
         cout << "  2. 비용 등록                             " << endl;
@@ -216,4 +216,9 @@ vector<string> ExpenseManager::parseCSV(istream& str, char delimiter) {
         }
     }
     return result;
+}
+
+void ExpenseManager::showAllDatas()
+{
+
 }

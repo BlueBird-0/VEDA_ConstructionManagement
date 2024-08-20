@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <windows.h>
+//#include <windows.h>
 
 void EmployeeManager::create()
 {
@@ -11,13 +11,13 @@ void EmployeeManager::create()
 
     cleanCMD();
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "¡˜ø¯∏Ì: ";
+    cout << "ÏßÅÏõêÎ™Ö: ";
     cin >> name;
-    cout << "¡˜√•: ";
+    cout << "ÏßÅÏ±Ö: ";
     cin >> jobTitle;
-    cout << "ø¨∂Ù√≥: ";
+    cout << "Ïó∞ÎùΩÏ≤ò: ";
     cin >> phoneNum;
-	cout << "«¡∑Œ¡ß∆Æ ID: (-1 ¿‘∑¬Ω√ ¡æ∑·) ";
+    cout << "ÌîÑÎ°úÏ†ùÌä∏ID: (-1 ÏûÖÎ†•ÏãúÏ¢ÖÎ£å) ";
     int input;
     while (true)
     {
@@ -32,13 +32,13 @@ void EmployeeManager::create()
     Employee* material = new Employee(newId, name, jobTitle, phoneNum, projectIdList);
     m_employeeList[newId] = material;
 
-    cout << "¡˜ø¯ ª˝º∫ º∫∞¯!" << endl;
+    cout << "ÏÑ±Í≥µÏ†ÅÏúºÎ°ú Ï∂îÍ∞ÄÎêòÏóàÏäµÎãàÎã§!" << endl;
     saveCSV();
 }
 
 EmployeeManager::EmployeeManager()
 {
-    //∆ƒ¿œø°º≠ ∫“∑Øø¿±‚
+    //ÌååÏùºÏóêÏÑú Î∂àÎü¨Ïò§Í∏∞
     ifstream file("employeeList.txt");
     if (!file.fail()) {
         while (!file.eof()) {
@@ -57,7 +57,7 @@ EmployeeManager::EmployeeManager()
                         break;
                     }
                     else {
-						projectIdList.push_back(stoi(projectIdStr.substr(0, i)));
+                        projectIdList.push_back(stoi(projectIdStr.substr(0, i)));
                         projectIdStr.erase(0, i+1);
                     }
                 }
@@ -109,13 +109,13 @@ void EmployeeManager::showAllDatas()
 {
     cleanCMD();
 
-    cout << "√— ¿Œø¯ [" << m_employeeList.size() << "]" << endl;
-	for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
+    cout << "Ï¥ù Ïù∏Ïõê [" << m_employeeList.size() << "]" << endl;
+    for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
     {
         Employee* employee = it->second;
         employee->showInfo();
     }
-    cout << "æ∆π´≈∞≥™ ¿‘∑¬«œººø‰.";
+    cout << "ÏïÑÎ¨¥ÌÇ§ÎÇò ÏûÖÎ†•ÌïòÏÑ∏Ïöî.";
     string temp;
     cin >> temp;
 }
@@ -125,25 +125,26 @@ void EmployeeManager::displayMenu(){
     {
         cleanCMD();
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "                 ¿Œ∑¬ ∞¸∏Æ                   " << endl;
+        cout << "                    Ïù∏Î†•Í¥ÄÎ¶¨                   " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "  1. ¿Œ∑¬ √ﬂ∞°                               " << endl;
-        cout << "  2. ¿Œ∑¬ ºˆ¡§                               " << endl;
-        cout << "  3. ¿Œ∑¬ ªË¡¶                               " << endl;
-        cout << "  4. ∏µÁ ¿Œ∑¬ ∫∏±‚                          " << endl;
+        cout << "  1. Ïù∏Î†• Ï∂îÍ∞Ä                                 " << endl;
+        cout << "  2. Ïù∏Î†• ÏàòÏ†ï                                 " << endl;
+        cout << "  3. Ïù∏Î†• ÏÇ≠Ï†ú                                 " << endl;
+        cout << "  4. Î™®Îì† Ïù∏Î†• Î≥¥Í∏∞                             " << endl;
+        cout << "  5. Ïù∏Î†•Í¥ÄÎ¶¨ ÎÇòÍ∞ÄÍ∏∞(exit)                      " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "Enter your choice: ";
+        cout << "Ïñ¥Îñ§ Ìï≠Î™©ÏùÑ ÏÑ†ÌÉùÌïòÏãúÍ≤†ÏäµÎãàÍπå? ";
         string input;
         cin >> input;
 
-        if (input == "1") 
+        if (input == "1")
         {
             create();
         }
         else if (input == "2")
         {
             //
-		}
+        }
         else if (input == "3")
         {
             //
@@ -152,7 +153,7 @@ void EmployeeManager::displayMenu(){
         {
             showAllDatas();
         }
-        else if (input == "exit") 
+        else if (input == "exit")
         {
             return;
         }
@@ -167,7 +168,7 @@ vector<Employee> EmployeeManager::search(int projectId)
         Employee* employee = pair.second;
         vector<int> projectIdList = employee->getProjectIdList();
 
-        //employeeø°∞‘ projectId∞° ¿÷¥Ÿ∏È, ∏ÆΩ∫∆Æø° √ﬂ∞°
+         //employeeÏóêÍ≤å projectIdÍ∞Ä ÏûàÎã§Î©¥, Î¶¨Ïä§Ìä∏Ïóê Ï∂îÍ∞Ä
         if (find(projectIdList.begin(), projectIdList.end(), projectId) != projectIdList.end()) {
             returnEmployeeList.push_back(*employee);
         }

@@ -28,6 +28,8 @@ public:
     void displayInfo();  // 모든 비용 정보 표시
     void displayMenu();  // 메뉴 표시 및 사용자 인터페이스 제공
 
+    virtual void showAllDatas();
+
 private:
     vector<string> parseCSV(istream& str, char delimiter);  // CSV 파일 파싱
 };
