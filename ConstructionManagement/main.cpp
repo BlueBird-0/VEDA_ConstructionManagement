@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    Manager* manager;
+    Manager* manager = nullptr;
     ClientManager* clientManager = new ClientManager();
     ExpenseManager* expenseManager = new ExpenseManager();
     EmployeeManager* employeeManager = new EmployeeManager();
@@ -20,7 +20,7 @@ int main()
     ProjectManager* projectManagerr = new ProjectManager();
 
     string  input;
-    while(true){
+    while (true) {
         cleanCMD();
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
         cout << "            건축 관리 프로그램               " << endl;
@@ -34,25 +34,28 @@ int main()
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
         cout << "어떤 항목을 선택하시겠습니까? ";
 
-		cin >> input;
+        cin >> input;
         if (input == "1") {
-            projectManagerr->displayMenu();
+            manager = projectManagerr;
         }
         else if (input == "2") {
-            clientManager->displayMenu();
+            manager = clientManager;
         }
         else if (input == "3") {
-            materialManager->displayMenu();
+            manager = materialManager;
         }
         else if (input == "4") {
             manager = employeeManager;
-            manager->displayMenu();
         }
         else if (input == "5") {
-            expenseManager->displayMenu();
+            manager = expenseManager;
         }
-        else if (input =="exit")
+        else if (input == "exit")
             break;
+        else {
+            continue;
+        }
+        manager->displayMenu();
 
     }
 
