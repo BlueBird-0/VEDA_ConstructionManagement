@@ -11,7 +11,7 @@ private:
     map<int, Employee*> m_employeeList;
     void create();  //Employee를 생성합니다.
     void remove();
-    //void modify();    //Todo : 구현 예정
+    void modify();
 public:
     EmployeeManager();
     virtual void showAllDatas();

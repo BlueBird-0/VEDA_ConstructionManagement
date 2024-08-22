@@ -55,6 +55,54 @@ void EmployeeManager::remove()
     cout << "해당 ID " << idStr << " 의 직원을(를) 찾을 수 없습니다..." << endl;
 }
 
+void EmployeeManager::modify()
+{
+    cleanCMD();
+    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+    cout << "삭제할 직원 ID를 입력하세요: ";
+    string idStr;
+    cin >> idStr;
+    if (m_employeeList.find(stoi(idStr)) != m_employeeList.end()) 
+    {
+        auto employee = m_employeeList[stoi(idStr)];
+        if (employee->getId() == stoi(idStr)) {
+            employee->showInfo();
+                cout << "+++++++++++++++++수정할 정보++++++++++++++++" << endl;
+                string name, jobTitle, phoneNum;
+                vector<int> projectIdList;
+                cout << "직원명 (공백입력시 현재 상태 유지): ";
+                cin >> name;
+                if (name != "")
+                    employee->setName(name);
+                cout << "직책 (공백입력시 현재 상태 유지): ";
+                cin >> jobTitle;
+            if (name != "")
+                employee->setJobTitle(jobTitle);
+            cout << "연락처 (공백입력시 현재 상태 유지): ";
+            cin >> phoneNum;
+            if (phoneNum != "")
+                employee->setPhoneNum(phoneNum);
+            cout << "프로젝트ID (-1입력시 종료): ";
+            int input;
+            while (true)
+            {
+                cin >> input;
+                if (input == -1)
+                    break;
+                else
+                    projectIdList.push_back(input);
+            }
+            if (projectIdList.size() != 0)
+                employee->setProjectIdList(projectIdList);
+            cout << "성공적으로 수정되었습니다!" << endl;
+            return;
+        }
+    }
+    else {
+        cout << "해당 ID " << idStr << " 의 직원을(를) 찾을 수 없습니다..." << endl;
+    }
+}
+
 EmployeeManager::EmployeeManager()
 {
     //파일에서 불러오기
@@ -166,7 +214,7 @@ void EmployeeManager::displayMenu(){
         }
         else if (input == "3")
         {
-            //
+            modify();
         }
         else if (input == "4")
         {
