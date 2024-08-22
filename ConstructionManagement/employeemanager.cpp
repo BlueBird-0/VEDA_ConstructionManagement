@@ -36,6 +36,25 @@ void EmployeeManager::create()
     saveCSV();
 }
 
+void EmployeeManager::remove()
+{
+    cleanCMD();
+    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+    cout << "삭제할 직원 ID를 입력하세요: ";
+    string idStr;
+    cin >> idStr;
+
+    for (auto it = m_employeeList.begin(); it != m_employeeList.end(); ++it) {
+        Employee* employee = it->second;
+        if (employee->getId() == stoi(idStr)) {
+            m_employeeList.erase(stoi(idStr));
+            cout << "직원이 성공적으로 삭제되었습니다!" << endl;
+            return;
+        }
+    }
+    cout << "해당 ID " << idStr << " 의 직원을(를) 찾을 수 없습니다..." << endl;
+}
+
 EmployeeManager::EmployeeManager()
 {
     //파일에서 불러오기
@@ -143,7 +162,7 @@ void EmployeeManager::displayMenu(){
         }
         else if (input == "2")
         {
-            //
+            remove();
         }
         else if (input == "3")
         {
