@@ -204,61 +204,82 @@ vector<string> ProjectManager::parseCSV(istream& file, char delimiter)
 
 void ProjectManager::displayMenu()
 {
-    int ch, key;
-    cout << "\033[2J\033[1;1H";
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "              프로젝트관리                 " << endl;
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. 프로젝트 전체조회                    " << endl;
-    cout << "  2. 프로젝트 ID조회                    " << endl;
-    cout << "  3. 프로젝트 등록                            " << endl;
-    cout << "  4. 프로젝트 삭제                           " << endl;
-    cout << "  5. 프로젝트 수정                           " << endl;
-    cout << "  6. 프로젝트관리 나가기                       " << endl;
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << " 어떤 항목을 선택하시겠습니까? ";
-    cin >> ch;
-    switch (ch) {
-    case 1:
-        displayInfo();
+    while (1)
+    {
+        string ch, key;
+        cout << "\033[2J\033[1;1H";
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "              프로젝트관리                 " << endl;
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "  1. 프로젝트 전체조회                    " << endl;
+        cout << "  2. 프로젝트 ID조회                    " << endl;
+        cout << "  3. 프로젝트 등록                            " << endl;
+        cout << "  4. 프로젝트 삭제                           " << endl;
+        cout << "  5. 프로젝트 수정                           " << endl;
+        cout << "  6. 프로젝트관리 나가기                       " << endl;
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << " 어떤 항목을 선택하시겠습니까? ";
         cin.ignore();
-        getchar();
-        break;
-    case 2:
-        cout << "   조회할 프로젝트ID를 입력해주세요: ";
-        cin >> key;
-        displayInfo(key);
-        cin.ignore();
-        getchar();
-        break;
-    case 3:
-        create();
-        cin.ignore();
-        getchar();
-        break;
-    case 4:
-        displayInfo();
-        cout << "   삭제할 프로젝트ID를 입력해주세요: ";
-        cin >> key;
-        remove(key);
-        cin.ignore();
-        getchar();
-        break;
-    case 5:
-        displayInfo();
-        cout << "   수정할 프로젝트ID를 입력해주세요: ";
-        cin >> key;
-        modify(key);
-        cin.ignore();
-        getchar();
-        break;
-    case 6:
-        break;
-    default:
-        cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-        break;
-
+        cin >> ch;
+        if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
+        {
+            goto ff;
+        }
+        switch (atoi(ch.c_str())) {
+        case 1:
+            displayInfo();
+            cin.ignore();
+            getchar();
+            break;
+        case 2:
+            cout << "   조회할 프로젝트ID를 입력해주세요: ";
+            cin >> key;
+            if (atoi(key.c_str()) == 0 && key != "0")
+            {
+                goto ff;
+            }
+            displayInfo(stoi(key));
+            cin.ignore();
+            getchar();
+            break;
+        case 3:
+            create();
+            cin.ignore();
+            getchar();
+            break;
+        case 4:
+            displayInfo();
+            cout << "   삭제할 프로젝트ID를 입력해주세요: ";
+            cin >> key;
+            if (atoi(key.c_str()) == 0 && key != "0")
+            {
+                goto ff;
+            }
+            remove(stoi(key));
+            cin.ignore();
+            getchar();
+            break;
+        case 5:
+            displayInfo();
+            cout << "   수정할 프로젝트ID를 입력해주세요: ";
+            cin >> key;
+            if (atoi(key.c_str()) == 0 && key != "0")
+            {
+                goto ff;
+            }
+            modify(stoi(key));
+            cin.ignore();
+            getchar();
+            break;
+        case 6:
+            return;
+        default:
+            ff:
+            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+            break;
+        }
     }
+    
 
 }
 

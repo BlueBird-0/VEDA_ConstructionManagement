@@ -191,61 +191,92 @@ vector<string> ClientManager::parseCSV(istream& file, char delimiter)
     return row;
 }
 
-
 void ClientManager::displayMenu()
 {
-    int ch, key;
-    cout << "\033[2J\033[1;1H";
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "              고객관리                 " << endl;
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "  1. 전체 고객 조회                     " << endl;
-    cout << "  2. 고객 ID 조회                     " << endl;
-    cout << "  3. 고객 등록                            " << endl;
-    cout << "  4. 고객 정보 삭제                           " << endl;
-    cout << "  5. 고객 정보 수정                          " << endl;
-    cout << "  6. 고객관리 나가기                       " << endl;
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << " 어떤 항목을 선택하시겠습니까? ";
-    cin >> ch;
-    switch (ch) {
-    case 1:
-        displayInfo();
+    while (1)
+    {
+        string ch;
+        string keystr = "-1";
+        int key;
+        cout << "\033[2J\033[1;1H";
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "              고객관리                 " << endl;
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << "  1. 전체 고객 조회                     " << endl;
+        cout << "  2. 고객 ID 조회                     " << endl;
+        cout << "  3. 고객 등록                            " << endl;
+        cout << "  4. 고객 정보 삭제                           " << endl;
+        cout << "  5. 고객 정보 수정                          " << endl;
+        cout << "  6. 고객관리 나가기                       " << endl;
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout << " 어떤 항목을 선택하시겠습니까? ";
         cin.ignore();
-        getchar();
-        break;
+        cin >> ch;
+        if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
+        {
+            goto ff;
+        }
 
-    case 2:
-        cout << "   조회할 고객ID를 입력해주세요: ";
-        cin >> key;
-        displayInfo(key);
-        cin.ignore();
-        getchar();
-        break;
+        // 0x30<= stoi(ch) <= 0x36
+        switch (stoi(ch)) {
+        case 1:
+            displayInfo();
+            cin.ignore();
+            getchar();
+            break;
 
-    case 3:
-        create();
-        cin.ignore();
-        getchar();
-        break;
-    case 4:
-        displayInfo();
-        cout << "삭제할 고객ID를 입력해주세요: ";
-        cin >> key;
-        remove(key);
-        break;
-    case 5:
-        displayInfo();
-        cout << "수정할 고객ID를 입력해주세요: ";
-        cin >> key;
-        modify(key);
-        break;
-    case 6:
-        break;
-    default:
-        cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-        break;
+        case 2:
+            cout << "   조회할 고객ID를 입력해주세요: ";
+            cin >> keystr;
+            if (atoi(keystr.c_str()) == 0 && keystr != "0")
+            {
+                goto ff;
+            }
+            key = stoi(keystr);
+            displayInfo(key);
+            cin.ignore();
+            getchar();
+            break;
+
+
+
+        case 3:
+            create();
+            cin.ignore();
+            getchar();
+            break;
+        case 4:
+            displayInfo();
+            cout << "삭제할 고객ID를 입력해주세요: ";
+            cin >> keystr;
+            if (atoi(keystr.c_str()) == 0 && keystr != "0")
+            {
+                goto ff;
+            }
+            remove(stoi(keystr));
+            break;
+        case 5:
+            displayInfo();
+            cout << "수정할 고객ID를 입력해주세요: ";
+            cin >> keystr;
+            if (atoi(keystr.c_str()) == 0 && keystr != "0")
+            {
+                goto ff;
+            }
+            modify(stoi(keystr));
+            break;
+        case 6:
+            return;
+        default:
+        ff:
+            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+            cout << "아무키나 입력하세요.";
+            string temp;
+            cin >> temp;
+            break;
+        }
     }
+   
 }
 
 void ClientManager::showAllDatas() 
