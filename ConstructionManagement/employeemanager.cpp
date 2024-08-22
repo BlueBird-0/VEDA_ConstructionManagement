@@ -43,16 +43,21 @@ void EmployeeManager::remove()
     cout << "삭제할 직원 ID를 입력하세요: ";
     string idStr;
     cin >> idStr;
+    int id = atoi(idStr.c_str());
+    if (idStr != "0" && id == 0)
+        id = -1;
 
     for (auto it = m_employeeList.begin(); it != m_employeeList.end(); ++it) {
         Employee* employee = it->second;
-        if (employee->getId() == stoi(idStr)) {
-            m_employeeList.erase(stoi(idStr));
+        if (employee->getId() == id) {
+            m_employeeList.erase(id);
             cout << "직원이 성공적으로 삭제되었습니다!" << endl;
             return;
         }
     }
     cout << "해당 ID " << idStr << " 의 직원을(를) 찾을 수 없습니다..." << endl;
+    string temp;
+    cin >> temp;
 }
 
 void EmployeeManager::modify()
@@ -210,11 +215,11 @@ void EmployeeManager::displayMenu(){
         }
         else if (input == "2")
         {
-            remove();
+            modify();
         }
         else if (input == "3")
         {
-            modify();
+            remove();
         }
         else if (input == "4")
         {
