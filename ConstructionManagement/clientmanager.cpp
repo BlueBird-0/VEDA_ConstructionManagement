@@ -119,20 +119,31 @@ void ClientManager::modify(int id)
 
 void ClientManager::displayInfo()
 {
-    cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
-    for (auto it = clientList.begin(); it != clientList.end(); it++)
-    {
-        int key = it->first;
-        Client* c = clientList[key];
-        c->showInfo();
+    if (clientList.size() != 0) {
+        cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
+        for (auto it = clientList.begin(); it != clientList.end(); it++)
+        {
+            int key = it->first;
+            Client* c = clientList[key];
+            c->showInfo();
+        }
     }
+    else {
+        cout << "등록된 고객이 없습니다." << endl;
+    }
+    
 }
 void ClientManager::displayInfo(int key)
 {
-    cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
-
-    Client* c = clientList[key];
-    c->showInfo();
+    if (clientList.find(key) != clientList.end())
+    {
+        cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
+        Client* c = clientList[key];
+        c->showInfo();
+    }
+    else {
+        cout << "해당 고객이 없습니다." << endl;
+    }
 }
 
 //void ClientManager::showInfo(int key)
