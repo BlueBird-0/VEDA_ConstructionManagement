@@ -5,25 +5,25 @@
 #include <iomanip>
 
 MaterialManager::MaterialManager() {
-    ifstream file("materiallist.txt");  // "materiallist.txt" íŒŒì¼ì„ ì½ê¸° ìœ„í•´ ì—°ë‹¤.
+    ifstream file("materiallist.txt");  // "materiallist.txt" ÆÄÀÏÀ» ÀĞ±â À§ÇØ ¿¬´Ù.
     if (!file.fail()) {
         while (!file.eof()) {
-            vector<string> row = parseCSV(file, ',');  // CSV í˜•ì‹ìœ¼ë¡œ ë°ì´í„°ë¥¼ ì½ì–´ì˜¨ë‹¤.
+            vector<string> row = parseCSV(file, ',');  // CSV Çü½ÄÀ¸·Î µ¥ÀÌÅÍ¸¦ ÀĞ¾î¿Â´Ù.
             if (row.size() > 0) {
-                int id = stoi(row[0]);  // ì²« ë²ˆì§¸ ì—´ì„ ì •ìˆ˜í˜• IDë¡œ ë³€í™˜
-                int unitPrice = stoi(row[3]);  // ë„¤ ë²ˆì§¸ ì—´ì„ ì‹¤ìˆ˜í˜• ë‹¨ê°€ë¡œ ë³€í™˜
-                int stock = stoi(row[4]);  // ë‹¤ì„¯ ë²ˆì§¸ ì—´ì„ ì •ìˆ˜í˜• ì¬ê³ ëŸ‰ìœ¼ë¡œ ë³€í™˜
-                int orderQuantity = stoi(row[5]);  // ì—¬ì„¯ ë²ˆì§¸ ì—´ì„ ì •ìˆ˜í˜• ì£¼ë¬¸ëŸ‰ìœ¼ë¡œ ë³€í™˜
-                Material* m = new Material(id, row[1], row[2], unitPrice, stock, orderQuantity);  // ìì¬ ê°ì²´ ìƒì„±
-                materialList[id] = m;  // IDë¥¼ í‚¤ë¡œ í•˜ì—¬ materialListì— ìì¬ë¥¼ ì €ì¥
+                int id = stoi(row[0]);  // Ã¹ ¹øÂ° ¿­À» Á¤¼öÇü ID·Î º¯È¯
+                int unitPrice = stoi(row[3]);  // ³× ¹øÂ° ¿­À» ½Ç¼öÇü ´Ü°¡·Î º¯È¯
+                int stock = stoi(row[4]);  // ´Ù¼¸ ¹øÂ° ¿­À» Á¤¼öÇü Àç°í·®À¸·Î º¯È¯
+                int orderQuantity = stoi(row[5]);  // ¿©¼¸ ¹øÂ° ¿­À» Á¤¼öÇü ÁÖ¹®·®À¸·Î º¯È¯
+                Material* m = new Material(id, row[1], row[2], unitPrice, stock, orderQuantity);  // ÀÚÀç °´Ã¼ »ı¼º
+                materialList[id] = m;  // ID¸¦ Å°·Î ÇÏ¿© materialList¿¡ ÀÚÀç¸¦ ÀúÀå
             }
         }
     }
-    file.close();  // íŒŒì¼ ë‹«ê¸°
+    file.close();  // ÆÄÀÏ ´İ±â
 }
 
 MaterialManager::~MaterialManager() {
-    ofstream file("materiallist.txt");  // "materiallist.txt" íŒŒì¼ì„ ì“°ê¸° ìœ„í•´ ì—°ë‹¤.
+    ofstream file("materiallist.txt");  // "materiallist.txt" ÆÄÀÏÀ» ¾²±â À§ÇØ ¿¬´Ù.
     if (!file.fail()) {
         for (const auto& pair : materialList) {
             Material* m = pair.second;
@@ -31,10 +31,10 @@ MaterialManager::~MaterialManager() {
                  << m->getUnitPrice() << "," << m->getStock() << "," << m->getOrderQuantity() << endl;
         }
     }
-    file.close();  // íŒŒì¼ ë‹«ê¸°
+    file.close();  // ÆÄÀÏ ´İ±â
 
     for (auto& pair : materialList) {
-        delete pair.second;  // ë™ì ìœ¼ë¡œ í• ë‹¹ëœ ìì¬ ê°ì²´ ì‚­ì œ
+        delete pair.second;  // µ¿ÀûÀ¸·Î ÇÒ´çµÈ ÀÚÀç °´Ã¼ »èÁ¦
     }
 }
 
@@ -42,42 +42,42 @@ void MaterialManager::create() {
     string name, supplier;
     int stock, orderQuantity, unitPrice;
 
-    cout << "ìì¬ëª…: ";
+    cout << "ÀÚÀç¸í: ";
     cin >> name;
-    cout << "ê³µê¸‰ì—…ì²´: ";
+    cout << "°ø±Ş¾÷Ã¼: ";
     cin >> supplier;
-    cout << "ë‹¨ê°€: ";
+    cout << "´Ü°¡: ";
     cin >> unitPrice;
-    cout << "ì¬ê³ ëŸ‰: ";
+    cout << "Àç°í·®: ";
     cin >> stock;
-    cout << "ì£¼ë¬¸ëŸ‰: ";
+    cout << "ÁÖ¹®·®: ";
     cin >> orderQuantity;
 
-    int id = makeId();  // ìƒˆë¡œìš´ ìì¬ ID ìƒì„±
+    int id = makeId();  // »õ·Î¿î ÀÚÀç ID »ı¼º
     Material* material = new Material(id, name, supplier, unitPrice, stock, orderQuantity);
-    materialList[id] = material;  // ìì¬ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+    materialList[id] = material;  // ÀÚÀç ¸®½ºÆ®¿¡ Ãß°¡
 
-    cout << "ìì¬ê°€ ì„±ê³µì ìœ¼ë¡œ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+    cout << "ÀÚÀç°¡ ¼º°øÀûÀ¸·Î Ãß°¡µÇ¾ú½À´Ï´Ù!" << endl;
 }
 
 void MaterialManager::remove(int id) {
     auto it = materialList.find(id);
     if (it != materialList.end()) {
-        delete it->second;  // ë™ì ìœ¼ë¡œ í• ë‹¹ëœ ìì¬ ê°ì²´ ì‚­ì œ
-        materialList.erase(it);  // ìì¬ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚­ì œ
-        cout << "ìì¬ê°€ ì„±ê³µì ìœ¼ë¡œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+        delete it->second;  // µ¿ÀûÀ¸·Î ÇÒ´çµÈ ÀÚÀç °´Ã¼ »èÁ¦
+        materialList.erase(it);  // ÀÚÀç ¸®½ºÆ®¿¡¼­ »èÁ¦
+        cout << "ÀÚÀç°¡ ¼º°øÀûÀ¸·Î »èÁ¦µÇ¾ú½À´Ï´Ù!" << endl;
     } else {
-        cout << "ìì¬ID " << id << "ì„(ë¥¼) ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤..." << endl;
+        cout << "ÀÚÀçID " << id << "À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù..." << endl;
     }
 }
 
 Material* MaterialManager::search(int id) {
     auto it = materialList.find(id);
     if (it != materialList.end()) {
-        return it->second;  // ìì¬ ì°¾ê¸° ì„±ê³µ
+        return it->second;  // ÀÚÀç Ã£±â ¼º°ø
     } else {
-        cout << "ìì¬ID " << id << "ì„(ë¥¼) ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤..." << endl;
-        return nullptr;  // ìì¬ ì°¾ê¸° ì‹¤íŒ¨
+        cout << "ÀÚÀçID " << id << "À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù..." << endl;
+        return nullptr;  // ÀÚÀç Ã£±â ½ÇÆĞ
     }
 }
 
@@ -87,47 +87,47 @@ void MaterialManager::modify(int id) {
         string name, supplier;
         int stock, orderQuantity, unitPrice;
 
-        cout << "í˜„ì¬ ìì¬ëª…: " << material->getName() << endl;
-        cout << "í˜„ì¬ ê³µê¸‰ì—…ì²´: " << material->getSupplier() << endl;
-        cout << "í˜„ì¬ ë‹¨ê°€: " << material->getUnitPrice() << endl;
-        cout << "í˜„ì¬ ì¬ê³ ëŸ‰: " << material->getStock() << endl;
-        cout << "í˜„ì¬ ì£¼ë¬¸ëŸ‰: " << material->getOrderQuantity() << endl;
+        cout << "ÇöÀç ÀÚÀç¸í: " << material->getName() << endl;
+        cout << "ÇöÀç °ø±Ş¾÷Ã¼: " << material->getSupplier() << endl;
+        cout << "ÇöÀç ´Ü°¡: " << material->getUnitPrice() << endl;
+        cout << "ÇöÀç Àç°í·®: " << material->getStock() << endl;
+        cout << "ÇöÀç ÁÖ¹®·®: " << material->getOrderQuantity() << endl;
 
-        cout << "ìƒˆë¡œìš´ ìì¬ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î ÀÚÀç¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
         cin.ignore();
         getline(cin, name);
         if (!name.empty()) material->setName(name);
 
-        cout << "ìƒˆë¡œìš´ ê³µê¸‰ì—…ì²´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î °ø±Ş¾÷Ã¼¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
         getline(cin, supplier);
         if (!supplier.empty()) material->setSupplier(supplier);
 
-        cout << "ìƒˆë¡œìš´ ë‹¨ê°€ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ -1ë¥¼ ì…ë ¥í•˜ì—¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î ´Ü°¡¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é -1¸¦ ÀÔ·ÂÇÏ¿© ÇöÀç »óÅÂ À¯Áö): ";
         cin >> unitPrice;
         if (unitPrice >= 0) material->setUnitPrice(unitPrice);
 
-        cout << "ìƒˆë¡œìš´ ì¬ê³ ëŸ‰ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ -1ë¥¼ ì…ë ¥í•˜ì—¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î Àç°í·®À» ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é -1¸¦ ÀÔ·ÂÇÏ¿© ÇöÀç »óÅÂ À¯Áö): ";
         cin >> stock;
         if (stock >= 0) material->setStock(stock);
 
-        cout << "ìƒˆë¡œìš´ ì£¼ë¬¸ëŸ‰ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ -1ë¥¼ ì…ë ¥í•˜ì—¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î ÁÖ¹®·®À» ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é -1¸¦ ÀÔ·ÂÇÏ¿© ÇöÀç »óÅÂ À¯Áö): ";
         cin >> orderQuantity;
         if (orderQuantity >= 0) material->setOrderQuantity(orderQuantity);
 
-        cout << "ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+        cout << "¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù!" << endl;
     }
 }
 
 void MaterialManager::displayInfo() {
-    cout << endl << "  ìì¬ID  |     ìì¬ëª…     |   ê³µê¸‰ì—…ì²´   |   ë‹¨ê°€   | ì¬ê³ ëŸ‰ | ì£¼ë¬¸ëŸ‰ " << endl;
+    cout << endl << "  ÀÚÀçID  |     ÀÚÀç¸í     |   °ø±Ş¾÷Ã¼   |   ´Ü°¡   | Àç°í·® | ÁÖ¹®·® " << endl;
     for (const auto& pair : materialList) {
         Material* m = pair.second;
-        cout << setw(7) << m->getId() << " | ";  // ìì¬ ID ì¶œë ¥
-        cout << setw(12) << m->getName() << " | ";  // ìì¬ëª… ì¶œë ¥
-        cout << setw(12) << m->getSupplier() << " | ";  // ê³µê¸‰ì—…ì²´ëª… ì¶œë ¥
-        cout << setw(9) << fixed << m->getUnitPrice() << " | ";  // ë‹¨ê°€ ì¶œë ¥
-        cout << setw(6) << m->getStock() << " | ";  // ì¬ê³ ëŸ‰ ì¶œë ¥
-        cout << setw(6) << m->getOrderQuantity() << endl;  // ì£¼ë¬¸ëŸ‰ ì¶œë ¥
+        cout << setw(7) << m->getId() << " | ";  // ÀÚÀç ID Ãâ·Â
+        cout << setw(12) << m->getName() << " | ";  // ÀÚÀç¸í Ãâ·Â
+        cout << setw(12) << m->getSupplier() << " | ";  // °ø±Ş¾÷Ã¼¸í Ãâ·Â
+        cout << setw(9) << fixed << m->getUnitPrice() << " | ";  // ´Ü°¡ Ãâ·Â
+        cout << setw(6) << m->getStock() << " | ";  // Àç°í·® Ãâ·Â
+        cout << setw(6) << m->getOrderQuantity() << endl;  // ÁÖ¹®·® Ãâ·Â
     }
 }
 
@@ -136,47 +136,47 @@ void MaterialManager::displayMenu() {
     bool running = true;
 
     while (running) {
-        cout << "\033[2J\033[1;1H";  // í™”ë©´ì„ ì§€ìš°ê³  ì»¤ì„œë¥¼ ë§¨ ìœ„ë¡œ ì´ë™
+        cout << "\033[2J\033[1;1H";  // È­¸éÀ» Áö¿ì°í Ä¿¼­¸¦ ¸Ç À§·Î ÀÌµ¿
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "              ìì¬ê´€ë¦¬               " << endl;
+        cout << "              ÀÚÀç°ü¸®               " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "  1. ìì¬ ì¡°íšŒ                   " << endl;
-        cout << "  2. ìì¬ ë“±ë¡                            " << endl;
-        cout << "  3. ìì¬ ì‚­ì œ                         " << endl;
-        cout << "  4. ìì¬ ìˆ˜ì •                         " << endl;
-        cout << "  5. ìì¬ê´€ë¦¬ ë‚˜ê°€ê¸°                       " << endl;
+        cout << "  1. ÀÚÀç Á¶È¸                   " << endl;
+        cout << "  2. ÀÚÀç µî·Ï                            " << endl;
+        cout << "  3. ÀÚÀç »èÁ¦                         " << endl;
+        cout << "  4. ÀÚÀç ¼öÁ¤                         " << endl;
+        cout << "  5. ÀÚÀç°ü¸® ³ª°¡±â                       " << endl;
         cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "ì–´ë–¤ í•­ëª©ì„ ì„ íƒí•˜ì‹œê² ìŠµë‹ˆê¹Œ? ";
+        cout << "¾î¶² Ç×¸ñÀ» ¼±ÅÃÇÏ½Ã°Ú½À´Ï±î? ";
         cin >> choice;
 
         switch (choice) {
         case 1:
-            displayInfo();  // ìì¬ ì •ë³´ë¥¼ ì¶œë ¥
+            displayInfo();  // ÀÚÀç Á¤º¸¸¦ Ãâ·Â
             break;
         case 2:
-            create();  // ìì¬ë¥¼ ìƒì„±í•˜ì—¬ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+            create();  // ÀÚÀç¸¦ »ı¼ºÇÏ¿© ¸®½ºÆ®¿¡ Ãß°¡
             break;
         case 3:
-            cout << "ì‚­ì œí•  ìì¬IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
+            cout << "»èÁ¦ÇÒ ÀÚÀçID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
             cin >> id;
-            remove(id);  // ìì¬ë¥¼ ì‚­ì œ
+            remove(id);  // ÀÚÀç¸¦ »èÁ¦
             break;
         case 4:
-            cout << "ìˆ˜ì •í•  ìì¬IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
+            cout << "¼öÁ¤ÇÒ ÀÚÀçID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
             cin >> id;
-            modify(id);  // ìì¬ë¥¼ ìˆ˜ì •
+            modify(id);  // ÀÚÀç¸¦ ¼öÁ¤
             break;
         case 5:
-            running = false;  // í”„ë¡œê·¸ë¨ ì¢…ë£Œ
+            running = false;  // ÇÁ·Î±×·¥ Á¾·á
             break;
         default:
-            cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”." << endl;
+            cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä." << endl;
             break;
         }
         if (running) {
-            cout << "\nê³„ì†í•˜ë ¤ë©´ Enter í‚¤ë¥¼ ëˆŒëŸ¬ì£¼ì„¸ìš”...";
+            cout << "\n°è¼ÓÇÏ·Á¸é Enter Å°¸¦ ´­·¯ÁÖ¼¼¿ä...";
             cin.ignore();
-            cin.get();  // Enter ì…ë ¥ì„ ê¸°ë‹¤ë¦¼
+            cin.get();  // Enter ÀÔ·ÂÀ» ±â´Ù¸²
         }
     }
 }
@@ -188,7 +188,7 @@ int MaterialManager::makeId() {
             maxId = pair.first;
         }
     }
-    return maxId + 1;  // ìƒˆë¡œìš´ ID ìƒì„±
+    return maxId + 1;  // »õ·Î¿î ID »ı¼º
 }
 
 vector<string> MaterialManager::parseCSV(istream& str, char delimiter) {
@@ -201,7 +201,7 @@ vector<string> MaterialManager::parseCSV(istream& str, char delimiter) {
             result.push_back(item);
         }
     }
-    return result;  // CSV íŒŒì‹± ê²°ê³¼ ë°˜í™˜
+    return result;  // CSV ÆÄ½Ì °á°ú ¹İÈ¯
 }
 
 void MaterialManager::showAllDatas(){
