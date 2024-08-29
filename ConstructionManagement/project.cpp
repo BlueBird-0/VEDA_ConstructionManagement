@@ -68,10 +68,11 @@ int Project::id() const
 
 void Project::showInfo()
 {
-    cout << setw(5) << setfill('0') << right << id() << " | " << left;
-    cout << setw(12) << setfill(' ') << getProjectName() << " | ";
-    cout << setw(12) << getLocation() << " | ";
-    cout << setw(12) << getStartDate() << " | ";
-    cout << setw(12) << getEndDate() << " | ";
-    cout << getBudget() << endl;
+    //printf("%10s | %14s | %10s | %8s | %8s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일","종료일","예산");
+    cout << setw(10) << right << id() << " | ";
+    cout << setw(14) << right << getProjectName() << " | ";
+    cout << setw(10) << right << getLocation() << " | ";
+    cout << setw(8) << right << getStartDate() << " | ";
+    cout << setw(8) << right << getEndDate() << " | ";
+    cout << setw(10) << right << getBudget() << endl;
 }

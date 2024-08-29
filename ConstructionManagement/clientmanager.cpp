@@ -113,47 +113,44 @@ void ClientManager::modify(int id)
         getline(cin, address);
         if (!address.empty()) client->setAddress(address);
 
-        cout << "성공적으로 수정되었습니다!" << endl;
-    }
+		cout << "성공적으로 수정되었습니다!" << endl;
+	}
 }
 
 void ClientManager::displayInfo()
 {
-    if (clientList.size() != 0) {
-        cout << endl << "  ID  |     고객명     | 전화번호 |      주소" << endl;
-        for (auto it = clientList.begin(); it != clientList.end(); it++)
-        {
-            int key = it->first;
-            Client* c = clientList[key];
-            c->showInfo();
-        }
-    }
-    else {
-        cout << "등록된 고객이 없습니다." << endl;
-    }
-
+	if (clientList.size() != 0) {
+        setCmdColor(1);
+		printf("%6s | %10s | %14s | %10s\n", "고객ID", "고객명", "전화번호", "주소");
+		for (auto it = clientList.begin(); it != clientList.end(); it++)
+		{
+			int key = it->first;
+			Client* c = clientList[key];
+			c->showInfo();
+		}
+	}
+	else {
+        setCmdColor(2);
+		cout << "등록된 고객이 없습니다." << endl;
+	}
+    setCmdColor();
 }
 void ClientManager::displayInfo(int key)
 {
+    
     if (clientList.find(key) != clientList.end())
     {
-        cout << endl << "  ID  |  고객명  |   전화번호   |   주소" << endl;
+        setCmdColor(1);
+        printf("%6s | %10s | %14s | %10s\n", "고객ID", "고객명", "전화번호", "주소");
         Client* c = clientList[key];
         c->showInfo();
     }
     else {
+        setCmdColor(2);
         cout << "해당 고객이 없습니다." << endl;
     }
+    setCmdColor();
 }
-
-//void ClientManager::showInfo(int key)
-//{
-//    Client* c = clientList[key];
-//    cout << setw(5) << setfill('0') << right << c->id() << " | " << left;
-//    cout << setw(12) << setfill(' ') << c->getClientName() << " | ";
-//    cout << setw(12) << c->getPhoneNum() << " | ";
-//    cout << c->getAddress() << endl;
-//}
 
 int ClientManager::makeId()
 {
@@ -193,7 +190,8 @@ vector<string> ClientManager::parseCSV(istream& file, char delimiter)
 
 void ClientManager::displayMenu()
 {
-    while (1)
+    bool running = true;
+    while (running)
     {
         string ch;
         string keystr = "-1";
@@ -210,7 +208,6 @@ void ClientManager::displayMenu()
         cout << "\033[30;94m│  \033[30;91m6. 고객관리 나가기\033[0m                       \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << " 어떤 항목을 선택하시겠습니까? ";
-        cin.ignore();
         cin >> ch;
         if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
         {
@@ -221,8 +218,7 @@ void ClientManager::displayMenu()
         switch (stoi(ch)) {
         case 1:
             displayInfo();
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
 
         case 2:
@@ -234,16 +230,11 @@ void ClientManager::displayMenu()
             }
             key = stoi(keystr);
             displayInfo(key);
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
-
-
-
         case 3:
             create();
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
         case 4:
             displayInfo();
@@ -254,6 +245,7 @@ void ClientManager::displayMenu()
                 goto ff;
             }
             remove(stoi(keystr));
+            waitEnter();
             break;
         case 5:
             displayInfo();
@@ -264,15 +256,14 @@ void ClientManager::displayMenu()
                 goto ff;
             }
             modify(stoi(keystr));
+            waitEnter();
             break;
         case 6:
             return;
         default:
         ff:
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-            cout << "\n계속하려면 Enter 키를 눌러주세요...";
-            cin.ignore();
-            cin.get();  // Enter 입력을 기다림
+            waitEnter();
             break;
         }
     }

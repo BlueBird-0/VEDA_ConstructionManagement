@@ -9,7 +9,7 @@ void EmployeeManager::create()
     string name, jobTitle, phoneNum;
     vector<int> projectIdList;
 
-    cleanCMD();
+    cout << "\033[2J\033[1;1H";  // Clear screen
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "직원명: ";
     cin >> name;
@@ -38,7 +38,7 @@ void EmployeeManager::create()
 
 void EmployeeManager::remove()
 {
-    cleanCMD();
+    cout << "\033[2J\033[1;1H";  // Clear screen
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "삭제할 직원 ID를 입력하세요: ";
     string idStr;
@@ -62,7 +62,7 @@ void EmployeeManager::remove()
 
 void EmployeeManager::modify()
 {
-    cleanCMD();
+    cout << "\033[2J\033[1;1H";  // Clear screen
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "삭제할 직원 ID를 입력하세요: ";
     string idStr;
@@ -177,22 +177,23 @@ void EmployeeManager::saveCSV()
 }
 
 void EmployeeManager::showAllDatas()
-{
-    cout << "총 인원 [" << m_employeeList.size() << "]" << endl;
+{    
+    setCmdColor(1);
+    //cout << "총 인원 [" << m_employeeList.size() << "]" << endl;
+    printf("%6s | %10s | %8s | %14s | %10s \n", "직원ID", "직원명", "직책", "연락처", "관련 프로젝트ID");
     for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
     {
         Employee* employee = it->second;
         employee->showInfo();
     }
-    cout << "\n계속하려면 Enter 키를 눌러주세요...";
-    cin.ignore();
-    cin.get();  // Enter 입력을 기다림
+    setCmdColor();
+    waitEnter();
 }
 
 void EmployeeManager::displayMenu(){
     while(true)
     {
-        cleanCMD();
+        cout << "\033[2J\033[1;1H";  // Clear screen
         cout << "\033[30;94m┌───────────────────────────────────────────┐ \033[0m" << endl;
         cout << "\033[30;94m│                \033[30;93m인력관리\033[0m                   \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│───────────────────────────────────────────│ \033[0m" << endl;

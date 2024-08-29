@@ -22,7 +22,7 @@ int main()
 
     string  input;
     while (true) {
-        cleanCMD();
+        cout << "\033[2J\033[1;1H";  // Clear screen
         cout << "\033[30;94m┌───────────────────────────────────────────┐ \033[0m" << endl;
         cout << "\033[30;94m│            \033[30;93m건축 관리 프로그램\033[0m             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│───────────────────────────────────────────│ \033[0m" << endl;
@@ -54,6 +54,9 @@ int main()
         else if (input == "exit")
             break;
         else {
+            cout << "\n계속하려면 Enter 키를 눌러주세요...";
+            cin.ignore();
+            cin.get();  // Enter 입력을 기다림
             continue;
         }
         manager->displayMenu();

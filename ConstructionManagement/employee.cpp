@@ -1,18 +1,23 @@
 #include "employee.h"
 #include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
 
 void Employee::showInfo()
 {
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "ID: " << getId() << endl;
-    cout << "이름: " << getName() << endl;
-    cout << "직책: " << getJobTitle() << endl;
-    cout << "연락처: " << getPhoneNum() << endl;
-    cout << "관련 프로젝트ID: ";
+    cout << setw(6) << right << getId() << " | ";
+    cout << setw(10) << right << getName() << " | ";
+    cout << setw(8) << right << getJobTitle() << " | ";
+    cout << setw(14) << right << getPhoneNum() << " | ";
+
+    string list = "";
     for (auto projectID : getProjectIdList())
     {
-        cout << projectID << ", ";
+        list += to_string(projectID);
+        list += ", ";
     }
+    cout << setw(10) << right << list <<endl;
 
     cout << endl << endl;
 }

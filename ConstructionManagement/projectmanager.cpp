@@ -131,42 +131,33 @@ void ProjectManager::modify(int id)
         if (budget >= 0) project->setBudget(budget);
 
         cout << "성공적으로 수정되었습니다!" << endl;
-        cout << "\n계속하려면 Enter 키를 눌러주세요...";
-        cin.ignore();
-        cin.get();  // Enter 입력을 기다림
+        waitEnter();
     }
 }
 
 void ProjectManager::displayInfo()
 {
-    cout << endl << "  프로젝트ID  |     프로젝트명     | 위치 | 시작일 | 종료일 | 예산 " << endl;
+    printf("\n");
+    setCmdColor(2);
+    printf("%10s | %14s | %10s | %8s | %8s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일","종료일","예산");    ///setw()
+    setCmdColor(1);
     for (const auto& v : projectList)
     {
         int key = v.first;
         Project* p = projectList[key];
         p->showInfo();
     }
+    setCmdColor();
 }
 
 void ProjectManager::displayInfo(int key)
 {
-    cout << endl << "  프로젝트ID  |     프로젝트명     | 위치 | 시작일 | 종료일 | 예산 " << endl;
+    setCmdColor(1);
+    printf("%10s | %14s | %10s | %8s | %8s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산");
     Project* p = projectList[key];
     p->showInfo();
-
+    setCmdColor();
 }
-
-/*void ProjectManager::showInfo(int key)
-{
-    Project* p = projectList[key];
-    cout << setw(5) << setfill('0') << right << p->id() << " | " << left;
-    cout << setw(12) << setfill(' ') << p->getProjectName() << " | ";
-    cout << setw(12) << p->getLocation() << " | ";
-    cout << setw(12) << p->getStartDate() << " | ";
-    cout << setw(12) << p->getEndDate() << " | ";
-    cout << p->getBudget() << endl;
-}*/
-
 
 int ProjectManager::makeId()
 {
@@ -222,17 +213,15 @@ void ProjectManager::displayMenu()
         cout << "\033[30;94m│  \033[30;91m6. 프로젝트관리 나가기\033[0m                   \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << " 어떤 항목을 선택하시겠습니까? ";
-        cin.ignore();
         cin >> ch;
-        if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
+		if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
         {
             goto ff;
         }
         switch (atoi(ch.c_str())) {
         case 1:
             displayInfo();
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
         case 2:
             cout << "   조회할 프로젝트ID를 입력해주세요: ";
@@ -242,13 +231,11 @@ void ProjectManager::displayMenu()
                 goto ff;
             }
             displayInfo(stoi(key));
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
         case 3:
             create();
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
         case 4:
             displayInfo();
@@ -258,9 +245,8 @@ void ProjectManager::displayMenu()
             {
                 goto ff;
             }
-            remove(stoi(key));
-            cin.ignore();
-            getchar();
+            remove(stoi(key)); 
+            waitEnter();
             break;
         case 5:
             displayInfo();
@@ -271,14 +257,15 @@ void ProjectManager::displayMenu()
                 goto ff;
             }
             modify(stoi(key));
-            cin.ignore();
-            getchar();
+            waitEnter();
             break;
         case 6:
             return;
         default:
         ff:
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+
+            waitEnter();
             break;
         }
     }

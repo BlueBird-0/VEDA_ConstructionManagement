@@ -45,10 +45,11 @@ int Client::id() const
 {
     return m_clientId;
 }
+//printf("%5s | %10s | %14s | %10s\n", "고객ID", "고객명", "전화번호", "주소");
 
 void Client::showInfo() {
-    cout << setw(5) << setfill('0') << right << id() << " | " << left;
-    cout << setw(12) << setfill(' ') << getClientName() << " | ";
-    cout << setw(12) << getPhoneNum() << " | ";
-    cout << getAddress() << endl;
+    cout << setw(6) << setfill(' ') << right << id() << " | ";
+    cout << setw(10) << setfill(' ') << right << getClientName() << " | ";
+    cout << setw(14) << getPhoneNum() << right << " | ";
+    cout << setw(10) << getAddress() << right << endl;
 }

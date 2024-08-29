@@ -36,18 +36,19 @@ ExpenseManager::~ExpenseManager() {
 }
 
 void ExpenseManager::create() {
-    int projectID, materialID, materialCosts, laborCosts, otherCosts;
-
-    cout << "프로젝트ID: ";
-    cin >> projectID;
-    cout << "자재ID: ";
-    cin >> materialID;
-    cout << "자재비용: ";
-    cin >> materialCosts;
-    cout << "인건비: ";
-    cin >> laborCosts;
-    cout << "기타비용: ";
-    cin >> otherCosts;
+	int projectID, materialID, materialCosts, laborCosts, otherCosts;
+	setCmdColor(1);
+	cout << "프로젝트ID: ";
+	cin >> projectID;
+	cout << "자재ID: ";
+	cin >> materialID;
+	cout << "자재비용: ";
+	cin >> materialCosts;
+	cout << "인건비: ";
+	cin >> laborCosts;
+	cout << "기타비용: ";
+	cin >> otherCosts;
+	setCmdColor();
 
     Expense expense(projectID, materialID, materialCosts, laborCosts, otherCosts);
     m_expenses.push_back(expense);
@@ -115,14 +116,16 @@ vector<int> ExpenseManager::searchByMaterialID(int materialID) {
 }
 
 void ExpenseManager::displayInfo() {
-    cout << endl << "프로젝트ID |   자재ID   |     자재비용    |    인건비    |   기타비용" << endl;
+    setCmdColor(1);
+    printf("%10s | %6s | %8s | %8s | %8s\n", "프로젝트ID", "자재ID", "자재비용", "인건비", "기타비용");
     for (const auto& expense : m_expenses) {
         cout << setw(10) << expense.getProjectID() << " | ";
-        cout << setw(10) << expense.getMaterialID() << " | ";
-        cout << setw(15) << expense.getMaterialCosts() << " | ";
-        cout << setw(12) << expense.getLaborCosts() << " | ";
-        cout << setw(11) << expense.getOtherCosts() << endl;
+        cout << setw(6) << expense.getMaterialID() << " | ";
+        cout << setw(8) << expense.getMaterialCosts() << " | ";
+        cout << setw(8) << expense.getLaborCosts() << " | ";
+        cout << setw(8) << expense.getOtherCosts() << endl;
     }
+    setCmdColor();
 }
 
 void ExpenseManager::displayMenu() {
