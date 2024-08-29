@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    Manager* manager = nullptr;
+    Manager* manager;
     ClientManager* clientManager = new ClientManager();
     ExpenseManager* expenseManager = new ExpenseManager();
     EmployeeManager* employeeManager = new EmployeeManager();
@@ -20,42 +20,39 @@ int main()
     ProjectManager* projectManagerr = new ProjectManager();
 
     string  input;
-    while (true) {
+    while(true){
         cleanCMD();
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "            ���� ���� ���α׷�               " << endl;
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "  1. ������Ʈ ����                           " << endl;
-        cout << "  2. ���� ����                               " << endl;
-        cout << "  3. ���� ����                               " << endl;
-        cout << "  4. �η� ����                               " << endl;
-        cout << "  5. ��� ����                               " << endl;
-        cout << "  exit. ���α׷� ����                        " << endl;
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "� �׸��� �����Ͻðڽ��ϱ�? ";
+        cout << "\033[30;94m┌───────────────────────────────────────────┐\033[0m" << endl;
+        cout << "\033[30;94m│            \033[30;93m건축 관리 프로그램\033[0m             \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m│───────────────────────────────────────────│\033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m1. 프로젝트 관리\033[0m                         \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m2. 고객 관리\033[0m                             \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m3. 자재 관리\033[0m                             \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m4. 인력 관리\033[0m                             \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m5. 비용 관리\033[0m                             \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91mexit. 프로그램 종료\033[0m                      \033[30;94m│\033[0m" << endl;
+        cout << "\033[30;94m└───────────────────────────────────────────┘\033[0m" << endl;
+        cout << "어떤 항목을 선택하시겠습니까? ";
 
         cin >> input;
         if (input == "1") {
-            manager = projectManagerr;
+            projectManagerr->displayMenu();
         }
         else if (input == "2") {
-            manager = clientManager;
+            clientManager->displayMenu();
         }
         else if (input == "3") {
-            manager = materialManager;
+            materialManager->displayMenu();
         }
         else if (input == "4") {
             manager = employeeManager;
+            manager->displayMenu();
         }
         else if (input == "5") {
-            manager = expenseManager;
+            expenseManager->displayMenu();
         }
-        else if (input == "exit")
+        else if (input =="exit")
             break;
-        else {
-            continue;
-        }
-        manager->displayMenu();
 
     }
 
@@ -67,4 +64,3 @@ int main()
     return 0;
 
 }
-

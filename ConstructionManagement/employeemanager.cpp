@@ -11,13 +11,13 @@ void EmployeeManager::create()
 
     cleanCMD();
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "¡˜ø¯∏Ì: ";
+    cout << "ÏßÅÏõêÎ™Ö: ";
     cin >> name;
-    cout << "¡˜√•: ";
+    cout << "ÏßÅÏ±Ö: ";
     cin >> jobTitle;
-    cout << "ø¨∂Ù√≥: ";
+    cout << "Ïó∞ÎùΩÏ≤ò: ";
     cin >> phoneNum;
-    cout << "«¡∑Œ¡ß∆ÆID: (-1 ¿‘∑¬Ω√¡æ∑·) ";
+    cout << "ÌîÑÎ°úÏ†ùÌä∏ID: (-1 ÏûÖÎ†•ÏãúÏ¢ÖÎ£å) ";
     int input;
     while (true)
     {
@@ -32,7 +32,7 @@ void EmployeeManager::create()
     Employee* material = new Employee(newId, name, jobTitle, phoneNum, projectIdList);
     m_employeeList[newId] = material;
 
-    cout << "º∫∞¯¿˚¿∏∑Œ √ﬂ∞°µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+    cout << "ÏÑ±Í≥µÏ†ÅÏúºÎ°ú Ï∂îÍ∞ÄÎêòÏóàÏäµÎãàÎã§!" << endl;
     saveCSV();
 }
 
@@ -40,7 +40,7 @@ void EmployeeManager::remove()
 {
     cleanCMD();
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "ªË¡¶«“ ¡˜ø¯ ID∏¶ ¿‘∑¬«œººø‰: ";
+    cout << "ÏÇ≠Ï†úÌï† ÏßÅÏõê IDÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî: ";
     string idStr;
     cin >> idStr;
     int id = atoi(idStr.c_str());
@@ -51,11 +51,11 @@ void EmployeeManager::remove()
         Employee* employee = it->second;
         if (employee->getId() == id) {
             m_employeeList.erase(id);
-            cout << "¡˜ø¯¿Ã º∫∞¯¿˚¿∏∑Œ ªË¡¶µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+            cout << "ÏßÅÏõêÏù¥ ÏÑ±Í≥µÏ†ÅÏúºÎ°ú ÏÇ≠Ï†úÎêòÏóàÏäµÎãàÎã§!" << endl;
             return;
         }
     }
-    cout << "«ÿ¥Á ID " << idStr << " ¿« ¡˜ø¯¿ª(∏¶) √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ..." << endl;
+    cout << "Ìï¥Îãπ ID " << idStr << " Ïùò ÏßÅÏõêÏùÑ(Î•º) Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§..." << endl;
     string temp;
     cin >> temp;
 }
@@ -64,30 +64,30 @@ void EmployeeManager::modify()
 {
     cleanCMD();
     cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "ªË¡¶«“ ¡˜ø¯ ID∏¶ ¿‘∑¬«œººø‰: ";
+    cout << "ÏÇ≠Ï†úÌï† ÏßÅÏõê IDÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî: ";
     string idStr;
     cin >> idStr;
-    if (m_employeeList.find(stoi(idStr)) != m_employeeList.end()) 
+    if (m_employeeList.find(stoi(idStr)) != m_employeeList.end())
     {
         auto employee = m_employeeList[stoi(idStr)];
         if (employee->getId() == stoi(idStr)) {
             employee->showInfo();
-                cout << "+++++++++++++++++ºˆ¡§«“ ¡§∫∏++++++++++++++++" << endl;
-                string name, jobTitle, phoneNum;
-                vector<int> projectIdList;
-                cout << "¡˜ø¯∏Ì (∞¯πÈ¿‘∑¬Ω√ «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
-                cin >> name;
-                if (name != "")
-                    employee->setName(name);
-                cout << "¡˜√• (∞¯πÈ¿‘∑¬Ω√ «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
-                cin >> jobTitle;
+            cout << "+++++++++++++++++ÏàòÏ†ïÌï† Ï†ïÎ≥¥++++++++++++++++" << endl;
+            string name, jobTitle, phoneNum;
+            vector<int> projectIdList;
+            cout << "ÏßÅÏõêÎ™Ö (Í≥µÎ∞±ÏûÖÎ†•Ïãú ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
+            cin >> name;
+            if (name != "")
+                employee->setName(name);
+            cout << "ÏßÅÏ±Ö (Í≥µÎ∞±ÏûÖÎ†•Ïãú ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
+            cin >> jobTitle;
             if (name != "")
                 employee->setJobTitle(jobTitle);
-            cout << "ø¨∂Ù√≥ (∞¯πÈ¿‘∑¬Ω√ «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "Ïó∞ÎùΩÏ≤ò (Í≥µÎ∞±ÏûÖÎ†•Ïãú ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> phoneNum;
             if (phoneNum != "")
                 employee->setPhoneNum(phoneNum);
-            cout << "«¡∑Œ¡ß∆ÆID (-1¿‘∑¬Ω√ ¡æ∑·): ";
+            cout << "ÌîÑÎ°úÏ†ùÌä∏ID (-1ÏûÖÎ†•Ïãú Ï¢ÖÎ£å): ";
             int input;
             while (true)
             {
@@ -99,18 +99,18 @@ void EmployeeManager::modify()
             }
             if (projectIdList.size() != 0)
                 employee->setProjectIdList(projectIdList);
-            cout << "º∫∞¯¿˚¿∏∑Œ ºˆ¡§µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+            cout << "ÏÑ±Í≥µÏ†ÅÏúºÎ°ú ÏàòÏ†ïÎêòÏóàÏäµÎãàÎã§!" << endl;
             return;
         }
     }
     else {
-        cout << "«ÿ¥Á ID " << idStr << " ¿« ¡˜ø¯¿ª(∏¶) √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ..." << endl;
+        cout << "Ìï¥Îãπ ID " << idStr << " Ïùò ÏßÅÏõêÏùÑ(Î•º) Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§..." << endl;
     }
 }
 
 EmployeeManager::EmployeeManager()
 {
-    //∆ƒ¿œø°º≠ ∫“∑Øø¿±‚
+    //ÌååÏùºÏóêÏÑú Î∂àÎü¨Ïò§Í∏∞
     ifstream file("employeeList.txt");
     if (!file.fail()) {
         while (!file.eof()) {
@@ -181,13 +181,13 @@ void EmployeeManager::showAllDatas()
 {
     cleanCMD();
 
-    cout << "√— ¿Œø¯ [" << m_employeeList.size() << "]" << endl;
+    cout << "Ï¥ù Ïù∏Ïõê [" << m_employeeList.size() << "]" << endl;
     for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
     {
         Employee* employee = it->second;
         employee->showInfo();
     }
-    cout << "æ∆π´≈∞≥™ ¿‘∑¬«œººø‰.";
+    cout << "ÏïÑÎ¨¥ÌÇ§ÎÇò ÏûÖÎ†•ÌïòÏÑ∏Ïöî.";
     string temp;
     cin >> temp;
 }
@@ -196,16 +196,16 @@ void EmployeeManager::displayMenu(){
     while(true)
     {
         cleanCMD();
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "                    ¿Œ∑¬∞¸∏Æ                   " << endl;
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "  1. ¿Œ∑¬ √ﬂ∞°                                 " << endl;
-        cout << "  2. ¿Œ∑¬ ºˆ¡§                                 " << endl;
-        cout << "  3. ¿Œ∑¬ ªË¡¶                                 " << endl;
-        cout << "  4. ∏µÁ ¿Œ∑¬ ∫∏±‚                             " << endl;
-        cout << "  5. ¿Œ∑¬∞¸∏Æ ≥™∞°±‚(exit)                      " << endl;
-        cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-        cout << "æÓ∂≤ «◊∏Ò¿ª º±≈√«œΩ√∞⁄Ω¿¥œ±Ó? ";
+        cout << "\033[30;94m‚îå‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îê\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ                \033[30;93mÏù∏Î†•Í¥ÄÎ¶¨\033[0m                   \033[30;94m‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ   \033[30;97m1. Ïù∏Î†• Ï∂îÍ∞Ä\033[0m                            \033[30;94m‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ   \033[30;97m2. Ïù∏Î†• ÏàòÏ†ï\033[0m                            \033[30;94m‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ   \033[30;97m3. Ïù∏Î†• ÏÇ≠Ï†ú\033[0m                            \033[30;94m‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ   \033[30;97m4. Î™®Îì† Ïù∏Î†• Î≥¥Í∏∞\033[0m                       \033[30;94m‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îÇ   \033[30;91mexit. Ïù∏Î†•Í¥ÄÎ¶¨ ÎÇòÍ∞ÄÍ∏∞\033[0m                   \033[30;94m‚îÇ\033[0m" << endl;
+        cout << "\033[30;94m‚îî‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îò\033[0m" << endl;
+        cout << "Ïñ¥Îñ§ Ìï≠Î™©ÏùÑ ÏÑ†ÌÉùÌïòÏãúÍ≤†ÏäµÎãàÍπå? ";
         string input;
         cin >> input;
 
@@ -240,7 +240,7 @@ vector<Employee> EmployeeManager::search(int projectId)
         Employee* employee = pair.second;
         vector<int> projectIdList = employee->getProjectIdList();
 
-         //employeeø°∞‘ projectId∞° ¿÷¥Ÿ∏È, ∏ÆΩ∫∆Æø° √ﬂ∞°
+        //employeeÏóêÍ≤å projectIdÍ∞Ä ÏûàÎã§Î©¥, Î¶¨Ïä§Ìä∏Ïóê Ï∂îÍ∞Ä
         if (find(projectIdList.begin(), projectIdList.end(), projectId) != projectIdList.end()) {
             returnEmployeeList.push_back(*employee);
         }

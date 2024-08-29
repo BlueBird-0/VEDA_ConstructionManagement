@@ -8,5 +8,3 @@ void Manager::setErrorMessage(string errorMessage)
 {
     errorMessage = errorMessage;
 }
-
-

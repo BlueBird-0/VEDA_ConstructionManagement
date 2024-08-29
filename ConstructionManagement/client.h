@@ -17,7 +17,7 @@ public:
     void setPhoneNum(string&);
     string getAddress() const;
     void setAddress(string&);
- 
+
     int id() const;
 
     virtual void showInfo();
@@ -32,4 +32,3 @@ private:
 
 };
 #endif          // __CLIENT_H__
-

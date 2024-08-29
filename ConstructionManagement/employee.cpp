@@ -3,16 +3,16 @@
 
 void Employee::showInfo()
 {
-	cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-	cout << "ID: " << getId() << endl;
-	cout << "ÀÌ¸§: " << getName() << endl;
-	cout << "Á÷Ã¥: " << getJobTitle() << endl;
-	cout << "¿¬¶ôÃ³: " << getPhoneNum() << endl;
-	cout << "°ü·Ã ÇÁ·ÎÁ§Æ®ID: ";
-	for (auto projectID : getProjectIdList())
-	{
-		cout << projectID << ", ";
-	}
+    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
+    cout << "ID: " << getId() << endl;
+    cout << "ì´ë¦„: " << getName() << endl;
+    cout << "ì§ì±…: " << getJobTitle() << endl;
+    cout << "ì—°ë½ì²˜: " << getPhoneNum() << endl;
+    cout << "ê´€ë ¨ í”„ë¡œì íŠ¸ID: ";
+    for (auto projectID : getProjectIdList())
+    {
+        cout << projectID << ", ";
+    }
 
     cout << endl << endl;
 }

@@ -22,7 +22,7 @@ public:
     int makeId();
     void displayInfo();
     void displayInfo(int);
-    
+
     vector<string> parseCSV(istream&, char);
 
     virtual void displayMenu();
