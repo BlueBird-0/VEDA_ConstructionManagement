@@ -176,20 +176,17 @@ void EmployeeManager::saveCSV()
     file.close();
 }
 
-
 void EmployeeManager::showAllDatas()
 {
-    cleanCMD();
-
     cout << "총 인원 [" << m_employeeList.size() << "]" << endl;
     for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
     {
         Employee* employee = it->second;
         employee->showInfo();
     }
-    cout << "아무키나 입력하세요.";
-    string temp;
-    cin >> temp;
+    cout << "\n계속하려면 Enter 키를 눌러주세요...";
+    cin.ignore();
+    cin.get();  // Enter 입력을 기다림
 }
 
 void EmployeeManager::displayMenu(){
@@ -225,11 +222,10 @@ void EmployeeManager::displayMenu(){
         {
             showAllDatas();
         }
-        else if (input == "exit")
+        else if (input == "exit" || input == "5")
         {
             return;
         }
-
     }
 }
 

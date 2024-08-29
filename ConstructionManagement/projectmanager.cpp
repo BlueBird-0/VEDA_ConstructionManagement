@@ -131,6 +131,9 @@ void ProjectManager::modify(int id)
         if (budget >= 0) project->setBudget(budget);
 
         cout << "성공적으로 수정되었습니다!" << endl;
+        cout << "\n계속하려면 Enter 키를 눌러주세요...";
+        cin.ignore();
+        cin.get();  // Enter 입력을 기다림
     }
 }
 

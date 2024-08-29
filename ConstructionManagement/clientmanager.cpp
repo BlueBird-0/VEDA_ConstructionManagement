@@ -270,9 +270,9 @@ void ClientManager::displayMenu()
         default:
         ff:
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-            cout << "아무키나 입력하세요.";
-            string temp;
-            cin >> temp;
+            cout << "\n계속하려면 Enter 키를 눌러주세요...";
+            cin.ignore();
+            cin.get();  // Enter 입력을 기다림
             break;
         }
     }
