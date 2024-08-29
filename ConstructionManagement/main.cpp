@@ -12,7 +12,8 @@ using namespace std;
 
 int main()
 {
-    Manager* manager;
+
+    Manager* manager = nullptr;
     ClientManager* clientManager = new ClientManager();
     ExpenseManager* expenseManager = new ExpenseManager();
     EmployeeManager* employeeManager = new EmployeeManager();
@@ -20,39 +21,42 @@ int main()
     ProjectManager* projectManagerr = new ProjectManager();
 
     string  input;
-    while(true){
+    while (true) {
         cleanCMD();
-        cout << "\033[30;94mâ”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”\033[0m" << endl;
-        cout << "\033[30;94mâ”‚            \033[30;93mê±´ì¶• ê´€ë¦¬ í”„ë¡œê·¸ë¨\033[0m             \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m1. í”„ë¡œì íŠ¸ ê´€ë¦¬\033[0m                         \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m2. ê³ ê° ê´€ë¦¬\033[0m                             \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m3. ìì¬ ê´€ë¦¬\033[0m                             \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m4. ì¸ë ¥ ê´€ë¦¬\033[0m                             \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m5. ë¹„ìš© ê´€ë¦¬\033[0m                             \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;91mexit. í”„ë¡œê·¸ë¨ ì¢…ë£Œ\033[0m                      \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜\033[0m" << endl;
-        cout << "ì–´ë–¤ í•­ëª©ì„ ì„ íƒí•˜ì‹œê² ìŠµë‹ˆê¹Œ? ";
+        cout << "\033[30;94m¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤ \033[0m" << endl;
+        cout << "\033[30;94m¦¢            \033[30;93m°ÇÃà °ü¸® ÇÁ·Î±×·¥\033[0m             \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m1. ÇÁ·ÎÁ§Æ® °ü¸®\033[0m                         \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m2. °í°´ °ü¸®\033[0m                             \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m3. ÀÚÀç °ü¸®\033[0m                             \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m4. ÀÎ·Â °ü¸®\033[0m                             \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m5. ºñ¿ë °ü¸®\033[0m                             \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;91mexit. ÇÁ·Î±×·¥ Á¾·á\033[0m                      \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥ \033[0m" << endl;
+        cout << "¾î¶² Ç×¸ñÀ» ¼±ÅÃÇÏ½Ã°Ú½À´Ï±î? ";
 
         cin >> input;
         if (input == "1") {
-            projectManagerr->displayMenu();
+            manager = projectManagerr;
         }
         else if (input == "2") {
-            clientManager->displayMenu();
+            manager = clientManager;
         }
         else if (input == "3") {
-            materialManager->displayMenu();
+            manager = materialManager;
         }
         else if (input == "4") {
             manager = employeeManager;
-            manager->displayMenu();
         }
         else if (input == "5") {
-            expenseManager->displayMenu();
+            manager = expenseManager;
         }
-        else if (input =="exit")
+        else if (input == "exit")
             break;
+        else {
+            continue;
+        }
+        manager->displayMenu();
 
     }
 
@@ -62,5 +66,4 @@ int main()
     delete materialManager;
     delete projectManagerr;
     return 0;
-
 }

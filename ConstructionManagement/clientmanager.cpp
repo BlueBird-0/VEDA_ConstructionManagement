@@ -42,7 +42,7 @@ ClientManager::~ClientManager()
 
     for (auto& pair : clientList)
     {
-        delete pair.second;  // ë™ì ìœ¼ë¡œ í• ë‹¹ëœ ê³ ê° ê°ì²´ ì‚­ì œ
+        delete pair.second;  // µ¿ÀûÀ¸·Î ÇÒ´çµÈ °í°´ °´Ã¼ »èÁ¦
     }
 }
 
@@ -50,30 +50,30 @@ void ClientManager::create()
 {
     string name, phoneNum, address;
 
-    cout << "ê³ ê°ëª…: ";
+    cout << "°í°´¸í: ";
     cin >> name;
-    cout << "ì „í™”ë²ˆí˜¸: ";
+    cout << "ÀüÈ­¹øÈ£: ";
     cin >> phoneNum;
-    cout << "ì£¼ì†Œ: ";
+    cout << "ÁÖ¼Ò: ";
     cin >> address;
 
 
-    int id = makeId();  // ìƒˆë¡œìš´ ê³ ê° ID ìƒì„±
+    int id = makeId();  // »õ·Î¿î °í°´ ID »ı¼º
     Client* client = new Client(id, name, phoneNum, address);
-    clientList[id] = client;  // ê³ ê° ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+    clientList[id] = client;  // °í°´ ¸®½ºÆ®¿¡ Ãß°¡
 
-    cout << "ê³ ê°ì´ ì„±ê³µì ìœ¼ë¡œ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+    cout << "°í°´ÀÌ ¼º°øÀûÀ¸·Î Ãß°¡µÇ¾ú½À´Ï´Ù!" << endl;
 }
 
 Client* ClientManager::search(int id)
 {
     auto it = clientList.find(id);
     if (it != clientList.end()) {
-        return it->second;  // ê³ ê° ì°¾ê¸° ì„±ê³µ
+        return it->second;  // °í°´ Ã£±â ¼º°ø
     }
     else {
-        cout << "ê³ ê°ID " << id << "ì„(ë¥¼) ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤..." << endl;
-        return nullptr;  // ê³ ê° ì°¾ê¸° ì‹¤íŒ¨
+        cout << "°í°´ID " << id << "À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù..." << endl;
+        return nullptr;  // °í°´ Ã£±â ½ÇÆĞ
     }
 }
 
@@ -81,12 +81,12 @@ void ClientManager::remove(int id)
 {
     auto it = clientList.find(id);
     if (it != clientList.end()) {
-        delete it->second;  // ë™ì ìœ¼ë¡œ í• ë‹¹ëœ ê³ ê° ê°ì²´ ì‚­ì œ
-        clientList.erase(it);  // ê³ ê° ë¦¬ìŠ¤íŠ¸ì—ì„œ ì‚­ì œ
-        cout << "ê³ ê° ì •ë³´ê°€ ì„±ê³µì ìœ¼ë¡œ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+        delete it->second;  // µ¿ÀûÀ¸·Î ÇÒ´çµÈ °í°´ °´Ã¼ »èÁ¦
+        clientList.erase(it);  // °í°´ ¸®½ºÆ®¿¡¼­ »èÁ¦
+        cout << "°í°´ Á¤º¸°¡ ¼º°øÀûÀ¸·Î »èÁ¦µÇ¾ú½À´Ï´Ù!" << endl;
     }
     else {
-        cout << "ê³ ê°ID " << id << "ì„(ë¥¼) ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤..." << endl;
+        cout << "°í°´ID " << id << "À»(¸¦) Ã£À» ¼ö ¾ø½À´Ï´Ù..." << endl;
     }
 }
 
@@ -96,31 +96,31 @@ void ClientManager::modify(int id)
     if (client) {
         string name, phoneNum, address;
 
-        cout << "í˜„ì¬ ê³ ê°ëª…: " << client->getClientName() << endl;
-        cout << "í˜„ì¬ ì „í™”ë²ˆí˜¸: " << client->getPhoneNum() << endl;
-        cout << "í˜„ì¬ ì£¼ì†Œ: " << client->getAddress() << endl;
+        cout << "ÇöÀç °í°´¸í: " << client->getClientName() << endl;
+        cout << "ÇöÀç ÀüÈ­¹øÈ£: " << client->getPhoneNum() << endl;
+        cout << "ÇöÀç ÁÖ¼Ò: " << client->getAddress() << endl;
 
-        cout << "ìƒˆë¡œìš´ ê³ ê°ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î °í°´¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
         cin.ignore();
         getline(cin, name);
         if (!name.empty()) client->setClientName(name);
 
-        cout << "ìƒˆë¡œìš´ ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
         getline(cin, phoneNum);
         if (!phoneNum.empty()) client->setPhoneNum(phoneNum);
 
-        cout << "ìƒˆë¡œìš´ ì£¼ì†Œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. (ì•„ë‹ˆë©´ Enterí‚¤ë¥¼ ëˆŒëŸ¬ í˜„ì¬ ìƒíƒœ ìœ ì§€): ";
+        cout << "»õ·Î¿î ÁÖ¼Ò¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. (¾Æ´Ï¸é EnterÅ°¸¦ ´­·¯ ÇöÀç »óÅÂ À¯Áö): ";
         getline(cin, address);
         if (!address.empty()) client->setAddress(address);
 
-        cout << "ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤!" << endl;
+        cout << "¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù!" << endl;
     }
 }
 
 void ClientManager::displayInfo()
 {
     if (clientList.size() != 0) {
-        cout << endl << "  ID  |     ê³ ê°ëª…     | ì „í™”ë²ˆí˜¸ |      ì£¼ì†Œ" << endl;
+        cout << endl << "  ID  |     °í°´¸í     | ÀüÈ­¹øÈ£ |      ÁÖ¼Ò" << endl;
         for (auto it = clientList.begin(); it != clientList.end(); it++)
         {
             int key = it->first;
@@ -129,7 +129,7 @@ void ClientManager::displayInfo()
         }
     }
     else {
-        cout << "ë“±ë¡ëœ ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤." << endl;
+        cout << "µî·ÏµÈ °í°´ÀÌ ¾ø½À´Ï´Ù." << endl;
     }
 
 }
@@ -137,12 +137,12 @@ void ClientManager::displayInfo(int key)
 {
     if (clientList.find(key) != clientList.end())
     {
-        cout << endl << "  ID  |  ê³ ê°ëª…  |   ì „í™”ë²ˆí˜¸   |   ì£¼ì†Œ" << endl;
+        cout << endl << "  ID  |  °í°´¸í  |   ÀüÈ­¹øÈ£   |   ÁÖ¼Ò" << endl;
         Client* c = clientList[key];
         c->showInfo();
     }
     else {
-        cout << "í•´ë‹¹ ê³ ê°ì´ ì—†ìŠµë‹ˆë‹¤." << endl;
+        cout << "ÇØ´ç °í°´ÀÌ ¾ø½À´Ï´Ù." << endl;
     }
 }
 
@@ -199,17 +199,17 @@ void ClientManager::displayMenu()
         string keystr = "-1";
         int key;
         cout << "\033[2J\033[1;1H";
-        cout << "\033[30;94mâ”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”\033[0m" << endl;
-        cout << "\033[30;94mâ”‚                \033[30;93mê³ ê°ê´€ë¦¬\033[0m                   \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m1. ì „ì²´ ê³ ê° ì¡°íšŒ\033[0m                        \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m2. ê³ ê° ID ì¡°íšŒ\033[0m                          \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m3. ê³ ê° ë“±ë¡\033[0m                             \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m4. ê³ ê° ì •ë³´ ì‚­ì œ\033[0m                        \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;97m5. ê³ ê° ì •ë³´ ìˆ˜ì •\033[0m                        \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ”‚  \033[30;91m6. ê³ ê°ê´€ë¦¬ ë‚˜ê°€ê¸°\033[0m                       \033[30;94mâ”‚\033[0m" << endl;
-        cout << "\033[30;94mâ””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜\033[0m" << endl;
-        cout << " ì–´ë–¤ í•­ëª©ì„ ì„ íƒí•˜ì‹œê² ìŠµë‹ˆê¹Œ? ";
+        cout << "\033[30;94m¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤ \033[0m" << endl;
+        cout << "\033[30;94m¦¢                \033[30;93m°í°´°ü¸®\033[0m                   \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m1. ÀüÃ¼ °í°´ Á¶È¸\033[0m                        \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m2. °í°´ ID Á¶È¸\033[0m                          \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m3. °í°´ µî·Ï\033[0m                             \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m4. °í°´ Á¤º¸ »èÁ¦\033[0m                        \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;97m5. °í°´ Á¤º¸ ¼öÁ¤\033[0m                        \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¢  \033[30;91m6. °í°´°ü¸® ³ª°¡±â\033[0m                       \033[30;94m¦¢ \033[0m" << endl;
+        cout << "\033[30;94m¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥ \033[0m" << endl;
+        cout << " ¾î¶² Ç×¸ñÀ» ¼±ÅÃÇÏ½Ã°Ú½À´Ï±î? ";
         cin.ignore();
         cin >> ch;
         if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
@@ -226,7 +226,7 @@ void ClientManager::displayMenu()
             break;
 
         case 2:
-            cout << "   ì¡°íšŒí•  ê³ ê°IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
+            cout << "   Á¶È¸ÇÒ °í°´ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
             cin >> keystr;
             if (atoi(keystr.c_str()) == 0 && keystr != "0")
             {
@@ -247,7 +247,7 @@ void ClientManager::displayMenu()
             break;
         case 4:
             displayInfo();
-            cout << "ì‚­ì œí•  ê³ ê°IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
+            cout << "»èÁ¦ÇÒ °í°´ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
             cin >> keystr;
             if (atoi(keystr.c_str()) == 0 && keystr != "0")
             {
@@ -257,7 +257,7 @@ void ClientManager::displayMenu()
             break;
         case 5:
             displayInfo();
-            cout << "ìˆ˜ì •í•  ê³ ê°IDë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”: ";
+            cout << "¼öÁ¤ÇÒ °í°´ID¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä: ";
             cin >> keystr;
             if (atoi(keystr.c_str()) == 0 && keystr != "0")
             {
@@ -269,8 +269,8 @@ void ClientManager::displayMenu()
             return;
         default:
         ff:
-            cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”." << endl;
-            cout << "ì•„ë¬´í‚¤ë‚˜ ì…ë ¥í•˜ì„¸ìš”.";
+            cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä." << endl;
+            cout << "¾Æ¹«Å°³ª ÀÔ·ÂÇÏ¼¼¿ä.";
             string temp;
             cin >> temp;
             break;
