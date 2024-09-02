@@ -8,6 +8,13 @@
 #include "project.h"
 #include "projectmanager.h"
 
+void ProjectManager::displayNotFoundId(int id)
+{
+    setCmdColor(2);
+    cout << "프로젝트ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+    setCmdColor();
+}
+
 ProjectManager::ProjectManager()
 {
     ifstream file;
@@ -81,7 +88,7 @@ void ProjectManager::remove(int id)
         cout << "프로젝트가 성공적으로 삭제되었습니다!" << endl;
     }
     else {
-        cout << "프로젝트ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+        displayNotFoundId(id);
     }
 }
 
@@ -92,7 +99,7 @@ Project* ProjectManager::search(int id)
         return it->second;  // 프로젝트 찾기 성공
     }
     else {
-        cout << "프로젝트ID " << id << "을(를) 찾을 수 없습니다..." << endl;
+        displayNotFoundId(id);
         return nullptr;  // 프로젝트 찾기 실패
     }
 }
@@ -101,41 +108,46 @@ Project* ProjectManager::search(int id)
 
 void ProjectManager::modify(int id)
 {
-    Project* project = projectList[id];
+    if (projectList.find(id) != projectList.end()) {
+        Project* project = projectList[id];
 
-    if (project) {
-        string name, location, startDate, endDate;
-        int budget = 0;
+        if (project) {
+            string name, location, startDate, endDate;
+            int budget = 0;
 
-        cout << "현재 프로젝트명: " << project->getProjectName() << endl;
-        cout << "현재 위치: " << project->getLocation() << endl;
-        cout << "현재 시작일: " << project->getStartDate() << endl;
-        cout << "현재 종료일: " << project->getEndDate() << endl;
-        cout << "현재 예산: " << project->getBudget() << endl;
+            cout << "현재 프로젝트명: " << project->getProjectName() << endl;
+            cout << "현재 위치: " << project->getLocation() << endl;
+            cout << "현재 시작일: " << project->getStartDate() << endl;
+            cout << "현재 종료일: " << project->getEndDate() << endl;
+            cout << "현재 예산: " << project->getBudget() << endl;
 
-        cout << "새로운 프로젝트명을 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
-        cin.ignore();
-        getline(cin, name);
-        if (!name.empty()) project->setProjectName(name);
+            cout << "새로운 프로젝트명을 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+            cin.ignore();
+            getline(cin, name);
+            if (!name.empty()) project->setProjectName(name);
 
-        cout << "새로운 위치를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
-        getline(cin, location);
-        if (!location.empty()) project->setLocation(location);
+            cout << "새로운 위치를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+            getline(cin, location);
+            if (!location.empty()) project->setLocation(location);
 
-        cout << "새로운 시작일를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
-        getline(cin, startDate);
-        if (!startDate.empty()) project->setStartDate(startDate);
+            cout << "새로운 시작일를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+            getline(cin, startDate);
+            if (!startDate.empty()) project->setStartDate(startDate);
 
-        cout << "새로운 종료일를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
-        getline(cin, endDate);
-        if (!endDate.empty()) project->setEndDate(endDate);
+            cout << "새로운 종료일를 입력해주세요. (아니면 Enter키를 눌러 현재 상태 유지): ";
+            getline(cin, endDate);
+            if (!endDate.empty()) project->setEndDate(endDate);
 
-        cout << "새로운 예산을 입력해주세요. (아니면 -1를 입력하여 현재 상태 유지): ";
-        cin >> budget;
-        if (budget >= 0) project->setBudget(budget);
+            cout << "새로운 예산을 입력해주세요. (아니면 -1를 입력하여 현재 상태 유지): ";
+            cin >> budget;
+            if (budget >= 0) project->setBudget(budget);
 
-        cout << "성공적으로 수정되었습니다!" << endl;
-        waitEnter();
+            cout << "성공적으로 수정되었습니다!" << endl;
+            waitEnter();
+        }
+    }
+    else {
+        displayNotFoundId(id);
     }
 }
 
@@ -152,7 +164,7 @@ void ProjectManager::displayInfo()
         }
     }else {
         setCmdColor(2);
-		cout << " 등록된 프로젝트가 없습니다." << endl;
+		cout << "등록된 프로젝트가 없습니다." << endl;
 	}
 
     setCmdColor();
@@ -160,13 +172,18 @@ void ProjectManager::displayInfo()
 
 void ProjectManager::displayInfo(int key)
 {
-    setCmdColor(1);
-    printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");
-    if (!projectList.empty()) {
-        Project* p = projectList[key];
-        p->showInfo();
+    if (projectList.find(key) != projectList.end()) {
+        setCmdColor(1);
+        printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");
+        if (!projectList.empty()) {
+            Project* p = projectList[key];
+            p->showInfo();
+        }
+        setCmdColor();
     }
-    setCmdColor();
+    else {
+        displayNotFoundId(key);
+    }
 }
 
 int ProjectManager::makeId()
@@ -220,9 +237,9 @@ void ProjectManager::displayMenu()
         cout << "\033[30;94m│  \033[30;97m3. 프로젝트 등록\033[0m                         \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m4. 프로젝트 삭제\033[0m                         \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m5. 프로젝트 수정\033[0m                         \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;91mexit. 프로젝트관리 나가기\033[0m                \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91mexit. 나가기\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
-        cout << " 어떤 항목을 선택하시겠습니까? ";
+        cout << "어떤 항목을 선택하시겠습니까? ";
         cin >> ch;
 		if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6" || ch == "exit"))
         {
@@ -233,7 +250,7 @@ void ProjectManager::displayMenu()
             waitEnter();
         }
         else if (ch == "2") {
-            cout << "   조회할 프로젝트ID를 입력해주세요: ";
+            cout << "조회할 프로젝트ID를 입력해주세요: ";
             cin >> key;
             if (atoi(key.c_str()) == 0 && key != "0")
             {
@@ -248,7 +265,7 @@ void ProjectManager::displayMenu()
         }
         else if (ch == "4") {
             displayInfo();
-            cout << "   삭제할 프로젝트ID를 입력해주세요: ";
+            cout << "삭제할 프로젝트ID를 입력해주세요: ";
             cin >> key;
             if (atoi(key.c_str()) == 0 && key != "0")
             {
@@ -259,7 +276,7 @@ void ProjectManager::displayMenu()
         }
         else if (ch == "5") {
             displayInfo();
-            cout << "   수정할 프로젝트ID를 입력해주세요: ";
+            cout << "수정할 프로젝트ID를 입력해주세요: ";
             cin >> key;
             if (atoi(key.c_str()) == 0 && key != "0")
             {
@@ -273,7 +290,9 @@ void ProjectManager::displayMenu()
         }
         else {
         ff:
+            setCmdColor(2);
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+            setCmdColor();
 
             waitEnter();
         }

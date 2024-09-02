@@ -10,6 +10,8 @@ using namespace std;
 
 class ProjectManager : public Manager
 {
+private:
+    void displayNotFoundId(int id);
 public:
     ProjectManager();
     ~ProjectManager();

@@ -33,7 +33,7 @@ int main()
         cout << "\033[30;94m│  \033[30;97m5. 비용 관리\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;91mexit. 프로그램 종료\033[0m                      \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
-        cout << " 어떤 항목을 선택하시겠습니까? ";
+        cout << "어떤 항목을 선택하시겠습니까? ";
 
         cin >> input;
         if (input == "1") {
@@ -54,6 +54,9 @@ int main()
         else if (input == "exit")
             break;
         else {
+            setCmdColor(2);
+            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+            setCmdColor();
             cout << "\n계속하려면 Enter 키를 눌러주세요...";
             cin.ignore();
             cin.get();  // Enter 입력을 기다림
