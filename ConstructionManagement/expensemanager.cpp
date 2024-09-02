@@ -1,4 +1,4 @@
-#include "expensemanager.h"
+Ôªø#include "expensemanager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -38,22 +38,22 @@ ExpenseManager::~ExpenseManager() {
 void ExpenseManager::create() {
 	int projectID, materialID, materialCosts, laborCosts, otherCosts;
 	setCmdColor(1);
-	cout << "«¡∑Œ¡ß∆ÆID: ";
+	cout << "ÌîÑÎ°úÏ†ùÌä∏ID: ";
 	cin >> projectID;
-	cout << "¿⁄¿ÁID: ";
+	cout << "ÏûêÏû¨ID: ";
 	cin >> materialID;
-	cout << "¿⁄¿Á∫ÒøÎ: ";
+	cout << "ÏûêÏû¨ÎπÑÏö©: ";
 	cin >> materialCosts;
-	cout << "¿Œ∞«∫Ò: ";
+	cout << "Ïù∏Í±¥ÎπÑ: ";
 	cin >> laborCosts;
-	cout << "±‚≈∏∫ÒøÎ: ";
+	cout << "Í∏∞ÌÉÄÎπÑÏö©: ";
 	cin >> otherCosts;
 	setCmdColor();
 
     Expense expense(projectID, materialID, materialCosts, laborCosts, otherCosts);
     m_expenses.push_back(expense);
 
-    cout << "∫ÒøÎ¿Ã º∫∞¯¿˚¿∏∑Œ √ﬂ∞°µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+    cout << "ÎπÑÏö©Ïù¥ ÏÑ±Í≥µÏ†ÅÏúºÎ°ú Ï∂îÍ∞ÄÎêòÏóàÏäµÎãàÎã§!" << endl;
 }
 
 void ExpenseManager::modify(int projectID, int materialID) {
@@ -61,38 +61,38 @@ void ExpenseManager::modify(int projectID, int materialID) {
         if (expense.getProjectID() == projectID && expense.getMaterialID() == materialID) {
             int materialCosts, laborCosts, otherCosts;
 
-            cout << "«ˆ¿Á ¿⁄¿Á∫ÒøÎ: " << expense.getMaterialCosts() << endl;
-            cout << "«ˆ¿Á ¿Œ∞«∫Ò: " << expense.getLaborCosts() << endl;
-            cout << "«ˆ¿Á ±‚≈∏∫ÒøÎ: " << expense.getOtherCosts() << endl;
+            cout << "ÌòÑÏû¨ ÏûêÏû¨ÎπÑÏö©: " << expense.getMaterialCosts() << endl;
+            cout << "ÌòÑÏû¨ Ïù∏Í±¥ÎπÑ: " << expense.getLaborCosts() << endl;
+            cout << "ÌòÑÏû¨ Í∏∞ÌÉÄÎπÑÏö©: " << expense.getOtherCosts() << endl;
 
-            cout << "ªı∑ŒøÓ ¿⁄¿Á∫ÒøÎ¿ª ¿‘∑¬«ÿ¡÷ººø‰. (æ∆¥œ∏È -1∏¶ ¿‘∑¬«œø© «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "ÏÉàÎ°úÏö¥ ÏûêÏû¨ÎπÑÏö©ÏùÑ ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî. (ÏïÑÎãàÎ©¥ -1Î•º ÏûÖÎ†•ÌïòÏó¨ ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> materialCosts;
             if (materialCosts >= 0) expense.setMaterialCosts(materialCosts);
 
-            cout << "ªı∑ŒøÓ ¿Œ∞«∫Ò∏¶ ¿‘∑¬«ÿ¡÷ººø‰. (æ∆¥œ∏È -1∏¶ ¿‘∑¬«œø© «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "ÏÉàÎ°úÏö¥ Ïù∏Í±¥ÎπÑÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî. (ÏïÑÎãàÎ©¥ -1Î•º ÏûÖÎ†•ÌïòÏó¨ ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> laborCosts;
             if (laborCosts >= 0) expense.setLaborCosts(laborCosts);
 
-            cout << "ªı∑ŒøÓ ±‚≈∏∫ÒøÎ¿ª ¿‘∑¬«ÿ¡÷ººø‰. (æ∆¥œ∏È -1∏¶ ¿‘∑¬«œø© «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "ÏÉàÎ°úÏö¥ Í∏∞ÌÉÄÎπÑÏö©ÏùÑ ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî. (ÏïÑÎãàÎ©¥ -1Î•º ÏûÖÎ†•ÌïòÏó¨ ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> otherCosts;
             if (otherCosts >= 0) expense.setOtherCosts(otherCosts);
 
-            cout << "º∫∞¯¿˚¿∏∑Œ ºˆ¡§µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+            cout << "ÏÑ±Í≥µÏ†ÅÏúºÎ°ú ÏàòÏ†ïÎêòÏóàÏäµÎãàÎã§!" << endl;
             return;
         }
     }
-    cout << "∫ÒøÎø° ¥Î«— «¡∑Œ¡ß∆ÆID " << projectID << " øÕ ¿⁄¿ÁID " << materialID << " ¿ª(∏¶) √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ..." << endl;
+    cout << "ÎπÑÏö©Ïóê ÎåÄÌïú ÌîÑÎ°úÏ†ùÌä∏ID " << projectID << " ÏôÄ ÏûêÏû¨ID " << materialID << " ÏùÑ(Î•º) Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§..." << endl;
 }
 
 void ExpenseManager::remove(int projectID, int materialID) {
     for (auto it = m_expenses.begin(); it != m_expenses.end(); ++it) {
         if (it->getProjectID() == projectID && it->getMaterialID() == materialID) {
             m_expenses.erase(it);
-            cout << "∫ÒøÎ¿Ã º∫∞¯¿˚¿∏∑Œ ªË¡¶µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+            cout << "ÎπÑÏö©Ïù¥ ÏÑ±Í≥µÏ†ÅÏúºÎ°ú ÏÇ≠Ï†úÎêòÏóàÏäµÎãàÎã§!" << endl;
             return;
         }
     }
-    cout << "∫ÒøÎø° ¥Î«— «¡∑Œ¡ß∆ÆID " << projectID << " øÕ ¿⁄¿ÁID " << materialID << " ¿ª(∏¶) √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ..." << endl;
+    cout << "ÎπÑÏö©Ïóê ÎåÄÌïú ÌîÑÎ°úÏ†ùÌä∏ID " << projectID << " ÏôÄ ÏûêÏû¨ID " << materialID << " ÏùÑ(Î•º) Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§..." << endl;
 }
 
 vector<int> ExpenseManager::searchByProjectID(int projectID) {
@@ -117,7 +117,7 @@ vector<int> ExpenseManager::searchByMaterialID(int materialID) {
 
 void ExpenseManager::displayInfo() {
     setCmdColor(1);
-    printf("%10s | %6s | %8s | %8s | %8s\n", "«¡∑Œ¡ß∆ÆID", "¿⁄¿ÁID", "¿⁄¿Á∫ÒøÎ", "¿Œ∞«∫Ò", "±‚≈∏∫ÒøÎ");
+    printf("%10s | %6s | %12s | %12s | %12s\n", "ÌîÑÎ°úÏ†ùÌä∏ID", "ÏûêÏû¨ID", "ÏûêÏû¨ÎπÑÏö©(‚Ç©)", "Ïù∏Í±¥ÎπÑ(‚Ç©)", "Í∏∞ÌÉÄÎπÑÏö©(‚Ç©)");
     for (const auto& expense : m_expenses) {
         cout << setw(10) << expense.getProjectID() << " | ";
         cout << setw(6) << expense.getMaterialID() << " | ";
@@ -134,18 +134,18 @@ void ExpenseManager::displayMenu() {
 
     while (running) {
         cout << "\033[2J\033[1;1H";  // Clear screen
-        cout << "\033[30;94m¶£¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶§ \033[0m" << endl;
-        cout << "\033[30;94m¶¢                 \033[30;93m∫ÒøÎ∞¸∏Æ\033[0m                  \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m1. ∫ÒøÎ ¡∂»∏\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m2. ∫ÒøÎ µÓ∑œ\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m3. ∫ÒøÎ ºˆ¡§\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m4. ∫ÒøÎ ªË¡¶\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m5. «¡∑Œ¡ß∆ÆID ∞Àªˆ\033[0m                       \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m6. ¿⁄¿ÁID ∞Àªˆ\033[0m                           \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;91m7. ∫ÒøÎ∞¸∏Æ ≥™∞°±‚\033[0m                       \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¶¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶• \033[0m" << endl;
-        cout << "æÓ∂≤ «◊∏Ò¿ª º±≈√«œΩ√∞⁄Ω¿¥œ±Ó? ";
+        cout << "\033[30;94m‚îå‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îê \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ                 \033[30;93mÎπÑÏö©Í¥ÄÎ¶¨\033[0m                  \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m1. ÎπÑÏö© Ï°∞Ìöå\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m2. ÎπÑÏö© Îì±Î°ù\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m3. ÎπÑÏö© ÏàòÏ†ï\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m4. ÎπÑÏö© ÏÇ≠Ï†ú\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m5. ÌîÑÎ°úÏ†ùÌä∏ID Í≤ÄÏÉâ\033[0m                       \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m6. ÏûêÏû¨ID Í≤ÄÏÉâ\033[0m                           \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;91m7. ÎπÑÏö©Í¥ÄÎ¶¨ ÎÇòÍ∞ÄÍ∏∞\033[0m                       \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îî‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îò \033[0m" << endl;
+        cout << "Ïñ¥Îñ§ Ìï≠Î™©ÏùÑ ÏÑ†ÌÉùÌïòÏãúÍ≤†ÏäµÎãàÍπå? ";
         cin >> choice;
 
         switch (choice) {
@@ -156,25 +156,25 @@ void ExpenseManager::displayMenu() {
             create();
             break;
         case 3:
-            cout << "ºˆ¡§«“ «¡∑Œ¡ß∆ÆID∏¶ ¿‘∑¬«ÿ¡÷ººø‰: ";
+            cout << "ÏàòÏ†ïÌï† ÌîÑÎ°úÏ†ùÌä∏IDÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî: ";
             cin >> projectID;
-            cout << "ºˆ¡§«“ ¿⁄¿ÁID∏¶ ¿‘∑¬«ÿ¡÷ººø‰: ";
+            cout << "ÏàòÏ†ïÌï† ÏûêÏû¨IDÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî: ";
             cin >> materialID;
             modify(projectID, materialID);
             break;
         case 4:
-            cout << "ªË¡¶«“ «¡∑Œ¡ß∆ÆID∏¶ ¿‘∑¬«ÿ¡÷ººø‰: ";
+            cout << "ÏÇ≠Ï†úÌï† ÌîÑÎ°úÏ†ùÌä∏IDÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî: ";
             cin >> projectID;
-            cout << "ªË¡¶«“ ¿⁄¿ÁID∏¶ ¿‘∑¬«ÿ¡÷ººø‰: ";
+            cout << "ÏÇ≠Ï†úÌï† ÏûêÏû¨IDÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî: ";
             cin >> materialID;
             remove(projectID, materialID);
             break;
         case 5:
-            cout << "√£∞ÌΩÕ¿∫ «¡∑Œ¡ß∆ÆID∏¶ ¿‘∑¬«ÿ¡÷ººø‰: ";
+            cout << "Ï∞æÍ≥†Ïã∂ÏùÄ ÌîÑÎ°úÏ†ùÌä∏IDÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî: ";
             cin >> projectID;
             {
                 vector<int> materialIDs = searchByProjectID(projectID);
-                cout << "«¡∑Œ¡ß∆Æø°º≠ ªÁøÎµ«¥¬ ¿⁄¿Á " << projectID << ": ";
+                cout << "ÌîÑÎ°úÏ†ùÌä∏ÏóêÏÑú ÏÇ¨Ïö©ÎêòÎäî ÏûêÏû¨ " << projectID << ": ";
                 for (int id : materialIDs) {
                     cout << id << " ";
                 }
@@ -182,11 +182,11 @@ void ExpenseManager::displayMenu() {
             }
             break;
         case 6:
-            cout << "√£∞ÌΩÕ¿∫ ¿⁄¿ÁID∏¶ ¿‘∑¬«ÿ¡÷ººø‰: ";
+            cout << "Ï∞æÍ≥†Ïã∂ÏùÄ ÏûêÏû¨IDÎ•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî: ";
             cin >> materialID;
             {
                 vector<int> projectIDs = searchByMaterialID(materialID);
-                cout << "¿⁄¿Á∏¶ ªÁøÎ«— «¡∑Œ¡ß∆Æ " << materialID << ": ";
+                cout << "ÏûêÏû¨Î•º ÏÇ¨Ïö©Ìïú ÌîÑÎ°úÏ†ùÌä∏ " << materialID << ": ";
                 for (int id : projectIDs) {
                     cout << id << " ";
                 }
@@ -197,11 +197,11 @@ void ExpenseManager::displayMenu() {
             running = false;
             break;
         default:
-            cout << "¿ﬂ∏¯µ» º±≈√¿‘¥œ¥Ÿ. ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰." << endl;
+            cout << "ÏûòÎ™ªÎêú ÏÑ†ÌÉùÏûÖÎãàÎã§. Îã§Ïãú ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî." << endl;
             break;
         }
         if (running) {
-            cout << "\n∞Ëº”«œ∑¡∏È Enter ≈∞∏¶ ¥≠∑Ø¡÷ººø‰...";
+            cout << "\nÍ≥ÑÏÜçÌïòÎ†§Î©¥ Enter ÌÇ§Î•º ÎàåÎü¨Ï£ºÏÑ∏Ïöî...";
             cin.ignore();
             cin.get();
         }

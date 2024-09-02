@@ -1,4 +1,4 @@
-#include <vector>
+﻿#include <vector>
 #include <algorithm>
 #include <fstream>
 #include <sstream>
@@ -51,8 +51,8 @@ void ProjectManager::create()
 {
     string name, location, startDate, endDate, budget;
     setCmdColor(0);
-    printf("%14s | %10s | %10s | %8s | %10s\n", "프로젝트명", "위치", "시작일","종료일","예산(₩)");
-    printf("%14s | %10s | %10s | %8s | %10s\n", "도로 공사", "부산광역시", "2023-02-15","2024-02-15","800,000,000");
+    printf("%14s | %10s | %10s | %10s | %10s\n", "프로젝트명", "위치", "시작일","종료일","예산(₩)");
+    printf("%14s | %10s | %10s | %10s | %10s\n", "도로 공사", "부산광역시", "2023-02-15","2024-02-15","800,000,000");
     setCmdColor();
     cout << "프로젝트명: ";
     cin >> name;
@@ -142,7 +142,8 @@ void ProjectManager::displayInfo()
 {
     printf("\n");
     setCmdColor(2);
-    printf("%10s | %14s | %10s | %8s | %8s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일","종료일","예산");    ///setw()
+
+    printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일","종료일","예산(₩)");    ///setw()
     setCmdColor(1);
     for (const auto& v : projectList)
     {
@@ -156,7 +157,7 @@ void ProjectManager::displayInfo()
 void ProjectManager::displayInfo(int key)
 {
     setCmdColor(1);
-    printf("%10s | %14s | %10s | %8s | %8s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산");
+    printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");
     Project* p = projectList[key];
     p->showInfo();
     setCmdColor();
