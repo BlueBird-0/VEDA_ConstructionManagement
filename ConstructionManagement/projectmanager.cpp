@@ -59,7 +59,8 @@ void ProjectManager::create()
     string name, location, startDate, endDate, budget;
     setCmdColor(0);
     printf("%14s | %10s | %10s | %10s | %10s\n", "프로젝트명", "위치", "시작일","종료일","예산(₩)");
-    printf("%14s | %10s | %10s | %10s | %10s\n", "도로 공사", "부산광역시", "2023-02-15","2024-02-15","800,000,000");
+    printf("%14s | %10s | %10s | %10s | %10s\n", "도로 공사", "부산광역시", "2023-02-15","2024-02-15","800000000");
+    printf("\n");
     setCmdColor();
     cout << "프로젝트명: ";
     cin >> name;

@@ -37,6 +37,12 @@ ExpenseManager::~ExpenseManager() {
 
 void ExpenseManager::create() {
 	int projectID, materialID, materialCosts, laborCosts, otherCosts;
+    setCmdColor(0);
+    printf("%10s | %6s | %12s | %12s | %12s\n", "프로젝트ID", "자재ID", "자재비용(₩)", "인건비(₩)", "기타비용(₩)");
+    printf("%10s | %6s | %12s | %12s | %12s\n", "0", "0", "20000000", "3100000", "1000000");
+    printf("\n");
+    setCmdColor();
+
 	setCmdColor(1);
 	cout << "프로젝트ID: ";
 	cin >> projectID;

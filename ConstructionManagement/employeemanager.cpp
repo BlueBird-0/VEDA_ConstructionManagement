@@ -11,6 +11,7 @@ void EmployeeManager::create()
     setCmdColor(0);
     printf("%10s | %8s | %14s | %10s \n", "직원명", "직책", "연락처", "관련 프로젝트ID");
     printf("%10s | %8s | %14s | %10s \n", "홍길동", "사장", "010-1234-5678", "1 2 3");
+    printf("\n");
     setCmdColor();
 
     cout << "직원명: ";
@@ -34,7 +35,7 @@ void EmployeeManager::create()
     Employee* material = new Employee(newId, name, jobTitle, phoneNum, projectIdList);
     m_employeeList[newId] = material;
 
-    cout << "성공적으로 추가되었습니다!" << endl;
+    cout << "직원이 성공적으로 추가되었습니다!" << endl;
 }
 
 void EmployeeManager::remove()

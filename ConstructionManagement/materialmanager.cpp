@@ -42,8 +42,9 @@ void MaterialManager::create() {
     string name, supplier;
     int stock, orderQuantity, unitPrice;
     setCmdColor(0);
-    printf("%2s)  %10s | %10s | %12s | %6s | %6s\n", "예","자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
-    printf("%2s | %10s | %10s | %12s | %6s | %6s\n", "","시멘트", "ABC 건축자재", "50,000", "200", "500");
+    printf("%2s)  %10s | %16s | %12s | %10s | %10s\n", "예","자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
+    printf("%2s | %10s | %16s | %12s | %10s | %10s\n", "","시멘트", "ABC 건축자재", "50000", "200", "500");
+    printf("\n");
     setCmdColor();
     cout << "자재명: ";
     cin >> name;
@@ -124,7 +125,7 @@ void MaterialManager::modify(int id) {
 void MaterialManager::displayInfo() {
     setCmdColor(1);
 	if (!materialList.empty()) {
-		printf("%6s | %10s | %10s | %12s | %6s | %6s\n", "자재ID", "자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
+		printf("%6s | %10s | %16s | %12s | %10s | %10s\n", "자재ID", "자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
 
 		for (const auto& pair : materialList) {
 			Material* m = pair.second;
