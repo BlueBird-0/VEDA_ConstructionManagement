@@ -12,15 +12,11 @@ void Employee::showInfo()
     cout << setw(14) << right << getPhoneNum() << " | ";
 
     string str = "";
-    auto projectList = getProjectIdList();
-    if (projectList.empty())
-        str = "empty";
-    else {
-		for (auto it = projectList.begin(); it != projectList.end(); it++) {
-            str += to_string(*it);
-            if (it != projectList.end() - 1)
-                str += ", ";
-        }
-    }
+	auto projectList = getProjectIdList();
+	for (auto it = projectList.begin(); it != projectList.end(); it++) {
+		str += to_string(*it);
+		if (it != projectList.end() - 1)
+			str += ", ";
+	}
     cout << setw(10) << right << str <<endl;
 }

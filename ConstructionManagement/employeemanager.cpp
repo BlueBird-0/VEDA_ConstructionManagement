@@ -134,19 +134,23 @@ EmployeeManager::EmployeeManager()
                 string name = row[1];
                 string jobTitle = row[2];
                 string phoneNum = row[3];
-                string projectIdStr = row[4];
+                string projectIdStr = "";
                 vector<int> projectIdList;
-                while(true)
-                {
-                    int i = projectIdStr.find('&');
-                    if (i == -1) {
-                        break;
-                    }
-                    else {
-                        projectIdList.push_back(stoi(projectIdStr.substr(0, i)));
-                        projectIdStr.erase(0, i+1);
+                if (row.size() > 4) {
+					projectIdStr = row[4]; 
+                    while (true)
+                    {
+                        int i = projectIdStr.find('&');
+                        if (i == -1) {
+                            break;
+                        }
+                        else {
+                            projectIdList.push_back(stoi(projectIdStr.substr(0, i)));
+                            projectIdStr.erase(0, i + 1);
+                        }
                     }
                 }
+                
 
                 Employee* employee = new Employee(id, name, jobTitle, phoneNum, projectIdList);
                 m_employeeList[id] = employee;
@@ -214,17 +218,39 @@ void EmployeeManager::showAllDatas()
     setCmdColor();
 }
 
+void EmployeeManager::showData()
+{
+    cout << "조회할 직원ID를 입력해주세요: ";
+    string str;
+    cin >> str;
+    if (str == "exit") return;
+    int id = stoi(str);
+
+	setCmdColor(1);
+	if (m_employeeList.find(id) != m_employeeList.end()) {
+		printf("%6s | %10s | %8s | %14s | %10s \n", "직원ID", "직원명", "직책", "연락처", "관련 프로젝트ID");
+		Employee* employee = m_employeeList[id];
+		employee->showInfo();
+	}
+	else {
+        setCmdColor(2);
+        cout << "등록된 직원이 없습니다." << endl;
+    }
+    setCmdColor();
+}
+
 void EmployeeManager::displayMenu(){
     while(true)
     {
         cout << "\033[2J\033[1;1H";  // Clear screen
         cout << "\033[30;94m┌───────────────────────────────────────────┐ \033[0m" << endl;
-        cout << "\033[30;94m│                 \033[30;93m인력관리\033[0m                  \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│                 \033[30;93m직원관리\033[0m                  \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│───────────────────────────────────────────│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;97m1. 인력 전체조회\033[0m                         \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;97m2. 인력 추가\033[0m                             \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;97m3. 인력 수정\033[0m                             \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;97m4. 인력 삭제\033[0m                             \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m1. 직원 전체조회\033[0m                         \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m2. 직원 ID조회\033[0m                           \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m3. 직원 추가\033[0m                             \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m4. 직원 수정\033[0m                             \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m5. 직원 삭제\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;91mexit. 나가기\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << "어떤 항목을 선택하시겠습니까? ";
@@ -233,19 +259,22 @@ void EmployeeManager::displayMenu(){
 		if (input == "1") {
             showAllDatas();
         }
-        else if (input == "2")
-        {
-            create();
+        else if (input == "2") {
+            showData();
         }
         else if (input == "3")
         {
-            modify();
+            create();
         }
         else if (input == "4")
         {
+            modify();
+        }
+        else if (input == "5")
+        {
             remove();
         }
-        else if (input == "exit" || input == "5")
+        else if (input == "exit" || input == "6")
         {
             return;
         }

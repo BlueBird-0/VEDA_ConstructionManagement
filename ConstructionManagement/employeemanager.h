@@ -17,6 +17,7 @@ public:
     EmployeeManager();
     ~EmployeeManager();
     virtual void showAllDatas();
+    void showData();
     virtual void displayMenu();
     vector<Employee> search(int projectId);  //특정 projectId로 연관된 employee들을 반환합니다.
     vector<string> parseCSV(istream&, char);

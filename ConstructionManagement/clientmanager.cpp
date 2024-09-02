@@ -228,7 +228,7 @@ void ClientManager::displayMenu()
             waitEnter();
         }
         else if (ch == "2") {
-            cout << "   조회할 고객ID를 입력해주세요: ";
+            cout << "조회할 고객ID를 입력해주세요: ";
             cin >> keystr;
             if (atoi(keystr.c_str()) == 0 && keystr != "0")
             {
