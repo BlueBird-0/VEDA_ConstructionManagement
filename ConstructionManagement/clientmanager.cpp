@@ -205,23 +205,20 @@ void ClientManager::displayMenu()
         cout << "\033[30;94m│  \033[30;97m3. 고객 등록\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m4. 고객 정보 삭제\033[0m                        \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m5. 고객 정보 수정\033[0m                        \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;91m6. 고객관리 나가기\033[0m                       \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91mexit. 고객관리 나가기\033[0m                    \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << " 어떤 항목을 선택하시겠습니까? ";
         cin >> ch;
-        if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
+        if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6" || ch=="exit"))
         {
             goto ff;
         }
 
-        // 0x30<= stoi(ch) <= 0x36
-        switch (stoi(ch)) {
-        case 1:
+        if (ch == "1") {
             displayInfo();
             waitEnter();
-            break;
-
-        case 2:
+        }
+        else if (ch == "2") {
             cout << "   조회할 고객ID를 입력해주세요: ";
             cin >> keystr;
             if (atoi(keystr.c_str()) == 0 && keystr != "0")
@@ -231,12 +228,12 @@ void ClientManager::displayMenu()
             key = stoi(keystr);
             displayInfo(key);
             waitEnter();
-            break;
-        case 3:
+        }
+        else if (ch == "3") {
             create();
             waitEnter();
-            break;
-        case 4:
+        }
+        else if (ch == "4") {
             displayInfo();
             cout << "삭제할 고객ID를 입력해주세요: ";
             cin >> keystr;
@@ -246,8 +243,8 @@ void ClientManager::displayMenu()
             }
             remove(stoi(keystr));
             waitEnter();
-            break;
-        case 5:
+        }
+        else if (ch == "5") {
             displayInfo();
             cout << "수정할 고객ID를 입력해주세요: ";
             cin >> keystr;
@@ -257,14 +254,14 @@ void ClientManager::displayMenu()
             }
             modify(stoi(keystr));
             waitEnter();
-            break;
-        case 6:
+        }
+		else if (ch == "6" || ch == "exit") {
             return;
-        default:
+        }
+        else {
         ff:
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
             waitEnter();
-            break;
         }
     }
 

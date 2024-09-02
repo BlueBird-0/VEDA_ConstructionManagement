@@ -129,7 +129,8 @@ void ExpenseManager::displayInfo() {
 }
 
 void ExpenseManager::displayMenu() {
-    int choice, projectID, materialID;
+    int projectID, materialID;
+    string choice;
     bool running = true;
 
     while (running) {
@@ -143,33 +144,32 @@ void ExpenseManager::displayMenu() {
         cout << "\033[30;94m│  \033[30;97m4. 비용 삭제\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m5. 프로젝트ID 검색\033[0m                       \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m6. 자재ID 검색\033[0m                           \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;91m7. 비용관리 나가기\033[0m                       \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91mexit. 비용관리 나가기\033[0m                    \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << "어떤 항목을 선택하시겠습니까? ";
         cin >> choice;
 
-        switch (choice) {
-        case 1:
+        if (choice == "1") {
             displayInfo();
-            break;
-        case 2:
+        }
+        else if (choice == "2") {
             create();
-            break;
-        case 3:
+        }
+		else if (choice == "3") {
             cout << "수정할 프로젝트ID를 입력해주세요: ";
             cin >> projectID;
             cout << "수정할 자재ID를 입력해주세요: ";
             cin >> materialID;
             modify(projectID, materialID);
-            break;
-        case 4:
+        }
+        else if (choice == "4") {
             cout << "삭제할 프로젝트ID를 입력해주세요: ";
             cin >> projectID;
             cout << "삭제할 자재ID를 입력해주세요: ";
             cin >> materialID;
             remove(projectID, materialID);
-            break;
-        case 5:
+        }
+        else if (choice == "5") {
             cout << "찾고싶은 프로젝트ID를 입력해주세요: ";
             cin >> projectID;
             {
@@ -180,8 +180,8 @@ void ExpenseManager::displayMenu() {
                 }
                 cout << endl;
             }
-            break;
-        case 6:
+        }
+        else if (choice == "6") {
             cout << "찾고싶은 자재ID를 입력해주세요: ";
             cin >> materialID;
             {
@@ -192,14 +192,15 @@ void ExpenseManager::displayMenu() {
                 }
                 cout << endl;
             }
-            break;
-        case 7:
-            running = false;
-            break;
-        default:
-            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-            break;
         }
+		else if (choice == "7" || choice == "exit") {
+            running = false;
+        }
+        else {
+            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+        }
+
+
         if (running) {
             cout << "\n계속하려면 Enter 키를 눌러주세요...";
             cin.ignore();

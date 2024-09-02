@@ -139,8 +139,9 @@ void MaterialManager::displayInfo() {
 }
 
 void MaterialManager::displayMenu() {
-    int choice, id;
+    int id;
     bool running = true;
+    string choice;
 
     while (running) {
         cout << "\033[2J\033[1;1H";  // 화면을 지우고 커서를 맨 위로 이동
@@ -151,35 +152,34 @@ void MaterialManager::displayMenu() {
         cout << "\033[30;94m│  \033[30;97m2. 자재 등록\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m3. 자재 삭제\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m4. 자재 수정\033[0m                             \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;91m5. 자재관리 나가기\033[0m                       \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91mexit. 자재관리 나가기\033[0m                    \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << "어떤 항목을 선택하시겠습니까? ";
         cin >> choice;
 
-        switch (choice) {
-        case 1:
+        if (choice == "1") {
             displayInfo();  // 자재 정보를 출력
-            break;
-        case 2:
+        }
+        else if (choice == "2") {
             create();  // 자재를 생성하여 리스트에 추가
-            break;
-        case 3:
+        }
+        else if (choice == "3") {
             cout << "삭제할 자재ID를 입력해주세요: ";
             cin >> id;
             remove(id);  // 자재를 삭제
-            break;
-        case 4:
+        }
+        else if (choice == "4") {
             cout << "수정할 자재ID를 입력해주세요: ";
             cin >> id;
             modify(id);  // 자재를 수정
-            break;
-        case 5:
-            running = false;  // 프로그램 종료
-            break;
-        default:
-            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-            break;
         }
+        else if (choice == "5" || choice =="exit" ) {
+            running = false;  // 프로그램 종료
+        }
+        else {
+            cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
+        }
+
         if (running) {
             cout << "\n계속하려면 Enter 키를 눌러주세요...";
             cin.ignore();

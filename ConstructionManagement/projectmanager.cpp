@@ -141,10 +141,9 @@ void ProjectManager::modify(int id)
 void ProjectManager::displayInfo()
 {
     printf("\n");
-    setCmdColor(2);
+    setCmdColor(1);
 
     printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일","종료일","예산(₩)");    ///setw()
-    setCmdColor(1);
     for (const auto& v : projectList)
     {
         int key = v.first;
@@ -158,8 +157,10 @@ void ProjectManager::displayInfo(int key)
 {
     setCmdColor(1);
     printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");
-    Project* p = projectList[key];
-    p->showInfo();
+    if (!projectList.empty()) {
+        Project* p = projectList[key];
+        p->showInfo();
+    }
     setCmdColor();
 }
 
@@ -214,20 +215,19 @@ void ProjectManager::displayMenu()
         cout << "\033[30;94m│  \033[30;97m3. 프로젝트 등록\033[0m                         \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m4. 프로젝트 삭제\033[0m                         \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m5. 프로젝트 수정\033[0m                         \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;91m6. 프로젝트관리 나가기\033[0m                   \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91mexit. 프로젝트관리 나가기\033[0m                \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << " 어떤 항목을 선택하시겠습니까? ";
         cin >> ch;
-        if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6"))
+		if (!(ch == "1" || ch == "2" || ch == "3" || ch == "4" || ch == "5" || ch == "6" || ch == "exit"))
         {
             goto ff;
         }
-        switch (atoi(ch.c_str())) {
-        case 1:
+        if (ch == "1") {
             displayInfo();
             waitEnter();
-            break;
-        case 2:
+        }
+        else if (ch == "2") {
             cout << "   조회할 프로젝트ID를 입력해주세요: ";
             cin >> key;
             if (atoi(key.c_str()) == 0 && key != "0")
@@ -236,12 +236,12 @@ void ProjectManager::displayMenu()
             }
             displayInfo(stoi(key));
             waitEnter();
-            break;
-        case 3:
+        }
+        else if (ch == "3") {
             create();
             waitEnter();
-            break;
-        case 4:
+        }
+        else if (ch == "4") {
             displayInfo();
             cout << "   삭제할 프로젝트ID를 입력해주세요: ";
             cin >> key;
@@ -251,8 +251,8 @@ void ProjectManager::displayMenu()
             }
             remove(stoi(key));
             waitEnter();
-            break;
-        case 5:
+        }
+        else if (ch == "5") {
             displayInfo();
             cout << "   수정할 프로젝트ID를 입력해주세요: ";
             cin >> key;
@@ -262,15 +262,15 @@ void ProjectManager::displayMenu()
             }
             modify(stoi(key));
             waitEnter();
-            break;
-        case 6:
+        }
+		else if (ch == "6" || ch=="exit") {
             return;
-        default:
+        }
+        else {
         ff:
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
 
             waitEnter();
-            break;
         }
     }
 
