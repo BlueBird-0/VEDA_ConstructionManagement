@@ -11,13 +11,16 @@ void Employee::showInfo()
     cout << setw(8) << right << getJobTitle() << " | ";
     cout << setw(14) << right << getPhoneNum() << " | ";
 
-    string list = "";
-    for (auto projectID : getProjectIdList())
-    {
-        list += to_string(projectID);
-        list += ", ";
+    string str = "";
+    auto projectList = getProjectIdList();
+    if (projectList.empty())
+        str = "empty";
+    else {
+		for (auto it = projectList.begin(); it != projectList.end(); it++) {
+            str += to_string(*it);
+            if (it != projectList.end() - 1)
+                str += ", ";
+        }
     }
-    cout << setw(10) << right << list <<endl;
-
-    cout << endl << endl;
+    cout << setw(10) << right << str <<endl;
 }

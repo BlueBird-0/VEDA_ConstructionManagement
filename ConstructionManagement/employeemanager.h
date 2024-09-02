@@ -12,8 +12,10 @@ private:
     void create();  //Employee를 생성합니다.
     void remove();
     void modify();
+    int makeId();
 public:
     EmployeeManager();
+    ~EmployeeManager();
     virtual void showAllDatas();
     virtual void displayMenu();
     vector<Employee> search(int projectId);  //특정 projectId로 연관된 employee들을 반환합니다.

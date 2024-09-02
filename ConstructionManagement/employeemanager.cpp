@@ -1,46 +1,45 @@
-#include "employeemanager.h"
+Ôªø#include "employeemanager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
-//#include <windows.h>
 
 void EmployeeManager::create()
 {
     string name, jobTitle, phoneNum;
     vector<int> projectIdList;
 
-    cout << "\033[2J\033[1;1H";  // Clear screen
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "¡˜ø¯∏Ì: ";
+    setCmdColor(0);
+    printf("%10s | %8s | %14s | %10s \n", "ÏßÅÏõêÎ™Ö", "ÏßÅÏ±Ö", "Ïó∞ÎùΩÏ≤ò", "Í¥ÄÎ†® ÌîÑÎ°úÏ†ùÌä∏ID");
+    printf("%10s | %8s | %14s | %10s \n", "ÌôçÍ∏∏Îèô", "ÏÇ¨Ïû•", "010-1234-5678", "1 2 3");
+    setCmdColor();
+
+    cout << "ÏßÅÏõêÎ™Ö: ";
     cin >> name;
-    cout << "¡˜√•: ";
+    cout << "ÏßÅÏ±Ö: ";
     cin >> jobTitle;
-    cout << "ø¨∂Ù√≥: ";
+    cout << "Ïó∞ÎùΩÏ≤ò: ";
     cin >> phoneNum;
-    cout << "«¡∑Œ¡ß∆ÆID: (-1 ¿‘∑¬Ω√¡æ∑·) ";
-    int input;
+    cout << "ÌîÑÎ°úÏ†ùÌä∏ID: (stop ÏûÖÎ†•ÏãúÏ¢ÖÎ£å) \n";
+    string input;
     while (true)
     {
         cin >> input;
-        if (input == -1)
+        if (input == "stop")
             break;
         else
-            projectIdList.push_back(input);
+            projectIdList.push_back(stoi(input));
     }
-
-    int newId = m_employeeList.size();
+   
+    int newId = makeId();
     Employee* material = new Employee(newId, name, jobTitle, phoneNum, projectIdList);
     m_employeeList[newId] = material;
 
-    cout << "º∫∞¯¿˚¿∏∑Œ √ﬂ∞°µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
-    saveCSV();
+    cout << "ÏÑ±Í≥µÏ†ÅÏúºÎ°ú Ï∂îÍ∞ÄÎêòÏóàÏäµÎãàÎã§!" << endl;
 }
 
 void EmployeeManager::remove()
 {
-    cout << "\033[2J\033[1;1H";  // Clear screen
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "ªË¡¶«“ ¡˜ø¯ ID∏¶ ¿‘∑¬«œººø‰: ";
+    cout << "ÏÇ≠Ï†úÌï† ÏßÅÏõê IDÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî: ";
     string idStr;
     cin >> idStr;
     int id = atoi(idStr.c_str());
@@ -51,20 +50,18 @@ void EmployeeManager::remove()
         Employee* employee = it->second;
         if (employee->getId() == id) {
             m_employeeList.erase(id);
-            cout << "¡˜ø¯¿Ã º∫∞¯¿˚¿∏∑Œ ªË¡¶µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+            cout << "ÏßÅÏõêÏù¥ ÏÑ±Í≥µÏ†ÅÏúºÎ°ú ÏÇ≠Ï†úÎêòÏóàÏäµÎãàÎã§!" << endl;
             return;
         }
     }
-    cout << "«ÿ¥Á ID " << idStr << " ¿« ¡˜ø¯¿ª(∏¶) √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ..." << endl;
+    cout << "Ìï¥Îãπ ID " << idStr << " Ïùò ÏßÅÏõêÏùÑ(Î•º) Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§..." << endl;
     string temp;
     cin >> temp;
 }
 
 void EmployeeManager::modify()
 {
-    cout << "\033[2J\033[1;1H";  // Clear screen
-    cout << "+++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "ªË¡¶«“ ¡˜ø¯ ID∏¶ ¿‘∑¬«œººø‰: ";
+    cout << "ÏÇ≠Ï†úÌï† ÏßÅÏõê IDÎ•º ÏûÖÎ†•ÌïòÏÑ∏Ïöî: ";
     string idStr;
     cin >> idStr;
     if (m_employeeList.find(stoi(idStr)) != m_employeeList.end())
@@ -72,22 +69,21 @@ void EmployeeManager::modify()
         auto employee = m_employeeList[stoi(idStr)];
         if (employee->getId() == stoi(idStr)) {
             employee->showInfo();
-            cout << "+++++++++++++++++ºˆ¡§«“ ¡§∫∏++++++++++++++++" << endl;
             string name, jobTitle, phoneNum;
             vector<int> projectIdList;
-            cout << "¡˜ø¯∏Ì (∞¯πÈ¿‘∑¬Ω√ «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "ÏßÅÏõêÎ™Ö (Í≥µÎ∞±ÏûÖÎ†•Ïãú ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> name;
             if (name != "")
                 employee->setName(name);
-            cout << "¡˜√• (∞¯πÈ¿‘∑¬Ω√ «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "ÏßÅÏ±Ö (Í≥µÎ∞±ÏûÖÎ†•Ïãú ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> jobTitle;
             if (name != "")
                 employee->setJobTitle(jobTitle);
-            cout << "ø¨∂Ù√≥ (∞¯πÈ¿‘∑¬Ω√ «ˆ¿Á ªÛ≈¬ ¿Ø¡ˆ): ";
+            cout << "Ïó∞ÎùΩÏ≤ò (Í≥µÎ∞±ÏûÖÎ†•Ïãú ÌòÑÏû¨ ÏÉÅÌÉú Ïú†ÏßÄ): ";
             cin >> phoneNum;
             if (phoneNum != "")
                 employee->setPhoneNum(phoneNum);
-            cout << "«¡∑Œ¡ß∆ÆID (-1¿‘∑¬Ω√ ¡æ∑·): ";
+            cout << "ÌîÑÎ°úÏ†ùÌä∏ID (-1ÏûÖÎ†•Ïãú Ï¢ÖÎ£å): ";
             int input;
             while (true)
             {
@@ -99,19 +95,31 @@ void EmployeeManager::modify()
             }
             if (projectIdList.size() != 0)
                 employee->setProjectIdList(projectIdList);
-            cout << "º∫∞¯¿˚¿∏∑Œ ºˆ¡§µ«æ˙Ω¿¥œ¥Ÿ!" << endl;
+            cout << "ÏÑ±Í≥µÏ†ÅÏúºÎ°ú ÏàòÏ†ïÎêòÏóàÏäµÎãàÎã§!" << endl;
             return;
         }
     }
     else {
-        cout << "«ÿ¥Á ID " << idStr << " ¿« ¡˜ø¯¿ª(∏¶) √£¿ª ºˆ æ¯Ω¿¥œ¥Ÿ..." << endl;
+        cout << "Ìï¥Îãπ ID " << idStr << " Ïùò ÏßÅÏõêÏùÑ(Î•º) Ï∞æÏùÑ Ïàò ÏóÜÏäµÎãàÎã§..." << endl;
     }
+}
+
+int EmployeeManager::makeId()
+{
+	if (m_employeeList.size() == 0) {
+		return 0;
+	}
+	else {
+		auto elem = m_employeeList.end();
+		int id = (--elem)->first;
+		return ++id;
+	}
 }
 
 EmployeeManager::EmployeeManager()
 {
-    //∆ƒ¿œø°º≠ ∫“∑Øø¿±‚
-    ifstream file("employeeList.txt");
+    //ÌååÏùºÏóêÏÑú Î∂àÎü¨Ïò§Í∏∞
+    ifstream file("employeelist.txt");
     if (!file.fail()) {
         while (!file.eof()) {
             vector<string> row = parseCSV(file, ',');
@@ -142,6 +150,11 @@ EmployeeManager::EmployeeManager()
     file.close();
 }
 
+EmployeeManager::~EmployeeManager()
+{
+    saveCSV();
+}
+
 vector<string> EmployeeManager::parseCSV(istream& str, char delimiter) {
     vector<string> result;
     string line;
@@ -157,7 +170,7 @@ vector<string> EmployeeManager::parseCSV(istream& str, char delimiter) {
 
 void EmployeeManager::saveCSV()
 {
-    ofstream file("employeeList.txt");
+    ofstream file("employeelist.txt");
     if (!file.fail()) {
 
         for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
@@ -180,8 +193,8 @@ void EmployeeManager::showAllDatas()
 {    
     setCmdColor(1);
     if (!m_employeeList.empty()) {
-        //cout << "√— ¿Œø¯ [" << m_employeeList.size() << "]" << endl;
-        printf("%6s | %10s | %8s | %14s | %10s \n", "¡˜ø¯ID", "¡˜ø¯∏Ì", "¡˜√•", "ø¨∂Ù√≥", "∞¸∑√ «¡∑Œ¡ß∆ÆID");
+        //cout << "Ï¥ù Ïù∏Ïõê [" << m_employeeList.size() << "]" << endl;
+        printf("%6s | %10s | %8s | %14s | %10s \n", "ÏßÅÏõêID", "ÏßÅÏõêÎ™Ö", "ÏßÅÏ±Ö", "Ïó∞ÎùΩÏ≤ò", "Í¥ÄÎ†® ÌîÑÎ°úÏ†ùÌä∏ID");
         for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
         {
             Employee* employee = it->second;
@@ -190,26 +203,25 @@ void EmployeeManager::showAllDatas()
     }
     else {
         setCmdColor(2);
-        cout << "µÓ∑œµ» ¡˜ø¯¿Ã æ¯Ω¿¥œ¥Ÿ." << endl;
+        cout << "Îì±Î°ùÎêú ÏßÅÏõêÏù¥ ÏóÜÏäµÎãàÎã§." << endl;
     }
     setCmdColor();
-    waitEnter();
 }
 
 void EmployeeManager::displayMenu(){
     while(true)
     {
         cout << "\033[2J\033[1;1H";  // Clear screen
-        cout << "\033[30;94m¶£¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶§ \033[0m" << endl;
-        cout << "\033[30;94m¶¢                 \033[30;93m¿Œ∑¬∞¸∏Æ\033[0m                  \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m1. ¿Œ∑¬ ¿¸√º¡∂»∏\033[0m                         \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m2. ¿Œ∑¬ √ﬂ∞°\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m3. ¿Œ∑¬ ºˆ¡§\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;97m4. ¿Œ∑¬ ªË¡¶\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¢  \033[30;91mexit. ≥™∞°±‚\033[0m                             \033[30;94m¶¢ \033[0m" << endl;
-        cout << "\033[30;94m¶¶¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶• \033[0m" << endl;
-        cout << "æÓ∂≤ «◊∏Ò¿ª º±≈√«œΩ√∞⁄Ω¿¥œ±Ó? ";
+        cout << "\033[30;94m‚îå‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îê \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ                 \033[30;93mÏù∏Î†•Í¥ÄÎ¶¨\033[0m                  \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m1. Ïù∏Î†• Ï†ÑÏ≤¥Ï°∞Ìöå\033[0m                         \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m2. Ïù∏Î†• Ï∂îÍ∞Ä\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m3. Ïù∏Î†• ÏàòÏ†ï\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;97m4. Ïù∏Î†• ÏÇ≠Ï†ú\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îÇ  \033[30;91mexit. ÎÇòÍ∞ÄÍ∏∞\033[0m                             \033[30;94m‚îÇ \033[0m" << endl;
+        cout << "\033[30;94m‚îî‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îÄ‚îò \033[0m" << endl;
+        cout << "Ïñ¥Îñ§ Ìï≠Î™©ÏùÑ ÏÑ†ÌÉùÌïòÏãúÍ≤†ÏäµÎãàÍπå? ";
         string input;
         cin >> input;
 		if (input == "1") {
@@ -233,10 +245,10 @@ void EmployeeManager::displayMenu(){
         }
         else {
             setCmdColor(2);
-            cout << "¿ﬂ∏¯µ» º±≈√¿‘¥œ¥Ÿ. ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰." << endl;
+            cout << "ÏûòÎ™ªÎêú ÏÑ†ÌÉùÏûÖÎãàÎã§. Îã§Ïãú ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî." << endl;
             setCmdColor();
-            waitEnter();
         }
+        waitEnter();
     }
 }
 
@@ -247,7 +259,7 @@ vector<Employee> EmployeeManager::search(int projectId)
         Employee* employee = pair.second;
         vector<int> projectIdList = employee->getProjectIdList();
 
-        //employeeø°∞‘ projectId∞° ¿÷¥Ÿ∏È, ∏ÆΩ∫∆Æø° √ﬂ∞°
+        //employeeÏóêÍ≤å projectIdÍ∞Ä ÏûàÎã§Î©¥, Î¶¨Ïä§Ìä∏Ïóê Ï∂îÍ∞Ä
         if (find(projectIdList.begin(), projectIdList.end(), projectId) != projectIdList.end()) {
             returnEmployeeList.push_back(*employee);
         }

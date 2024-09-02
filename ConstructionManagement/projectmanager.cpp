@@ -143,7 +143,6 @@ void ProjectManager::modify(int id)
             if (budget >= 0) project->setBudget(budget);
 
             cout << "성공적으로 수정되었습니다!" << endl;
-            waitEnter();
         }
     }
     else {
@@ -247,7 +246,6 @@ void ProjectManager::displayMenu()
         }
         if (ch == "1") {
             displayInfo();
-            waitEnter();
         }
         else if (ch == "2") {
             cout << "조회할 프로젝트ID를 입력해주세요: ";
@@ -257,11 +255,9 @@ void ProjectManager::displayMenu()
                 goto ff;
             }
             displayInfo(stoi(key));
-            waitEnter();
         }
         else if (ch == "3") {
             create();
-            waitEnter();
         }
         else if (ch == "4") {
             displayInfo();
@@ -272,7 +268,6 @@ void ProjectManager::displayMenu()
                 goto ff;
             }
             remove(stoi(key));
-            waitEnter();
         }
         else if (ch == "5") {
             displayInfo();
@@ -283,7 +278,6 @@ void ProjectManager::displayMenu()
                 goto ff;
             }
             modify(stoi(key));
-            waitEnter();
         }
 		else if (ch == "6" || ch=="exit") {
             return;
@@ -294,8 +288,8 @@ void ProjectManager::displayMenu()
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
             setCmdColor();
 
-            waitEnter();
         }
+        waitEnter();
     }
 
 
