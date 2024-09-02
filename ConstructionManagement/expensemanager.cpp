@@ -117,13 +117,19 @@ vector<int> ExpenseManager::searchByMaterialID(int materialID) {
 
 void ExpenseManager::displayInfo() {
     setCmdColor(1);
-    printf("%10s | %6s | %12s | %12s | %12s\n", "프로젝트ID", "자재ID", "자재비용(₩)", "인건비(₩)", "기타비용(₩)");
-    for (const auto& expense : m_expenses) {
-        cout << setw(10) << expense.getProjectID() << " | ";
-        cout << setw(6) << expense.getMaterialID() << " | ";
-        cout << setw(8) << expense.getMaterialCosts() << " | ";
-        cout << setw(8) << expense.getLaborCosts() << " | ";
-        cout << setw(8) << expense.getOtherCosts() << endl;
+    if (!m_expenses.empty()) {
+        printf("%10s | %6s | %12s | %12s | %12s\n", "프로젝트ID", "자재ID", "자재비용(₩)", "인건비(₩)", "기타비용(₩)");
+        for (const auto& expense : m_expenses) {
+            cout << setw(10) << expense.getProjectID() << " | ";
+            cout << setw(6) << expense.getMaterialID() << " | ";
+            cout << setw(8) << expense.getMaterialCosts() << " | ";
+            cout << setw(8) << expense.getLaborCosts() << " | ";
+            cout << setw(8) << expense.getOtherCosts() << endl;
+        }
+    }
+    else {
+        setCmdColor(2);
+        cout << " 등록된 비용이 없습니다." << endl;
     }
     setCmdColor();
 }
@@ -146,7 +152,7 @@ void ExpenseManager::displayMenu() {
         cout << "\033[30;94m│  \033[30;97m6. 자재ID 검색\033[0m                           \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;91mexit. 비용관리 나가기\033[0m                    \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
-        cout << "어떤 항목을 선택하시겠습니까? ";
+        cout << " 어떤 항목을 선택하시겠습니까? ";
         cin >> choice;
 
         if (choice == "1") {

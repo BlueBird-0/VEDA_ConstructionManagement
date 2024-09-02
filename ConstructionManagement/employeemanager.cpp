@@ -179,12 +179,18 @@ void EmployeeManager::saveCSV()
 void EmployeeManager::showAllDatas()
 {    
     setCmdColor(1);
-    //cout << "총 인원 [" << m_employeeList.size() << "]" << endl;
-    printf("%6s | %10s | %8s | %14s | %10s \n", "직원ID", "직원명", "직책", "연락처", "관련 프로젝트ID");
-    for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
-    {
-        Employee* employee = it->second;
-        employee->showInfo();
+    if (!m_employeeList.empty()) {
+        //cout << "총 인원 [" << m_employeeList.size() << "]" << endl;
+        printf("%6s | %10s | %8s | %14s | %10s \n", "직원ID", "직원명", "직책", "연락처", "관련 프로젝트ID");
+        for (auto it = m_employeeList.begin(); it != m_employeeList.end(); it++)
+        {
+            Employee* employee = it->second;
+            employee->showInfo();
+        }
+    }
+    else {
+        setCmdColor(2);
+        cout << " 등록된 직원이 없습니다." << endl;
     }
     setCmdColor();
     waitEnter();
@@ -203,7 +209,7 @@ void EmployeeManager::displayMenu(){
         cout << "\033[30;94m│   \033[30;97m4. 인력 삭제\033[0m                            \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│   \033[30;91mexit. 인력관리 나가기\033[0m                   \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
-        cout << "어떤 항목을 선택하시겠습니까? ";
+        cout << " 어떤 항목을 선택하시겠습니까? ";
         string input;
         cin >> input;
 		if (input == "1") {

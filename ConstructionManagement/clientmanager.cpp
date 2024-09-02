@@ -131,7 +131,7 @@ void ClientManager::displayInfo()
 	}
 	else {
         setCmdColor(2);
-		cout << "등록된 고객이 없습니다." << endl;
+		cout << " 등록된 고객이 없습니다." << endl;
 	}
     setCmdColor();
 }

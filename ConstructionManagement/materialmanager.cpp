@@ -123,17 +123,23 @@ void MaterialManager::modify(int id) {
 
 void MaterialManager::displayInfo() {
     setCmdColor(1);
-    printf("%6s | %10s | %10s | %12s | %6s | %6s\n", "자재ID", "자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
+	if (!materialList.empty()) {
+		printf("%6s | %10s | %10s | %12s | %6s | %6s\n", "자재ID", "자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
 
-    for (const auto& pair : materialList) {
-        Material* m = pair.second;
-        cout << setw(6) << m->getId() << " | ";  // 자재 ID 출력
-        cout << setw(10) << m->getName() << " | ";  // 자재명 출력
-        cout << setw(10) << m->getSupplier() << " | ";  // 공급업체명 출력
-        cout << setw(12) << fixed << m->getUnitPrice() << " | ";  // 단가 출력
-        cout << setw(6) << m->getStock() << " | ";  // 재고량 출력
-        cout << setw(6) << m->getOrderQuantity() << endl;  // 주문량 출력
-    }
+		for (const auto& pair : materialList) {
+			Material* m = pair.second;
+			cout << setw(6) << m->getId() << " | ";  // 자재 ID 출력
+			cout << setw(10) << m->getName() << " | ";  // 자재명 출력
+			cout << setw(10) << m->getSupplier() << " | ";  // 공급업체명 출력
+			cout << setw(12) << fixed << m->getUnitPrice() << " | ";  // 단가 출력
+			cout << setw(6) << m->getStock() << " | ";  // 재고량 출력
+			cout << setw(6) << m->getOrderQuantity() << endl;  // 주문량 출력
+		}
+	}
+	else {
+		setCmdColor(2);
+		cout << " 등록된 자재가 없습니다." << endl;
+	}
     setCmdColor();
 
 }
@@ -154,7 +160,7 @@ void MaterialManager::displayMenu() {
         cout << "\033[30;94m│  \033[30;97m4. 자재 수정\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;91mexit. 자재관리 나가기\033[0m                    \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
-        cout << "어떤 항목을 선택하시겠습니까? ";
+        cout << " 어떤 항목을 선택하시겠습니까? ";
         cin >> choice;
 
         if (choice == "1") {

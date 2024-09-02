@@ -102,6 +102,7 @@ Project* ProjectManager::search(int id)
 void ProjectManager::modify(int id)
 {
     Project* project = projectList[id];
+
     if (project) {
         string name, location, startDate, endDate;
         int budget = 0;
@@ -140,16 +141,20 @@ void ProjectManager::modify(int id)
 
 void ProjectManager::displayInfo()
 {
-    printf("\n");
     setCmdColor(1);
+    if (!projectList.empty()) {
+        printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");    ///setw()
+        for (const auto& v : projectList)
+        {
+            int key = v.first;
+            Project* p = projectList[key];
+            p->showInfo();
+        }
+    }else {
+        setCmdColor(2);
+		cout << " 등록된 프로젝트가 없습니다." << endl;
+	}
 
-    printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일","종료일","예산(₩)");    ///setw()
-    for (const auto& v : projectList)
-    {
-        int key = v.first;
-        Project* p = projectList[key];
-        p->showInfo();
-    }
     setCmdColor();
 }
 
