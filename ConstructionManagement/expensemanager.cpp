@@ -36,7 +36,7 @@ ExpenseManager::~ExpenseManager() {
 }
 
 void ExpenseManager::create() {
-	int projectID, materialID, materialCosts, laborCosts, otherCosts;
+	string projectID, materialID, materialCosts, laborCosts, otherCosts;
     setCmdColor(0);
     printf("%10s | %6s | %12s | %12s | %12s\n", "프로젝트ID", "자재ID", "자재비용(₩)", "인건비(₩)", "기타비용(₩)");
     printf("%10s | %6s | %12s | %12s | %12s\n", "0", "0", "20000000", "3100000", "1000000");
@@ -46,17 +46,22 @@ void ExpenseManager::create() {
 	setCmdColor(1);
 	cout << "프로젝트ID: ";
 	cin >> projectID;
+	if (projectID == "exit") return;
 	cout << "자재ID: ";
 	cin >> materialID;
+    if (materialID == "exit") return;
 	cout << "자재비용: ";
 	cin >> materialCosts;
+    if (materialCosts == "exit") return;
 	cout << "인건비: ";
 	cin >> laborCosts;
+    if (laborCosts == "exit") return;
 	cout << "기타비용: ";
 	cin >> otherCosts;
+    if (otherCosts == "exit") return;
 	setCmdColor();
 
-    Expense expense(projectID, materialID, materialCosts, laborCosts, otherCosts);
+    Expense expense(stoi(projectID), stoi(materialID), stoi(materialCosts), stoi(laborCosts), stoi(otherCosts));
     m_expenses.push_back(expense);
 
     cout << "비용이 성공적으로 추가되었습니다!" << endl;
@@ -128,9 +133,9 @@ void ExpenseManager::displayInfo() {
         for (const auto& expense : m_expenses) {
             cout << setw(10) << expense.getProjectID() << " | ";
             cout << setw(6) << expense.getMaterialID() << " | ";
-            cout << setw(8) << expense.getMaterialCosts() << " | ";
-            cout << setw(8) << expense.getLaborCosts() << " | ";
-            cout << setw(8) << expense.getOtherCosts() << endl;
+            cout << setw(12) << expense.getMaterialCosts() << " | ";
+            cout << setw(12) << expense.getLaborCosts() << " | ";
+            cout << setw(12) << expense.getOtherCosts() << endl;
         }
     }
     else {

@@ -40,7 +40,7 @@ MaterialManager::~MaterialManager() {
 
 void MaterialManager::create() {
     string name, supplier;
-    int stock, orderQuantity, unitPrice;
+    string stock, orderQuantity, unitPrice;
     setCmdColor(0);
     printf("%2s)  %10s | %16s | %12s | %10s | %10s\n", "예","자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
     printf("%2s | %10s | %16s | %12s | %10s | %10s\n", "","시멘트", "ABC 건축자재", "50000", "200", "500");
@@ -48,17 +48,22 @@ void MaterialManager::create() {
     setCmdColor();
     cout << "자재명: ";
     cin >> name;
+    if (name == "exit")    return;
     cout << "공급업체: ";
     cin >> supplier;
+    if (supplier == "exit")    return;
     cout << "단가: ";
     cin >> unitPrice;
+	if (unitPrice == "exit")    return;
     cout << "재고량: ";
     cin >> stock;
+    if (stock == "exit")    return;
     cout << "주문량: ";
     cin >> orderQuantity;
+	if (orderQuantity == "exit")    return;
 
     int id = makeId();  // 새로운 자재 ID 생성
-    Material* material = new Material(id, name, supplier, unitPrice, stock, orderQuantity);
+    Material* material = new Material(id, name, supplier, stod(unitPrice), stoi(stock), stoi(orderQuantity));
     materialList[id] = material;  // 자재 리스트에 추가
 
     cout << "자재가 성공적으로 추가되었습니다!" << endl;

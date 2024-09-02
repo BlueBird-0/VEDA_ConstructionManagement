@@ -58,10 +58,13 @@ void ClientManager::create()
 
     cout << "고객명: ";
     cin >> name;
+    if (name == "exit") return;
     cout << "전화번호: ";
     cin >> phoneNum;
+    if (phoneNum == "exit") return;
     cout << "주소: ";
     cin >> address;
+    if (address == "exit") return;
 
 
     int id = makeId();  // 새로운 고객 ID 생성

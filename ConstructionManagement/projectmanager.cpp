@@ -64,14 +64,19 @@ void ProjectManager::create()
     setCmdColor();
     cout << "프로젝트명: ";
     cin >> name;
+    if (name == "exit")    return;
     cout << "위치: ";
     cin >> location;
+    if (location == "exit")    return;
     cout << "시작일: ";
     cin >> startDate;
+    if (startDate == "exit")    return;
     cout << "종료일: ";
     cin >> endDate;
+    if (endDate == "exit")    return;
     cout << "예산: ";
-    cin >> budget; //cin.ignore(); getline(cin, budget, '\n'); //cin >> address;
+    cin >> budget;
+    if (budget == "exit")    return;
 
     int id = makeId();
     Project* p = new Project(id, name, location, startDate, endDate, stoi(budget));

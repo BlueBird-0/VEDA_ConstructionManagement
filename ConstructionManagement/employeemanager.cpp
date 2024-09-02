@@ -16,10 +16,13 @@ void EmployeeManager::create()
 
     cout << "직원명: ";
     cin >> name;
+    if (name == "exit") return;
     cout << "직책: ";
     cin >> jobTitle;
+    if (jobTitle == "exit") return;
     cout << "연락처: ";
     cin >> phoneNum;
+    if (phoneNum == "exit") return;
     cout << "프로젝트ID: (stop 입력시종료) \n";
     string input;
     while (true)
@@ -27,6 +30,8 @@ void EmployeeManager::create()
         cin >> input;
         if (input == "stop")
             break;
+        if (input == "exit")
+            return;
         else
             projectIdList.push_back(stoi(input));
     }
