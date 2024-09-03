@@ -1,8 +1,59 @@
-﻿#include "materialmanager.h"
+#include "materialmanager.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <string>
+#include <cctype>
+#include <stdexcept>
+#include <sstream>
+#include <locale>
+#include <iomanip>
+#include <algorithm>
+
+// 숫자를 쉼표가 포함된 문자열로 포맷하는 함수
+string MformatNumberWithCommas(int number) {
+    stringstream ss;
+    ss.imbue(locale(""));  // 현재 시스템의 로케일 설정
+    ss << fixed << setprecision(0) << number;
+
+    string str = ss.str();
+    string result;
+    int count = 0;
+
+    // 문자열을 끝에서부터 탐색하여 3자리마다 쉼표 추가
+    for (auto it = str.rbegin(); it != str.rend(); ++it) {
+        result += *it;
+        count++;
+        if (count % 3 == 0 && it + 1 != str.rend()) {
+            result += ','; // 쉼표 추가
+        }
+    }
+    reverse(result.begin(), result.end()); // 문자열을 원래 순서로 복원
+    return result;
+}
+
+int MparseCost(const string& costStr) {
+    string cleanStr;
+    for (char c : costStr) {
+        // 숫자와 쉼표만 허용
+        if (isdigit(c) || c == ',') {
+            cleanStr += c;
+        }
+    }
+
+    // 쉼표를 제거한 후 숫자로 변환
+    cleanStr.erase(remove(cleanStr.begin(), cleanStr.end(), ','), cleanStr.end());
+
+    try {
+        return stoi(cleanStr);
+    } catch (const invalid_argument& e) {
+        throw invalid_argument("잘못된 숫자 형식입니다: " + costStr);
+    } catch (const out_of_range& e) {
+        throw out_of_range("숫자 범위를 초과했습니다: " + costStr);
+    }
+}
+
 
 MaterialManager::MaterialManager() {
     ifstream file("materiallist.txt");  // "materiallist.txt" 파일을 읽기 위해 연다.
@@ -39,31 +90,36 @@ MaterialManager::~MaterialManager() {
 }
 
 void MaterialManager::create() {
-    string name, supplier;
-    string stock, orderQuantity, unitPrice;
+    string name, supplier, unitPriceCostsS;
+    int stock, orderQuantity, unitPrice;
     setCmdColor(0);
-    printf("%2s)  %10s | %16s | %12s | %10s | %10s\n", "예","자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
-    printf("%2s | %10s | %16s | %12s | %10s | %10s\n", "","시멘트", "ABC 건축자재", "50000", "200", "500");
-    printf("\n");
+    printf("%2s)  %10s | %16s | %16s | %10s | %10s\n", "예","자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
+    printf("%2s | %10s | %16s | %12s | %10s | %10s\n", "","시멘트", "ABC 건축자재", "50,000", "200", "500");
     setCmdColor();
     cout << "자재명: ";
-    cin >> name;
-    if (name == "exit")    return;
+    cin.ignore();  // 이전 입력 버퍼 비우기
+    getline(cin, name);  // 자재명 입력 받기
+
     cout << "공급업체: ";
-    cin >> supplier;
-    if (supplier == "exit")    return;
+    getline(cin, supplier);  // 공급업체 입력 받기
+
     cout << "단가: ";
-    cin >> unitPrice;
-	if (unitPrice == "exit")    return;
+    getline(std::cin, unitPriceCostsS);
+
+    try {
+        unitPrice = MparseCost(unitPriceCostsS);
+    } catch (const std::exception& e) {
+        std::cerr << "단가 입력 오류: " << e.what() << std::endl;
+        return;
+    }
+
     cout << "재고량: ";
     cin >> stock;
-    if (stock == "exit")    return;
     cout << "주문량: ";
     cin >> orderQuantity;
-	if (orderQuantity == "exit")    return;
 
     int id = makeId();  // 새로운 자재 ID 생성
-    Material* material = new Material(id, name, supplier, stod(unitPrice), stoi(stock), stoi(orderQuantity));
+    Material* material = new Material(id, name, supplier, unitPrice, stock, orderQuantity);
     materialList[id] = material;  // 자재 리스트에 추가
 
     cout << "자재가 성공적으로 추가되었습니다!" << endl;
@@ -93,12 +149,12 @@ Material* MaterialManager::search(int id) {
 void MaterialManager::modify(int id) {
     Material* material = search(id);
     if (material) {
-        string name, supplier;
+        string name, supplier, unitPriceCostsS;
         int stock, orderQuantity, unitPrice;
 
         cout << "현재 자재명: " << material->getName() << endl;
         cout << "현재 공급업체: " << material->getSupplier() << endl;
-        cout << "현재 단가: " << material->getUnitPrice() << endl;
+        cout << "현재 단가: " << MformatNumberWithCommas(material->getUnitPrice()) << endl;
         cout << "현재 재고량: " << material->getStock() << endl;
         cout << "현재 주문량: " << material->getOrderQuantity() << endl;
 
@@ -112,8 +168,16 @@ void MaterialManager::modify(int id) {
         if (!supplier.empty()) material->setSupplier(supplier);
 
         cout << "새로운 단가를 입력해주세요. (아니면 -1를 입력하여 현재 상태 유지): ";
-        cin >> unitPrice;
-        if (unitPrice >= 0) material->setUnitPrice(unitPrice);
+        getline(std::cin, unitPriceCostsS);
+        if (!unitPriceCostsS.empty() && unitPriceCostsS != "-1") {
+            try {
+                unitPrice = MparseCost(unitPriceCostsS);
+                material->setUnitPrice(unitPrice);
+            } catch (const std::exception& e) {
+                std::cerr << "단가 입력 오류: " << e.what() << std::endl;
+                return;
+            }
+        }
 
         cout << "새로운 재고량을 입력해주세요. (아니면 -1를 입력하여 현재 상태 유지): ";
         cin >> stock;
@@ -129,71 +193,62 @@ void MaterialManager::modify(int id) {
 
 void MaterialManager::displayInfo() {
     setCmdColor(1);
-	if (!materialList.empty()) {
-		printf("%6s | %10s | %16s | %12s | %10s | %10s\n", "자재ID", "자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
-
-		for (const auto& pair : materialList) {
-			Material* m = pair.second;
-			cout << setw(6) << m->getId() << " | ";  // 자재 ID 출력
-			cout << setw(10) << m->getName() << " | ";  // 자재명 출력
-			cout << setw(10) << m->getSupplier() << " | ";  // 공급업체명 출력
-			cout << setw(12) << fixed << m->getUnitPrice() << " | ";  // 단가 출력
-			cout << setw(6) << m->getStock() << " | ";  // 재고량 출력
-			cout << setw(6) << m->getOrderQuantity() << endl;  // 주문량 출력
-		}
-	}
-	else {
-		setCmdColor(2);
-		cout << "등록된 자재가 없습니다." << endl;
-	}
+    printf("%6s | %13s | %16s | %14s | %10s | %10s\n", "자재ID", "자재명", "공급업체", "단가(₩)", "재고량(EA)", "주문량(EA)");
+    for (const auto& pair : materialList) {
+        Material* m = pair.second;
+        cout << setw(6) << m->getId() << " | ";  // 자재 ID 출력
+        cout << setw(12) << m->getName() << " | ";  // 자재명 출력
+        cout << setw(14) << m->getSupplier() << " | ";  // 공급업체명 출력
+        cout << setw(10) << fixed <<MformatNumberWithCommas(m->getUnitPrice())<< " | ";  // 단가 출력
+        cout << setw(10) << m->getStock() << " | ";  // 재고량 출력
+        cout << setw(10) << m->getOrderQuantity() << endl;  // 주문량 출력
+    }
     setCmdColor();
 
 }
 
 void MaterialManager::displayMenu() {
-    int id;
+    int choice, id;
     bool running = true;
-    string choice;
 
     while (running) {
         cout << "\033[2J\033[1;1H";  // 화면을 지우고 커서를 맨 위로 이동
         cout << "\033[30;94m┌───────────────────────────────────────────┐ \033[0m" << endl;
-        cout << "\033[30;94m│                 \033[30;93m자재관리\033[0m                  \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│                \033[30;93m자재관리\033[0m                   \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│───────────────────────────────────────────│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;97m1. 자재 전체조회\033[0m                         \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;97m1. 자재 조회\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m2. 자재 등록\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m3. 자재 삭제\033[0m                             \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m│  \033[30;97m4. 자재 수정\033[0m                             \033[30;94m│ \033[0m" << endl;
-        cout << "\033[30;94m│  \033[30;91mexit. 나가기\033[0m                             \033[30;94m│ \033[0m" << endl;
+        cout << "\033[30;94m│  \033[30;91m5. 자재관리 나가기\033[0m                       \033[30;94m│ \033[0m" << endl;
         cout << "\033[30;94m└───────────────────────────────────────────┘ \033[0m" << endl;
         cout << "어떤 항목을 선택하시겠습니까? ";
         cin >> choice;
 
-        if (choice == "1") {
+        switch (choice) {
+        case 1:
             displayInfo();  // 자재 정보를 출력
-        }
-        else if (choice == "2") {
+            break;
+        case 2:
             create();  // 자재를 생성하여 리스트에 추가
-        }
-        else if (choice == "3") {
+            break;
+        case 3:
             cout << "삭제할 자재ID를 입력해주세요: ";
             cin >> id;
             remove(id);  // 자재를 삭제
-        }
-        else if (choice == "4") {
+            break;
+        case 4:
             cout << "수정할 자재ID를 입력해주세요: ";
             cin >> id;
             modify(id);  // 자재를 수정
-        }
-        else if (choice == "5" || choice =="exit" ) {
+            break;
+        case 5:
             running = false;  // 프로그램 종료
-        }
-        else {
-            setCmdColor(2);
+            break;
+        default:
             cout << "잘못된 선택입니다. 다시 입력해주세요." << endl;
-            setCmdColor();
+            break;
         }
-
         if (running) {
             cout << "\n계속하려면 Enter 키를 눌러주세요...";
             cin.ignore();
