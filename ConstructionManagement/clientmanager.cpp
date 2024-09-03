@@ -49,6 +49,7 @@ ClientManager::~ClientManager()
 void ClientManager::create()
 {
     string name, phoneNum, address;
+   // printf("%6s | %10s | %14s | %10s\n", "고객ID", "고객명", "전화번호", "주소");
 
     setCmdColor(0);
     printf("%10s | %14s | %10s\n", "고객명", "전화번호", "주소");

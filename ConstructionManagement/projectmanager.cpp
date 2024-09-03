@@ -58,8 +58,8 @@ void ProjectManager::create()
 {
     string name, location, startDate, endDate, budget;
     setCmdColor(0);
-    printf("%14s | %10s | %10s | %10s | %10s\n", "프로젝트명", "위치", "시작일","종료일","예산(₩)");
-    printf("%14s | %10s | %10s | %10s | %10s\n", "도로 공사", "부산광역시", "2023-02-15","2024-02-15","800000000");
+    printf("예시) %14s | %10s | %11s | %11s | %13s\n", "프로젝트명", "위치", "시작일","종료일","예산(₩)");
+    printf("      %14s | %10s | %11s | %11s | %13s\n", "도로 공사", "부산광역시", "2023-02-15","2024-02-15","800000000");
     printf("\n");
     setCmdColor();
     cout << "프로젝트명: ";
@@ -160,7 +160,7 @@ void ProjectManager::displayInfo()
 {
     setCmdColor(1);
     if (!projectList.empty()) {
-        printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");    ///setw()
+        printf("%10s | %14s | %10s | %11s | %11s | %13s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");    ///setw()
         for (const auto& v : projectList)
         {
             int key = v.first;
