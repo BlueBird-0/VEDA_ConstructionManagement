@@ -179,7 +179,7 @@ void ProjectManager::displayInfo(int key)
 {
     if (projectList.find(key) != projectList.end()) {
         setCmdColor(1);
-        printf("%10s | %14s | %10s | %10s | %10s | %10s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");
+        printf("%10s | %14s | %10s | %11s | %11s | %13s\n", "프로젝트ID", "프로젝트명", "위치", "시작일", "종료일", "예산(₩)");
         if (!projectList.empty()) {
             Project* p = projectList[key];
             p->showInfo();
